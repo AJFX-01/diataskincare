@@ -36,5 +36,7 @@ const DeleteUser = () => {
                 </div>
             </Card>
         </section>
-    )
+    );
 }
+
+export default DeleteUser;
