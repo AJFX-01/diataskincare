@@ -90,4 +90,38 @@
         cursor: pointer;
       }
     }
-  
+    .content {
+        position: relative;
+        padding: 1rem;
+        width: 65%;
+        .details {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 1rem;
+          h4 {
+            font-weight: 400;
+          }
+          p {
+            font-weight: 500;
+            color: var(--color-danger);
+          }
+        }
+        button {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+        }
+    }
+}
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+  }
+.error {
+    color: crimson;
+    background: pink;
+    padding: 0.3rem;
+    font-weight: 700;
+}
