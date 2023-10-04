@@ -30,12 +30,12 @@ const Item : React.FC<ItemProps> = ({ product, grid}) => {
                     <div className={styles.details}>
                         <p>NGN {new Intl.NumberFormat().format(product.price)}</p>
                         <h4>{product.name.substring(0, 21)}...</h4>
-                        <button className=''></button>
                     </div>
+                    <button className='--btn --btn-danger'> Add tp Cart</button>
                 </div>
             </div>
         </Card>
-    )
+    );
 }
 
 export default Item;
