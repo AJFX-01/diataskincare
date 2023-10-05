@@ -20,5 +20,19 @@ const initialState : ProductState ={
 };
 
 const productSlice = createSlice({
-    
+    name: "product",
+    initialState,
+    reducers : {
+        STORE_PRODUCTS: ( state, action: { payload: { products : Product[] }}) => {
+            state.products = action.payload.products;
+        }.
+        GET_PRICE_RANGE: (state, action {payload :{products : Product[]} }) => {
+           const priceArray: number[] = [];
+           action.payload.products.forEach((product) => {
+            priceArray.push(product.price);
+           });
+           const max = Math.max(...priceArray);
+            
+        }
+    }
 })
