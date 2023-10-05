@@ -4,6 +4,7 @@ import Card from "../../card/Card";
 import { MdError } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./item.module.scss";
+import { error } from 'console';
 
 
 type ItemType = {
@@ -21,7 +22,10 @@ type ItemProps = {
 
 const Item : React.FC<ItemProps> = ({ product, grid}) => {
     return (
-        <Card cardClass={styles.grid}>
+        <Card cardClass={grid ? `${styles.grid}` : `${styles.list}`}>
+            {product?.Avaliability === "Out of Stock" && (
+                <p className={styles["out-of-stock"]}>Out of Stock</p>
+            )}
             <div className={styles.img}>
                 <Link to={}>
                     <img src={product.imageUrl} alt={product.name}/>
@@ -31,6 +35,14 @@ const Item : React.FC<ItemProps> = ({ product, grid}) => {
                         <p>NGN {new Intl.NumberFormat().format(product.price)}</p>
                         <h4>{product.name.substring(0, 21)}...</h4>
                     </div>
+                    {!grid && (
+                        <p className={styles.desc}>{product.description.substring(0, 200)}...</p>
+                    )}
+                    {error && (
+                        <p className={`${styles.flex} ${styles.error}`}>
+                            <MdError/> &nbsp;Out of stock
+                        </p>
+                    )}
                     <button className='--btn --btn-danger'> Add tp Cart</button>
                 </div>
             </div>
