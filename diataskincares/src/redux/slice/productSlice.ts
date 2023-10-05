@@ -30,7 +30,7 @@ const productSlice = createSlice({
             ...state,
             products : action.payload.products,
         }),
-        GET_PRICE_RANGE: (state, action : {payload :{products : Product[]} }) => {
+        GET_PRICE_RANGE: (state, action : {payload :{ products : Product[]} }) => {
            if (action.payload.products.length === 0) return state;
            
            const priceArray: number[] = [];
