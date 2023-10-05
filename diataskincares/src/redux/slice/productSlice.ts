@@ -8,5 +8,17 @@ import { createSlice } from '@reduxjs/toolkit';
 // };
 
 type ProductState = {
+    products: []
+    minPrice: number | null;
+    maxPrice: number | null;
+};
 
-}
+const initialState : ProductState ={
+    products: [],
+    minPrice: null,
+    maxPrice: null,
+};
+
+const productSlice = createSlice({
+    
+})
