@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { type } from 'os';
 
 type Product = {
     name: string;
@@ -8,12 +9,14 @@ type Product = {
 };
 
 type ProductState = {
+    type: "product";
     products: Product[];
     minPrice: number | null;
     maxPrice: number | null;
 };
 
 const initialState : ProductState ={
+    type: "product",
     products: [],
     minPrice: null,
     maxPrice: null,
@@ -23,10 +26,13 @@ const productSlice = createSlice({
     name: "product",
     initialState,
     reducers : {
-        STORE_PRODUCTS: ( state, action: { payload: { products : Product[] }}) => {
-            state.products = action.payload.products;
-        }.
-        GET_PRICE_RANGE: (state, action {payload :{products : Product[]} }) => {
+        STORE_PRODUCTS: ( state, action: { payload: { products : Product[] }}) => ({
+            ...state,
+            products : action.payload.products,
+        }),
+        GET_PRICE_RANGE: (state, action : {payload :{products : Product[]} }) => {
+           if (action.payload.products.length === 0) return state;
+           
            const priceArray: number[] = [];
            action.payload.products.forEach((product) => {
             priceArray.push(product.price);
@@ -34,8 +40,9 @@ const productSlice = createSlice({
            const max = Math.max(...priceArray);
            const min = Math.min(...priceArray);
 
-           state.maxPrice = max;
-           state.minPrice = min; 
+           return {...state, maxPrice : max, minPrice : min}
         },
     },
 });
+
+export default productSlice;
