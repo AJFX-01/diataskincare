@@ -45,4 +45,8 @@ const productSlice = createSlice({
     },
 });
 
-export default productSlice;
+export const { STORE_PRODUCTS, GET_PRICE_RANGE } = productSlice.actions;
+export const selectProducts = (state : {product : ProductState}) => state.product.products;
+export const selectMinPrice = (state : {product : ProductState }) => state.product.minPrice;
+export const selectMaxPrice = (state : { product : ProductState }) => state.product.maxPrice;
+export default productSlice.reducer;
