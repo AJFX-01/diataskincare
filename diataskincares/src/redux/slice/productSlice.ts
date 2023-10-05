@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// type Product = {
-//     name: string;
-//     price: number;
-//     description : string;
-//     imageUrl: string;
-// };
+type Product = {
+    name: string;
+    price: number;
+    description : string;
+    imageUrl: string;
+};
 
 type ProductState = {
-    products: []
+    products: Product[];
     minPrice: number | null;
     maxPrice: number | null;
 };
@@ -32,7 +32,10 @@ const productSlice = createSlice({
             priceArray.push(product.price);
            });
            const max = Math.max(...priceArray);
-            
-        }
-    }
-})
+           const min = Math.min(...priceArray);
+
+           state.maxPrice = max;
+           state.minPrice = min; 
+        },
+    },
+});
