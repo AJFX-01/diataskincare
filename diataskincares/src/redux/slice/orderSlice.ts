@@ -43,3 +43,13 @@ const orderSlice = createSlice({
     }
 })
 
+
+export const { STORE_ORDERS, CALCULATE_TOTAL_ORDER_AMOUNTS, STORE_ADDRESS, SAVE_SUCCESS_URL } = orderSlice.actions;
+export const selectOrderHistory = (state : { orders: OrderState}) => state.orders.orderHistory;
+export const selectAddress = (state : { orderes : OrderState }) => state.orderes.addressHistory;
+export const selectTotal = (state : { orders : OrderState }) => state.orders.totalOrderAmount;
+export const selectSucessUrl = (state : { orders : OrderState }) => state.orders.successURL;
+export const selectDelievery = (state : { orders : OrderState }) => state.orders.deliveryFee;
+
+export default orderSlice.reducer;
+
