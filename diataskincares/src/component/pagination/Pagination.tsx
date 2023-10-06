@@ -44,5 +44,28 @@ const Pagination: React.FC<PaginationProps> = ({
         pageNumeber.push(i);
     }
 
-    return ()
-}
+    return (
+        <ul className={styles.pagination}>
+            <li onClick={paginatePrev} className={currentPage === pageNumeber[0] ? `{styles.hidden}` : undefined}>
+                Prev
+            </li>
+            {pageNumeber.map((number) => {
+                if (number < (maxPageNumberLimit + 1) && number > minPageNumberLimit) return (
+                    <li key={number} onClick={() => paginate(number)} className={currentPage === number ? `${styles.active}` : undefined }>
+                        {number}
+                    </li>
+                );
+                return null;
+            })}
+            <li onClick={paginateNext} className={currentPage === pageNumeber[pageNumeber.length - 1] ? `${styles.hidden}` : undefined}>
+                Next
+            </li>
+            <p>
+                <b className={styles.page}>{`page${currentPage}`}</b> &nbsp; <span>of</span> &nbsp; <b>{`${Math.ceil(totalPages)}`}</b>
+            </p>
+        </ul>
+    );
+};
+
+
+export default Pagination;
