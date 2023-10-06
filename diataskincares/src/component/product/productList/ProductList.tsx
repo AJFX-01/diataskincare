@@ -5,7 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./productList.module.scss";
 import Pagination from "../../pagination/Pagination";
 
-const ProductList = () => {
+interface ProductListProps {
+    
+}
+
+const ProductList : React.FC = () => {
     return (
         <div className={styles["product-list"]} id="product">
             <div className={styles.top}>
@@ -36,7 +40,7 @@ const ProductList = () => {
             </div>
             <div className={ `${styles.grid}`}>
             </div>
-            <Pagination/>
+            <Pagination />
         </div>
     )
 }
