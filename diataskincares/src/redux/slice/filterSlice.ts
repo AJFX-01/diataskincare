@@ -60,6 +60,54 @@ const filterSlice = createSlice({
                     tempProducts = products;
                     break;
             }
-        }
-    }
-})
+            state.filteredProducts = tempProducts;
+        },
+        FILTER_BY_BRAND: (state, action: { payload: { products : Product[]; brand : string}}) => {
+            const { products, brand } = action.payload;
+
+            let tempProducts: Product[] = [];
+
+            if (brand === "All") {
+                tempProducts = products;
+            } else {
+                tempProducts = products.filter((product) => product.brand === brand);
+            }
+
+            state.filteredProducts = tempProducts;
+        },
+        FILTER_BY_CATEGORY: (state, action : { payload: { products : Product[]; category: string}}) => {
+            const { products, category } = action.payload;
+
+            let tempProducts: Product[] = [];
+
+            if (category === "All") {
+                tempProducts = products;
+            } else {
+                tempProducts = products.filter((product) => product.category === category);
+            }
+
+            state.filteredProducts = tempProducts;
+        },
+
+        FILTER_BY_PRICE: (state, action : { payload : { products : Product[]; price : number }}) => {
+            const { products, price } = action.payload;
+
+            let tempProducts: Product[] = [];
+
+            tempProducts = products.filter((product) => product.price <= price);
+
+            state.filteredProducts = tempProducts;
+        },
+    },
+});
+
+export const { FILTER_BY_BRAND,
+    FILTER_BY_CATEGORY,
+    FILTER_BY_PRICE,
+    FILTER_BY_SEARCH,
+    SORT_PRODUCTS
+} = filterSlice.actions;
+
+export const selectFilterdProducts = (state: FilterState) => state.filter.filteredProducts;
+
+export default filterSlice.reducer;
