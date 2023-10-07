@@ -56,6 +56,7 @@ const filterSlice = createSlice({
                     break;
                 case "Out of Stock":
                     tempProducts = products.filter((product) => product.Availiability === "Out of stock");
+                    break;
                 default:
                     tempProducts = products;
                     break;
@@ -108,6 +109,6 @@ export const { FILTER_BY_BRAND,
     SORT_PRODUCTS
 } = filterSlice.actions;
 
-export const selectFilterdProducts = (state: FilterState) => state.filter.filteredProducts;
+export const selectFilterdProducts = (state: {filter :FilterState } ) => state.filter.filteredProducts;
 
 export default filterSlice.reducer;
