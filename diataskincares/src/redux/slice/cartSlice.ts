@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import Item from "../../component/product/productItem/item";
 
 interface Product {
     id: number;
@@ -42,7 +43,33 @@ const cartSlice = createSlice({
         ADD_TO_CART: ( state, action : { payload : Product}) => {
             const productIndex = state.cartItems.findIndex(
                 (item) => item.id === action.payload.id);
-        }
+
+                if (productIndex >= 0 ) {
+                   state.cartItems[productIndex].cartQuantity += 1; 
+                } else {
+                    let tempProduct: CartItem = { ...action.payload, cartQuantity: 1 };
+                    state.cartItems.push(tempProduct);
+                }
+                localStorage.setItem("cartItem", JSON.stringify(state.cartItems));
+
+        }, 
+        DECREASE_CART: ( state, action : { payload : Product}) => {
+            const productIndex = state.cartItems.findIndex((item) => item.id === action.payload.id);
+            if (state.cartItems[productIndex].cartQuantity > 1) {
+                state.cartItems[productIndex].cartQuantity -= 1;
+            } else if (state.cartItems[productIndex].cartQuantity === 1) {
+                const newCartItem = state.cartItems.filter((item) => item.id !== action.payload.id );
+         
+                state.cartItems = newCartItem;
+                toast.info(`${action.payload.name} removed from your cart`,
+                {
+                    position: "top-left",
+                    pauseOnFocusLoss: false,
+                });
+            }
+            localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+        },
+        SET_CART: (state, action : {payload })
     }
 
 })
