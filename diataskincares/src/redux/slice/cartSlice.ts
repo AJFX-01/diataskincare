@@ -28,8 +28,8 @@ const initialCartItems = localStorage.getItem("cartItems");
 const initialSavedItems = localStorage.getItem("savedItems");
 
 const initialState: CartState = {
-    cartItems: localStorage.getItem("cartItems") ? JSON.parse(initialCartItems) : [],
-    savedItems: localStorage.getItem("savedItems") ? JSON.parse(initialSavedItems) : [],
+    cartItems:initialCartItems ? JSON.parse(initialCartItems) : [],
+    savedItems: initialSavedItems ? JSON.parse(initialSavedItems) : [],
     cartTotalQuantity: 0,
     cartTotalAmounts: 0,
     previousURL: "",
@@ -39,7 +39,10 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-
+        ADD_TO_CART: ( state, action : { payload : Product}) => {
+            const productIndex = state.cartItems.findIndex(
+                (item) => item.id === action.payload.id);
+        }
     }
 
 })
