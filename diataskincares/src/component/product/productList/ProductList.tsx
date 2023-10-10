@@ -48,7 +48,7 @@ const ProductList : React.FC<ProductListProps> = ({ products }) => {
     useEffect(() => {
         dispatch(
             FILTER_BY_SEARCH({
-                products,
+                product,
                 search,
             })
         );
