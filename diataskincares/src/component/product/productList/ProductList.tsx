@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsFillGridFill } from "react-icons/bs";
 import { FaListAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,12 +6,36 @@ import styles from "./productList.module.scss";
 import Pagination from "../../pagination/Pagination";
 import Item from "../productItem/item";
 import Search from "../../search/Search";
-import { FILTER_BY_SEARCH, selectFilterdProducts, SORT_PRODUCTS } from "../../../redux/slice/filterSlice";
-interface ProductListProps {
-    
+import { FILTER_BY_SEARCH,
+         selectFilterdProducts, 
+         SORT_PRODUCTS, 
+} from "../../../redux/slice/filterSlice";
+
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    description: string;
+    imageURL: string;
+    Avalability: string;
 }
 
-const ProductList : React.FC = () => {
+
+interface ProductListProps {
+    products: Product[];
+}
+
+const ProductList : React.FC<ProductListProps> = ({ products }) => {
+    const [grid, setGrid] = useState(true);
+    const [search, setSearch ] = useState<string>("");
+    const [sort, setSort] = useState<string>("latest");
+    const dispatch = useDispatch();
+    const filteredProducts = useSelector(selectFilterdProducts);
+
+    // ============pages function control============
+    const [currentPage, setCurrentPage ] = useState<number>(1);
+    const [productsPerPage] = useState<number>(10);
+    
     return (
         <div className={styles["product-list"]} id="product">
             <div className={styles.top}>
@@ -26,7 +49,7 @@ const ProductList : React.FC = () => {
                     </p>
                 </div>
                 <div>
-                    <Search></Search> 
+                    <Search value={search} onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 <div className={styles.sort}>
                     <label>Sort By</label>
