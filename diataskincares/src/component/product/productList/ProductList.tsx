@@ -35,16 +35,45 @@ const ProductList : React.FC<ProductListProps> = ({ products }) => {
     // ============pages function control============
     const [currentPage, setCurrentPage ] = useState<number>(1);
     const [productsPerPage] = useState<number>(10);
-    
+    //=============current Page=================//
+
+    const indexOfLastProduct = currentPage + productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = filteredProducts.slice(
+        indexOfFirstProduct,
+        indexOfLastProduct
+    );
+
+    // ==========================================
+    useEffect(() => {
+        dispatch(
+            FILTER_BY_SEARCH({
+                products,
+                search,
+            })
+        );
+    }, [dispatch, products, search]);
+
+    useEffect(() => {
+        dispatch(
+            SORT_PRODUCTS({
+                products,
+                sort,
+            })
+        );
+    }, [ dispatch, products, sort])
+
     return (
         <div className={styles["product-list"]} id="product">
             <div className={styles.top}>
                 <div className={styles.icons}>
-                    <BsFillGridFill size={22} color="#c07d53"/>
-                    <FaListAlt size={24} color="#111" />
+                    <BsFillGridFill size={22} color="#c07d53" onClick={() => setGrid(true) }/>
+                    <FaListAlt size={24} color="#111" onClick={() => setGrid(false)} />
                     <p>
                         <b>
-                            1 product Found
+                            {filteredProducts.length === 1 
+                                ? "1 product Found" 
+                                : `${filteredProducts.length} Product Found`}
                         </b>
                     </p>
                 </div>
@@ -52,8 +81,10 @@ const ProductList : React.FC<ProductListProps> = ({ products }) => {
                     <Search value={search} onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 <div className={styles.sort}>
-                    <label>Sort By</label>
-                    <select value={sort}>
+                    <label>Sort By:</label>
+                    <select value={sort} onChange={(e) => {
+                        setSort(e.target.value);
+                    }}>
                         <option value="latest">Latest</option>
                         <option value="lowest-price">Lowest Price</option>
                         <option value="highest-price">Highest Price</option>
@@ -64,9 +95,36 @@ const ProductList : React.FC<ProductListProps> = ({ products }) => {
                     </select>
                 </div>
             </div>
-            <div className={ `${styles.grid}`}>
+            {search && (
+                <p style={{ textAlign: "center", margin: "2rem 0", fontSize: "1.9rem" }}>
+                    <b>
+                        Product including ' <i style={{ color:"#c07d53" }}>{search}</i> '
+                    </b>
+                </p>
+            )}
+            <div className={grid ? `${styles.grid}` : `${styles.list}`}>
+                {filteredProducts.length === 0 ? (
+                    <h2>
+                        <b>No Product(s) match your search</b>
+                    </h2>
+                ) : (
+                    <>
+                        {currentProducts.map((product) => (
+                            <div key={product.id}>
+                                <Item {...product} grid={grid} product={product} />
+                            </div>
+                        ))}
+                    </>
+                )}
             </div>
-            <Pagination/>
+            <Pagination
+            productsPerPage={productsPerPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalProducts={filteredProducts.length}
+            />
         </div>
-    )
-}
+    );
+};
+
+export default ProductList;
