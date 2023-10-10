@@ -7,7 +7,7 @@ import styles from "./item.module.scss";
 import { ADD_TO_CART, CALCULATE_TOTAL_QUANTITY } from '../../../redux/slice/cartSlice';
 
 
-type ItemType = {
+interface ItemType  {
     name : string;
     id: number;
     price : number;
@@ -16,8 +16,8 @@ type ItemType = {
     Avaliability : string;
 };
 
-type ItemProps = {
-    product : ItemType;
+interface ItemProps  {
+    product : ItemType ;
     grid: boolean;
 }
 

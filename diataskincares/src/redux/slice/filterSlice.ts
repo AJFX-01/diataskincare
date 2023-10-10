@@ -6,7 +6,7 @@ interface Product {
     category : string;
     price: number;
     brand: string;
-    Availiability : string;
+    Avaliability : string;
 }
 
 interface FilterState {
@@ -53,10 +53,10 @@ const filterSlice = createSlice({
                     tempProducts = products.slice().sort((a, b) => b.name.localeCompare(a.name));
                     break;
                 case "In - Stock":
-                    tempProducts = products.filter((product) => product.Availiability === "In-stock");
+                    tempProducts = products.filter((product) => product.Avaliability === "In-stock");
                     break;
                 case "Out of Stock":
-                    tempProducts = products.filter((product) => product.Availiability === "Out of stock");
+                    tempProducts = products.filter((product) => product.Avaliability === "Out of stock");
                     break;
                 default:
                     tempProducts = products;

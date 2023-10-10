@@ -17,7 +17,10 @@ interface Product {
     category: string;
     price: number;
     brand: string;
-    Availiability: string;
+    description: string; // Add these properties
+    imageUrl: string; 
+    Avaliability: string;
+   
 }
 
 
@@ -111,7 +114,7 @@ const ProductList : React.FC<ProductListProps> = ({ products }) => {
                     <>
                         {currentProducts.map((product) => (
                             <div key={product.id}>
-                                <Item {...product} grid={grid} product={product} />
+                                <Item grid={grid} description={product.description} imageUrl={product.imagUR}/>
                             </div>
                         ))}
                     </>
