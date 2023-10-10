@@ -42,7 +42,7 @@ const Item : React.FC<ItemProps> = ({ product, grid}) => {
                 <p className={styles["out-of-stock"]}>Out of Stock</p>
             )}
             <div className={styles.img}>
-                <Link to={}>
+                <Link to={`/`}>
                     <img src={product.imageUrl} alt={product.name}/>
                 </Link>
                 <div className={styles.content}>
@@ -58,7 +58,7 @@ const Item : React.FC<ItemProps> = ({ product, grid}) => {
                             <MdError/> &nbsp;Out of stock
                         </p>
                     )}
-                    <button className='--btn --btn-danger'> Add tp Cart</button>
+                    <button className='--btn --btn-danger' onClick={() => addtoCart(product)}> Add tp Cart</button>
                 </div>
             </div>
         </Card>
