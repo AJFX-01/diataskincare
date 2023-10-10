@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { BsFillGridFill } from "react-icons/bs";
 import { FaListAlt } from "react-icons/fa";
@@ -5,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./productList.module.scss";
 import Pagination from "../../pagination/Pagination";
 import Item from "../productItem/item";
-
+import Search from "../../search/Search";
 import { FILTER_BY_SEARCH, selectFilterdProducts, SORT_PRODUCTS } from "../../../redux/slice/filterSlice";
 interface ProductListProps {
     
@@ -25,7 +26,7 @@ const ProductList : React.FC = () => {
                     </p>
                 </div>
                 <div>
-                    <Search value={search}/>
+                    <Search></Search> 
                 </div>
                 <div className={styles.sort}>
                     <label>Sort By</label>
@@ -42,7 +43,7 @@ const ProductList : React.FC = () => {
             </div>
             <div className={ `${styles.grid}`}>
             </div>
-            <Pagination />
+            <Pagination/>
         </div>
     )
 }

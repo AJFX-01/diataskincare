@@ -3,7 +3,8 @@ import { BiSearch } from "react-icons/bi";
 import styles from "./search.module.scss";
 
 
-interface SearchProps {
+
+type SearchProps = {
     value: string;
     onChange: ( event : ChangeEvent<HTMLInputElement> ) => void;
 }
@@ -15,6 +16,6 @@ const Search: React.FC<SearchProps> = ({ value, onChange}) => {
             <input type="text" placeholder="Search by name or category" value={value} onChange={onChange} />
         </div>
     );
-}
+};
 
 export default Search;
