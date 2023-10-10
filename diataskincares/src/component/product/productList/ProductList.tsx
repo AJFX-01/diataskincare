@@ -12,12 +12,12 @@ import { FILTER_BY_SEARCH,
 } from "../../../redux/slice/filterSlice";
 
 interface Product {
-    id: number;
     name: string;
+    id: number;
+    category: string;
     price: number;
-    description: string;
-    imageURL: string;
-    Avalability: string;
+    brand: string;
+    Availiability: string;
 }
 
 
@@ -48,7 +48,7 @@ const ProductList : React.FC<ProductListProps> = ({ products }) => {
     useEffect(() => {
         dispatch(
             FILTER_BY_SEARCH({
-                product,
+                products,
                 search,
             })
         );
