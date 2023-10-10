@@ -6,14 +6,12 @@ interface Product {
     id: number;
     name: string;
     price: number;
-    category: string;
-    brand: string;
-    Avaliability: string;
+    
 };
 
 interface CartItem extends Product{
     cartQuantity: number;
-    // cartCount : number
+    
 }
 
 interface SavedItem extends Product {
@@ -73,11 +71,11 @@ const cartSlice = createSlice({
             }
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
         },
-        SET_CART: (state, action : { payload : CartItem }) => {
+        SET_CART: (state, action : { payload : { cartCount : number }}) => {
             // const cartIndex = state.cartItems.findIndex((item) => item.id === action.payload.id);
             // state.cartCount[cartIndex].cartCount = action.payload;
             let tempProducts = { ...action.payload, cartCount: 1 }; 
-            state.cartCount = tempProducts;
+            state.cartCount = tempProducts.cartCount;
         },
         REMOVE_FROM_CART: (state, action : { payload : Product }) => {
             const newCartItem = state.cartItems.filter((item) => item.id !== action.payload.id);
