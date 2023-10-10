@@ -5,6 +5,7 @@ import { MdError } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./item.module.scss";
 import { error } from 'console';
+import { ADD_TO_CART, CALCULATE_TOTAL_QUANTITY } from '../../../redux/slice/cartSlice';
 
 
 type ItemType = {
@@ -21,6 +22,17 @@ type ItemProps = {
 }
 
 const Item : React.FC<ItemProps> = ({ product, grid}) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [ error, setError ] = useState();
+    
+    const addtoCart = (product) => {
+        if(product?.Avaliability === "Out of Stock") {
+            setError(true);
+            setTimeout(() => setError(false), 7000);
+            return;
+        }
+    }
     return (
         <Card cardClass={grid ? `${styles.grid}` : `${styles.list}`}>
             {product?.Avaliability === "Out of Stock" && (
