@@ -5,13 +5,15 @@ import Item from "../../component/product/productItem/item";
 interface Product {
     id: number;
     name: string;
+    price: number;
     category: string;
     brand: string;
     Avaliability: string;
 };
 
-interface CartItem {
-    cartQuantity: number
+interface CartItem extends Product{
+    cartQuantity: number;
+    // cartCount : number
 }
 
 interface SavedItem extends Product {
@@ -23,6 +25,7 @@ interface CartState {
     savedItems: SavedItem[];
     cartTotalQuantity: number;
     cartTotalAmounts: number;
+    cartCount: number;
     previousURL: string;
 };
 const initialCartItems = localStorage.getItem("cartItems");
@@ -33,6 +36,7 @@ const initialState: CartState = {
     savedItems: initialSavedItems ? JSON.parse(initialSavedItems) : [],
     cartTotalQuantity: 0,
     cartTotalAmounts: 0,
+    cartCount: 0,
     previousURL: "",
 };
 
@@ -69,7 +73,59 @@ const cartSlice = createSlice({
             }
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
         },
-        SET_CART: (state, action : {payload })
-    }
-
+        SET_CART: (state, action : { payload : CartItem }) => {
+            // const cartIndex = state.cartItems.findIndex((item) => item.id === action.payload.id);
+            // state.cartCount[cartIndex].cartCount = action.payload;
+            let tempProducts = { ...action.payload, cartCount: 1 }; 
+            state.cartCount = tempProducts;
+        },
+        REMOVE_FROM_CART: (state, action : { payload : Product }) => {
+            const newCartItem = state.cartItems.filter((item) => item.id !== action.payload.id);
+            state.cartItems = newCartItem;
+            toast.info(`${action.payload.name} removed from your cart`, {
+                position: "top-left",
+                pauseOnFocusLoss: false,
+        });
+        localStorage.setItem("cartItem", JSON.stringify(state.cartItems));
+       },
+       CLEAR_CART: (state) => {
+        state.cartItems = [];
+        localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+       },
+       CALCULATE_SUBTOTAL: (state) => {
+        const subTotalArray: number[] = [];
+        state.cartItems.map((item) => {
+            const { price, cartQuantity } = item;
+            const cartItemAmount = price * cartQuantity;
+            return subTotalArray.push(cartItemAmount);
+        });
+        const totalAmount = subTotalArray.reduce((curr, init) => {
+            return curr + init ;
+        }, 0);
+        state.cartTotalAmounts = totalAmount;             
+       },
+       CALCULATE_TOTAL_QUANTITY: (state) => {
+        const totalQtyArray: number[] = [];
+        state.cartItems.map((item) => {
+            const { cartQuantity } = item;
+            const quantity = cartQuantity;
+            return totalQtyArray.push(quantity); 
+        });
+        const totalQty = totalQtyArray.reduce((curr, init) => {
+            return curr + init; 
+        }, 0);
+        state.cartTotalQuantity = totalQty;
+       },
+       SAVE_URL:(state, action) => {
+        let tempProducts = { ...action.payload, savedQuantity: 1 };
+        state.savedItems.push(tempProducts);
+        localStorage.setItem("savedItems", JSON.stringify(state.savedItems))
+       },
+       REMOVE_FROM_SAVER:(state, action) => {
+        const newsavedItems = state.savedItems.filter((item) => item.id !== action.payload.id);
+        state.savedItems = newsavedItems;
+        
+        localStorage.setItem("savedItems", JSON.stringify(state.savedItems));
+       }     
+    },
 })
