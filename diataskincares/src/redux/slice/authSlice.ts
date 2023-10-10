@@ -42,8 +42,9 @@ const authSlice = createSlice({
         },
         STORE_USERS: (state, action) => {
             state.deletedUsers = action.payload
-        }
-});
+        },
+    }
+})
 
 export const { SET_ACTIVE_USER, REMOVE_ACTIVE_USER, DELETE_USERS, STORE_USERS } = authSlice.actions;
 
