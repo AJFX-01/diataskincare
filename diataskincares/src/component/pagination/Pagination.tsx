@@ -8,7 +8,6 @@ interface PaginationProps {
     productsPerPage: number;
     totalProducts: number;
 }
-
 const Pagination: React.FC<PaginationProps> = ({
     currentPage,
     setCurrentPage,
