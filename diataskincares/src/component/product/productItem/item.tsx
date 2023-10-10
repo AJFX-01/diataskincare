@@ -9,6 +9,7 @@ import { ADD_TO_CART, CALCULATE_TOTAL_QUANTITY } from '../../../redux/slice/cart
 
 type ItemType = {
     name : string;
+    id: number;
     price : number;
     description : string;
     imageUrl : string;
@@ -31,6 +32,9 @@ const Item : React.FC<ItemProps> = ({ product, grid}) => {
             setTimeout(() => setError(false), 7000);
             return;
         }
+        dispatch(ADD_TO_CART(product));
+        navigate("/cart");
+        dispatch(CALCULATE_TOTAL_QUANTITY());
     }
     return (
         <Card cardClass={grid ? `${styles.grid}` : `${styles.list}`}>
