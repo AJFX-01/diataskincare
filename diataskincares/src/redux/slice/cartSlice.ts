@@ -116,16 +116,43 @@ const cartSlice = createSlice({
         }, 0);
         state.cartTotalQuantity = totalQty;
        },
-       SAVE_URL:(state, action) => {
+       SAVE_URL: (state, action) => {
+        state.previousURL = action.payload;
+       },
+       SAVE_FOR_LATER:(state, action) => {
         let tempProducts = { ...action.payload, savedQuantity: 1 };
         state.savedItems.push(tempProducts);
         localStorage.setItem("savedItems", JSON.stringify(state.savedItems))
        },
-       REMOVE_FROM_SAVER:(state, action) => {
+       REMOVE_FROM_SAVED:(state, action) => {
         const newsavedItems = state.savedItems.filter((item) => item.id !== action.payload.id);
         state.savedItems = newsavedItems;
         
         localStorage.setItem("savedItems", JSON.stringify(state.savedItems));
        }     
     },
-})
+});
+
+export const {
+    ADD_TO_CART,
+    DECREASE_CART,
+    SET_CART,
+    REMOVE_FROM_CART,
+    CLEAR_CART,
+    CALCULATE_SUBTOTAL,
+    CALCULATE_TOTAL_QUANTITY,
+    SAVE_URL,
+    SAVE_FOR_LATER,
+    REMOVE_FROM_SAVED
+     
+} = cartSlice.actions;
+
+export const selectCartItems = (state : { cart : CartState}) => state.cart.cartItems;
+export const selectSavedItems = (state : { cart : CartState} ) => state.cart.savedItems;
+export const selectCartCount = (state : { cart : CartState}) => state.cart.cartCount;
+export const selectCartTotalQuantity = (state : { cart : CartState }) => state.cart.cartTotalQuantity;
+export const selectCartTotalAmounts = (state : { cart : CartState }) => state.cart.cartTotalAmounts;
+export const selectPreviousURL = (state : { cart : CartState }) => state.cart.previousURL;
+
+export default cartSlice.reducer;
+
