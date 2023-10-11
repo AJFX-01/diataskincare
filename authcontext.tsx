@@ -1,139 +1,95 @@
 import React, { useEffect, useState } from "react";
-import { BsFillGridFill } from "react-icons/bs";
-import { FaListAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  FILTER_BY_SEARCH,
-  selectFilteredProducts,
-  SORT_PRODUCTS,
+  FILTER_BY_CATEGORY,
+  FILTER_BY_BRAND,
+  FILTER_BY_PRICE,
 } from "../../../redux/slice/filterSlice";
-import Pagination from "../../pagination/Pagination";
-import Search from "../../search/Search";
-import ProductItem from "../productItem/ProductItem";
-import styles from "./productList.module.scss";
+import {
+  selectMinPrice,
+  selectMaxPrice,
+  selectProducts,
+} from "../../../redux/slice/productSlice";
+import styles from "./productFilter.module.scss";
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  imageUrl: string;
-  Availability: string;
+interface ProductFilterProps {
+  showFilter: boolean;
+  setShowFilter: (show: boolean) => void;
 }
 
-interface ProductListProps {
-  products: Product[];
-}
-
-const ProductList: React.FC<ProductListProps> = ({ products }) => {
-  const [grid, setGrid] = useState(true);
-  const [search, setSearch] = useState<string>("");
-  const [sort, setSort] = useState<string>("latest");
+const ProductFilter: React.FC<ProductFilterProps> = ({ showFilter, setShowFilter }) => {
+  const [category, setCategory] = useState("All");
+  const [brand, setBrand] = useState("All");
+  const [price, setPrice] = useState<number>(3000);
   const dispatch = useDispatch();
-  const filteredProducts = useSelector(selectFilteredProducts);
+  const products = useSelector(selectProducts);
+  const minPrice = useSelector(selectMinPrice);
+  const maxPrice = useSelector(selectMaxPrice);
 
-  // ========pagination==========
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [productsPerPage] = useState<number>(10);
-
-  //get current products
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
-
-  // ================================
-  useEffect(() => {
-    dispatch(
-      FILTER_BY_SEARCH({
-        products,
-        search,
-      })
-    );
-  }, [dispatch, products, search]);
+  const allCategories = ["All", ...new Set(products.map((product) => product.category))];
+  const allBrands = ["All", ...new Set(products.map((product) => product.brand)];
 
   useEffect(() => {
-    dispatch(
-      SORT_PRODUCTS({
-        products,
-        sort,
-      })
-    );
-  }, [dispatch, products, sort]);
+    dispatch(FILTER_BY_BRAND({ products, brand }));
+  }, [dispatch, products, brand]);
+
+  const filterProducts = (cat: string) => {
+    setCategory(cat);
+    dispatch(FILTER_BY_CATEGORY({ products, category: cat }));
+  };
+
+  useEffect(() => {
+    dispatch(FILTER_BY_PRICE({ products, price }));
+  }, [dispatch, products, price]);
+
+  const clearFilters = () => {
+    setCategory("All");
+    setBrand("All");
+    setPrice(maxPrice);
+  };
 
   return (
-    <div className={styles["product-list"]} id="product">
-      <div className={styles.top}>
-        <div className={styles.icons}>
-          <BsFillGridFill
-            size={22}
-            color="#c07d53"
-            onClick={() => setGrid(true)}
-          />
-          <FaListAlt size={24} color="#111" onClick={() => setGrid(false)} />
-          <p>
-            <b>
-              {filteredProducts.length === 1
-                ? "1 Product Found"
-                : `${filteredProducts.length} Products Found`}
-            </b>
-          </p>
-        </div>
-        <div>
-          <Search value={search} onChange={(e) => setSearch(e.target.value)} />
-        </div>
-        <div className={styles.sort}>
-          <label>Sort by:</label>
-          <select
-            value={sort}
-            onChange={(e) => {
-              setSort(e.target.value);
-            }}
+    <div className={styles.filter} onClick={() => setShowFilter(!showFilter)}>
+      <h4>Categories</h4>
+      <div className={styles.category}>
+        {allCategories.map((cat, index) => (
+          <button
+            key={index}
+            className={category === cat ? styles.active : undefined}
+            type="button"
+            onClick={() => filterProducts(cat)}
           >
-            <option value="latest">Latest</option>
-            <option value="lowest-price">Lowest Price</option>
-            <option value="highest-price">Highest Price</option>
-            <option value="In-stock">In-stock</option>
-            <option value="Out of stock">Out of stock</option>
-            <option value="a-z">A - Z (alphabet. order)</option>
-            <option value="z-a">Z - A (alphabet. order)</option>
-          </select>
+            &#8250; {cat}
+          </button>
+        ))}
+      </div>
+      <h4>Brand</h4>
+      <div className={styles.brand}>
+        <select value={brand} onChange={(e) => setBrand(e.target.value)}>
+          {allBrands.map((brand, index) => (
+            <option value={brand} key={index}>
+              {brand}
+            </option>
+          ))}
+        </select>
+        <h4>Price</h4>
+        <p>NGN {new Intl.NumberFormat().format(price)}</p>
+        <div className={styles.price}>
+          <input
+            type="range"
+            value={price}
+            onChange={(e) => setPrice(Number(e.target.value))}
+            min={minPrice}
+            max={maxPrice}
+          />
         </div>
+        <br />
+        <button className="--btn --btn-danger" onClick={clearFilters}>
+          Clear Filters
+        </button>
       </div>
-      {search && (
-        <p
-          style={{ textAlign: "center", margin: "2rem 0", fontSize: "1.9rem" }}
-        >
-          <b>
-            Products including ' <i style={{ color: "#c07d53" }}>{search}</i> '
-          </b>
-        </p>
-      )}
-      <div className={grid ? `${styles.grid}` : `${styles.list}`}>
-        {filteredProducts.length === 0 ? (
-          <h2>
-            <b>No Product(s) match your search.</b>
-          </h2>
-        ) : (
-          <>
-            {currentProducts.map((product) => (
-              <div key={product.id}>
-                <ProductItem {...product} grid={grid} product={product} />
-              </div>
-            ))}
-          </>
-        )}
-      </div>
-      <Pagination
-        productsPerPage={productsPerPage}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalProducts={filteredProducts.length}
-      />
     </div>
   );
 };
 
-export default ProductList;
+export default ProductFilter;

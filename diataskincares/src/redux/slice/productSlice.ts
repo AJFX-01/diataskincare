@@ -6,6 +6,8 @@ type Product = {
     price: number;
     description : string;
     imageUrl: string;
+    brand: string;
+    category: string;
 };
 
 type ProductState = {
