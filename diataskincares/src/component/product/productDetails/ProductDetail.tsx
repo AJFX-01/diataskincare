@@ -1,6 +1,6 @@
 import React , { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import StarRatings from "react-satr-rating";
+import StarRatings from "react-star-rating";
 
 import { ImEyePlus } from "react-icons/im";
 import { TiCancel } from "react-icons/ti";
@@ -15,7 +15,7 @@ import {
   selectCartItems,
   selectSavedItems,
 } from "../../../redux/slice/cartSlice";
-import useFetchDocuments from "../../../hooks/useFetchDocuments";
-import useFetchCollection from "../../../hooks/useFetchCollection";
+// import useFetchDocuments from "../../../hooks/useFetchDocuments";
+// import useFetchCollection from "../../../hooks/useFetchCollection";
 import Card from "../../card/Card";
 import CardSkeleton from "./CardSkeleton";
