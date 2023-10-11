@@ -28,7 +28,7 @@ interface ProductListProps {
     products: Product[];
 }
 
-const ProductList : React.FC<ProductListProps> = ({ products }) => {
+const ProductList : React.FC<ProductListProps> = ({ products }: { products: Product[] }) => {
     const [grid, setGrid] = useState(true);
     const [search, setSearch ] = useState<string>("");
     const [sort, setSort] = useState<string>("latest");
@@ -114,9 +114,10 @@ const ProductList : React.FC<ProductListProps> = ({ products }) => {
                     <>
                         {currentProducts.map((product) => (
                             <div key={product.id}>
-                                <Item grid={grid} description={product.description} imageUrl={product.imagUR}/>
+                                <Item {...product} grid={grid} product={product}/>
                             </div>
                         ))}
+
                     </>
                 )}
             </div>

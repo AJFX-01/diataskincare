@@ -7,26 +7,28 @@ import styles from "./item.module.scss";
 import { ADD_TO_CART, CALCULATE_TOTAL_QUANTITY } from '../../../redux/slice/cartSlice';
 
 
-interface ItemType  {
+interface ProductItemType {
     name : string;
     id: number;
     price : number;
     description : string;
     imageUrl : string;
     Avaliability : string;
+   
 };
 
-interface ItemProps  {
-    product : ItemType ;
+interface ProductItemProps  {
+    product : ProductItemType ;
     grid: boolean;
 }
 
-const Item : React.FC<ItemProps> = ({ product, grid}) => {
+const ProductItem : React.FC<ProductItemProps> = ({ product , grid }) => {
+    const { name, price, Avaliability, description, imageUrl } = product;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [error, setError ] = useState< boolean | undefined>(undefined);
     
-    const addtoCart = (product : ItemType) => {
+    const addtoCart = (product : ProductItemType) => {
         if(product?.Avaliability === "Out of Stock") {
             setError(true);
             setTimeout(() => setError(false), 7000);
@@ -38,20 +40,20 @@ const Item : React.FC<ItemProps> = ({ product, grid}) => {
     }
     return (
         <Card cardClass={grid ? `${styles.grid}` : `${styles.list}`}>
-            {product?.Avaliability === "Out of Stock" && (
+            {Avaliability === "Out of Stock" && (
                 <p className={styles["out-of-stock"]}>Out of Stock</p>
             )}
             <div className={styles.img}>
                 <Link to={`/`}>
-                    <img src={product.imageUrl} alt={product.name}/>
+                    <img src={imageUrl} alt={name}/>
                 </Link>
                 <div className={styles.content}>
                     <div className={styles.details}>
-                        <p>NGN {new Intl.NumberFormat().format(product.price)}</p>
-                        <h4>{product.name.substring(0, 21)}...</h4>
+                        <p>NGN {new Intl.NumberFormat().format(price)}</p>
+                        <h4>{name.substring(0, 21)}...</h4>
                     </div>
                     {!grid && (
-                        <p className={styles.desc}>{product.description.substring(0, 200)}...</p>
+                        <p className={styles.desc}>{description.substring(0, 200)}...</p>
                     )}
                     {error && (
                         <p className={`${styles.flex} ${styles.error}`}>
@@ -65,4 +67,4 @@ const Item : React.FC<ItemProps> = ({ product, grid}) => {
     );
 }
 
-export default Item;
+export default ProductItem;

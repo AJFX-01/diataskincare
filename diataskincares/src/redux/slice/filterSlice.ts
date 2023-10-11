@@ -6,6 +6,8 @@ interface Product {
     category : string;
     price: number;
     brand: string;
+    description : string;
+    imageUrl : string;
     Avaliability : string;
 }
 
