@@ -2,26 +2,28 @@ import { createSlice } from '@reduxjs/toolkit';
 import { type } from 'os';
 
 type Product = {
+    id: number;
     name: string;
     price: number;
     description : string;
     imageUrl: string;
     brand: string;
+    Avaliability : string;
     category: string;
 };
 
 type ProductState = {
     type: "product";
     products: Product[];
-    minPrice: number | null;
-    maxPrice: number | null;
+    minPrice: number;  
+    maxPrice: number; 
 };
 
 const initialState : ProductState ={
     type: "product",
     products: [],
-    minPrice: null,
-    maxPrice: null,
+    minPrice: 1,
+    maxPrice: 100000000000000,
 };
 
 const productSlice = createSlice({
