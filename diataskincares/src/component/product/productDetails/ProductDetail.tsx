@@ -1,6 +1,6 @@
 import React , { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import StarRatings from "react-star-rating";
+import StarRatings from "react-star-ratings";
 
 import { ImEyePlus } from "react-icons/im";
 import { TiCancel } from "react-icons/ti";
@@ -19,3 +19,21 @@ import {
 // import useFetchCollection from "../../../hooks/useFetchCollection";
 import Card from "../../card/Card";
 import CardSkeleton from "./CardSkeleton";
+
+interface ProductDetailProps {} 
+
+const ProductDetail: React.FC<ProductDetailProps> = () => {
+
+    return(
+        <section>
+            <div className={`container ${styles.product}`}>
+                <div>
+                    <p onClick={() } style={{ cursor: "pointer"}}> 
+                        &larr; Go Back
+                    </p>
+                 </div>
+
+            </div>
+        </section>
+    )
+}
