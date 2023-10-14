@@ -20,5 +20,10 @@ const useNetworkStatus = (): boolean => {
             window.removeEventListener("omine", setOnline);
             window.removeEventListener("offine", setOffline); 
         };
-    })
-}
+    }, []);
+
+    return status;
+};
+
+
+export default useNetworkStatus;
