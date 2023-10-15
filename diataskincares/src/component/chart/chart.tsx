@@ -50,5 +50,18 @@ export default function Chart(props: ChartProps) {
     orders.map((item) => {
         const { orderStatus } = item;
         ordersArray.push(orderStatus);
-    })
+    });
+
+    const getOrderStatusCount = (array: string[], value: string): number => {
+        return array.filter((n) => n === value).length;
+    };
+
+    const [q1, q2, q3, q4] = [
+        "Order Placed...",
+        "Processing...",
+        "Shipped...",
+        "Delivered", 
+    ];
+
+    
 }
