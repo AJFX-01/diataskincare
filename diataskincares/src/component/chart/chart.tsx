@@ -16,3 +16,39 @@ import { useSelector } from "react-redux";
 import { MdOutlineAddShoppingCart } from 'react-icons/md';
 import { FcProcess, FcShipped } from 'react-icons/fc';
 import { BsCartCheckFill } from 'react-icons/bs';
+
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+);
+
+export const options = {
+    responsive: true,
+    plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
+          display: false,
+          text: "Chart.js Bar Chart",
+        },
+    },
+}
+
+interface ChartProps  {};
+
+export default function Chart(props: ChartProps) {
+    const orders = useSelector(selectOrderHistory);
+
+    const ordersArray: string[] = [];
+
+    orders.map((item) => {
+        const { orderStatus } = item;
+        ordersArray.push(orderStatus);
+    })
+}
