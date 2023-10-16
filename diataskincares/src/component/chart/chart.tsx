@@ -42,7 +42,7 @@ export const options = {
 
 interface ChartProps  {};
 
-export default function Chart(props: ChartProps) {
+const Chart: React.FC<(props: ChartProps)> = () => {
     const orders = useSelector(selectOrderHistory);
 
     const ordersArray: string[] = [];
@@ -76,6 +76,9 @@ export default function Chart(props: ChartProps) {
                 data: [placed, processing, shipped, delivered],
                 backgroundColor: "#c07d53",
             },
-        ]
+        ],
+
     }
+
+    return ()
 }
