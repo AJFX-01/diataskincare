@@ -83,7 +83,29 @@ const Chart: React.FC<(props: ChartProps)> = () => {
     return (
         <div className={styles.chart}>
             <Card cardClass={styles.card}>
-                
+                <div className={styles.grid}>
+                    <p>
+                        <MdOutlineAddShoppingCart size={25} color={'goldenrod'} />
+                        <b>  Placed: {placed}</b>
+                    </p>
+                    <p> 
+                        <FcProcess size={25} />
+                        <b> Processing: {processing}</b>
+                    </p>
+
+                    <p>
+                        <FcShipped size={25}/>
+                        <b> Shipped: {shipped}</b>
+                    </p>
+                    <p>
+                        <BsCartCheckFill size={25} color={'green'} />
+                        <b> Delivered: {delivered} </b>
+                    </p>
+                </div>
+                <h3>
+                    <b>Order status chart</b>
+                </h3>
+                <Bar options={options} data={data} /> 
             </Card>
         </div>
     )
