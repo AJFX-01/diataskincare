@@ -62,6 +62,5 @@ export default function Chart(props: ChartProps) {
         "Shipped...",
         "Delivered", 
     ];
-
     
 }
