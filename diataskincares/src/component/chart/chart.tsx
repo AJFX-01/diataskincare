@@ -62,5 +62,20 @@ export default function Chart(props: ChartProps) {
         "Shipped...",
         "Delivered", 
     ];
+
+    const  placed = getOrderStatusCount(ordersArray, q1);
+    const processing = getOrderStatusCount(ordersArray, q2);
+    const shipped = getOrderStatusCount(ordersArray, q3);
+    const delivered = getOrderStatusCount(ordersArray, q4);
     
+    const data = {
+        labe: ["Placed Orders", "Processing", "Shipped....", "Delivered"],
+        datasets: [
+            {
+                label : "Order Count",
+                data: [placed, processing, shipped, delivered],
+                backgroundColor: "#c07d53",
+            },
+        ]
+    }
 }
