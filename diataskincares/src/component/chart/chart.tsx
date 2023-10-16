@@ -80,5 +80,11 @@ const Chart: React.FC<(props: ChartProps)> = () => {
 
     }
 
-    return ()
+    return (
+        <div className={styles.chart}>
+            <Card cardClass={styles.card}>
+                
+            </Card>
+        </div>
+    )
 }
