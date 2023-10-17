@@ -110,3 +110,4 @@ const Chart: React.FC<(props: ChartProps)> = () => {
         </div>
     )
 }
+export default Chart;
