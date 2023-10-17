@@ -15,7 +15,11 @@ import {
     Auth,
     User,
 } from "firebase/auth";
+import { auth } from "../firebase/firebase";
 
+type AuthContextProps = {
+    children: React.ReactNode;
+}
 
 type AuthProviderPRops = {
     user: User  | null;
@@ -31,4 +35,31 @@ type AuthProviderPRops = {
     updateMail: (newmail: string) => Promise<void>;
     updatePass: (password: string) => Promise<void>;
     setUserName: (name: string) => void;
+}
+
+
+const AuthContext = React.createContext<AuthContextProps  |  undefined>(undefined);
+
+const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error('useAuth must be used within an AuthProvider'); 
+    }
+    return context;
+};
+
+const AuthProvider: React.FC<AuthProviderPRops> = ({ children }) => {
+    const [ user, setUser ] = useState<User | null>(null);
+    const [ loading, setLoading ] = useState(true);
+    const [ userName, setUserName ] = useState<string>('');
+
+    const signup = (email: string, password: string) => {
+        return createUserWithEmailAndPassword(auth, email, password);
+    };
+    const login =  (email: string, password: string) => {
+        return signInWithEmailAndPassword(auth, email, password);
+    };
+    const  logout = () => {
+        return signOut(auth); 
+    }
 }
