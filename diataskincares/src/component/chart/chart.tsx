@@ -7,6 +7,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import styles from "./chart.module.scss";
@@ -24,10 +25,10 @@ ChartJS.register(
     BarElement,
     Title,
     Tooltip,
-    Legend
+    Legend, 
 );
 
-const options = {
+const options: ChartOptions = {
     responsive: true,
     plugins: {
         legend: {
@@ -38,11 +39,11 @@ const options = {
           text: "Chart.js Bar Chart",
         },
     },
-}
+};
 
 interface ChartProps  {};
 
-const Chart: React.FC<(ChartProps)> = () => {
+const Chart: React.FC = () => {
     const orders = useSelector(selectOrderHistory);
 
     const ordersArray: string[] = [];
