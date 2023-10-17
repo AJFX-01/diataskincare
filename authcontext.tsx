@@ -204,3 +204,155 @@ export default function Header() {
   );
 }
 ///////
+
+
+
+/////
+import React, { useContext, useEffect, useState } from 'react';
+import { auth } from '../firebase/firebase';
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateEmail,
+  updatePassword,
+  updateProfile,
+  UserCredential,
+  Auth,
+  User,
+} from 'firebase/auth';
+
+type AuthProviderProps = {
+  children: React.ReactNode;
+};
+
+type AuthContextProps = {
+  user: User | null;
+  loading: boolean;
+  userName: string;
+  signup: (email: string, password: string) => Promise<UserCredential>;
+  login: (email: string, password: string) => Promise<UserCredential>;
+  logout: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
+  googleSignIn: () => Promise<UserCredential>;
+  facebookSignIn: () => Promise<UserCredential>;
+  updateName: (displayName: string) => Promise<void>;
+  updateMail: (newmail: string) => Promise<void>;
+  updatePass: (password: string) => Promise<void>;
+  setUserName: (name: string) => void;
+};
+
+const AuthContext = React.createContext<AuthContextProps | undefined>(undefined);
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [userName, setUserName] = useState<string>('');
+
+  const signup = (email: string, password: string) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const login = (email: string, password: string) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const logout = () => {
+    return signOut(auth);
+  };
+
+  const resetPassword = (email: string) => {
+    return sendPasswordResetEmail(auth, email);
+  };
+
+  const googleSignIn = () => {
+    const googleAuthProvider = new GoogleAuthProvider();
+    return signInWithPopup(auth, googleAuthProvider);
+  };
+
+  const facebookSignIn = () => {
+    const facebookAuthProvider = new FacebookAuthProvider();
+    return signInWithPopup(auth, facebookAuthProvider);
+  };
+
+  const updateName = (displayName: string) => {
+    return updateProfile(auth.currentUser, { displayName });
+  };
+
+  const updateMail = (newmail: string) => {
+    return updateEmail(auth.currentUser, newmail);
+  };
+
+  const updatePass = (password: string) => {
+    return updatePassword(auth.currentUser, password);
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const values: AuthContextProps = {
+    user,
+    signup,
+    login,
+    logout,
+    resetPassword,
+    googleSignIn,
+    facebookSignIn,
+    updateName,
+    updateMail,
+    updatePass,
+    userName,
+    setUserName,
+    loading,
+  };
+
+  return (
+    <AuthContext.Provider value={values}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
+};
+
+
+/////
+import { initializeApp } from "firebase/app";
+import { getFirestore, Firestore } from "firebase/firestore";
+import { getAuth, Auth } from "firebase/auth";
+import { getStorage, Storage } from "firebase/storage";
+
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY || "",
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN_URL || "",
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID || "",
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET || "",
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGE_SENDER_ID || "",
+  appId: process.env.REACT_APP_FIREBASE_APP_ID || "",
+};
+
+const app = initializeApp(firebaseConfig);
+const database: Firestore = getFirestore(app);
+const auth: Auth = getAuth(app);
+const storage: Storage = getStorage(app);
+
+export { app, database, auth, storage }
