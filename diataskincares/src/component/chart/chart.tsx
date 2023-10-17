@@ -42,7 +42,7 @@ export const options = {
 
 interface ChartProps  {};
 
-const Chart: React.FC<(props: ChartProps)> = () => {
+const Chart: React.FC<(ChartProps)> = () => {
     const orders = useSelector(selectOrderHistory);
 
     const ordersArray: string[] = [];
