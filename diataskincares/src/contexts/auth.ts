@@ -81,4 +81,12 @@ const AuthProvider: React.FC<AuthProviderPRops> = ({ children }) => {
     const updateName = (displayName: string) => {
         return updateProfile(auth.currentUser, { displayName });
     };
+
+    const updateMail = (newmail: string) => {
+        return updateEmail(auth.currentUser, newmail);
+    };
+
+    const updatePass = (password: string) => {
+        return updatePassword(auth.currentUser, password);
+    }
 }
