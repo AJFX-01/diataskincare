@@ -16,11 +16,12 @@ import {
     User,
    
 } from "firebase/auth";
+
 import { auth } from "../firebase/firebase";
 
 type AuthContextProps = {
     children: React.ReactNode;
-}
+};
 
 type AuthProviderPRops = {
     user: User  | null;
@@ -39,7 +40,7 @@ type AuthProviderPRops = {
 }
 
 
-const AuthContext = React.createContext<AuthContextProps  |  undefined>(undefined);
+const AuthContext = React.createContext<AuthContextProps | undefined>(undefined);
 
 const useAuth = () => {
     const context = useContext(AuthContext);
@@ -49,7 +50,7 @@ const useAuth = () => {
     return context;
 };
 
-const AuthProvider: React.FC<AuthProviderPRops> = ({ children }) => {
+const AuthProvider: React.FC<AuthProviderPRops> = ({ }) => {
     const [ user, setUser ] = useState<User | null>(null);
     const [ loading, setLoading ] = useState(true);
     const [ userName, setUserName ] = useState<string>('');
@@ -88,5 +89,37 @@ const AuthProvider: React.FC<AuthProviderPRops> = ({ children }) => {
 
     const updatePass = (password: string) => {
         return updatePassword(auth.currentUser, password);
-    }
+    };
+
+    useEffect(() => {
+        const unsubcribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+            setLoading(false) 
+        });
+
+
+        return () => {
+            unsubcribe();
+        };
+    }, []);
+
+    const values: AuthContextProps = {
+        user,
+        signup,
+        login,
+        logout,
+        resetPassword,
+        goggleSignIn,
+        facebookSiginIn,
+        updateName,
+        updateMail,
+        updatePass,
+        userName,
+        setUserName,
+        loading,
+    };
+
+    return (
+        <AuthContext.Provider value={values}>      
+    )
 }
