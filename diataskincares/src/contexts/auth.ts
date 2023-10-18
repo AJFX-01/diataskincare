@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useState } from "react";
 import { 
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
@@ -17,14 +17,11 @@ import {
    
 } from "firebase/auth";
 
-import { auth } from "../firebase/firebase";
+import { auth } from "../firebase/firebase"; 
 
-type AuthContextProps = {
-    children: React.ReactNode;
-};
 
-type AuthProviderPRops = {
-    user: User  | null;
+interface AuthContextProps {
+    user: User  | null | undefined;
     loading: boolean;
     userName: string;
     signup: (email: string, password: string) => Promise<UserCredential>;
@@ -42,7 +39,7 @@ type AuthProviderPRops = {
 
 const AuthContext = React.createContext<AuthContextProps | undefined>(undefined);
 
-const useAuth = () => {
+export const useAuth = () => {
     const context = useContext(AuthContext);
     if (context === undefined) {
         throw new Error('useAuth must be used within an AuthProvider'); 
@@ -50,8 +47,12 @@ const useAuth = () => {
     return context;
 };
 
-const AuthProvider: React.FC<AuthProviderPRops> = ({ }) => {
-    const [ user, setUser ] = useState<User | null>(null);
+interface AuthProviderProps {
+    children: ReactNode;
+}
+
+ export const AuthProvider = ({ children }: AuthProviderProps) => {
+    const [ user, setUser ] = useState<User | null | undefined>(null);
     const [ loading, setLoading ] = useState(true);
     const [ userName, setUserName ] = useState<string>('');
 
@@ -80,15 +81,15 @@ const AuthProvider: React.FC<AuthProviderPRops> = ({ }) => {
     }
 
     const updateName = (displayName: string) => {
-        return updateProfile(auth.currentUser, { displayName });
+        return updateProfile(auth.currentUser as User, { displayName });
     };
 
     const updateMail = (newmail: string) => {
-        return updateEmail(auth.currentUser, newmail);
+        return updateEmail(auth.currentUser as User, newmail);
     };
 
     const updatePass = (password: string) => {
-        return updatePassword(auth.currentUser, password);
+        return updatePassword(auth.currentUser as User, password);
     };
 
     useEffect(() => {
@@ -118,8 +119,7 @@ const AuthProvider: React.FC<AuthProviderPRops> = ({ }) => {
         setUserName,
         loading,
     };
+    
+ }
 
-    return (
-        <AuthContext.Provider value={values}>      
-    )
-}
+   export default AuthProvider; 
