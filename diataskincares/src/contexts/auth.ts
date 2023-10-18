@@ -14,6 +14,7 @@ import {
     UserCredential,
     Auth,
     User,
+   
 } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
@@ -61,5 +62,23 @@ const AuthProvider: React.FC<AuthProviderPRops> = ({ children }) => {
     };
     const  logout = () => {
         return signOut(auth); 
+    };
+
+    const resetPassword = (email: string) =>  {
+        return sendPasswordResetEmail(auth, email);
+    };
+
+    const goggleSignIn = () => {
+        const goggleAuthProvider = new GoogleAuthProvider();
+        return signInWithPopup(auth, goggleAuthProvider);
     }
+
+    const facebookSiginIn = () => {
+        const facebookAuthProvider = new FacebookAuthProvider();
+        return signInWithPopup(auth, facebookAuthProvider)
+    }
+
+    const updateName = (displayName: string) => {
+        return updateProfile(auth.currentUser, { displayName });
+    };
 }
