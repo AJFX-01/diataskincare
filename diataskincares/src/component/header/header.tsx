@@ -14,7 +14,7 @@ import {
   REMOVE_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import { onAuthStateChanged } from "firebase/auth";
-import ShowOnLogin from "../hiddenLinks/ShowOnLogin";
+import ShowOnLogin from "../hiddenLinks/HiddenIiNK";
 import ShowOnLogout from "../hiddenLinks/ShowOnLogout";
 import AdminOnlyLink from "../adminOnlyRoute/AdminOnlyLink";
 import {
