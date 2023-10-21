@@ -36,7 +36,7 @@ const activeLink = (isActive: boolean ) => isActive ? `${styles.active}` : "";
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPage, setScrollPage] = useState(false);
-  const [displayName, setDisplayName] = useState<string | undefined>(undefined);
+  const [displayName, setDisplayName] = useState<string | null>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {logout, user } = useAuth();
@@ -71,8 +71,8 @@ function Header() {
       if (user) {
         if (user) {
           if (user.displayName === null ) {
-            const u1 = user.email.substring(0, user.email?.indexOf("@"));
-            const uName = u1.charAt(0).toUpperCase() + u1?.slice(1);
+            const u1 = user.email?.substring(0, user.email?.indexOf("@"));
+            const uName = u1?.charAt(0).toUpperCase() + u1?.slice(1);
             setDisplayName(uName);
           } else {
             setDisplayName(user.displayName);
