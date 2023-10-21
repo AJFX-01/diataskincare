@@ -37,3 +37,18 @@ interface AdminOnlyLinkProps {
     children: ReactNode;
 }
 
+function AdminOnlyLink({ children } : AdminOnlyLinkProps) {
+    const userEmail = useSelector(selectEmail);
+
+    if (
+        userEmail === process.env.REACT_APP_ADMIN_EMAIL ||
+        userEmail === process.env.REACT_APP_ADMIN_EMAIL_TWO ||
+        userEmail === process.env.REACT_APP_ADMIN_EMAIL_THREE
+    ) {
+        return <>{children}</>;
+    } else {
+        return null;
+    }
+}
+
+export { AdminOnlyRoute, AdminOnlyLink };
