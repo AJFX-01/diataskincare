@@ -47,8 +47,39 @@ function Header() {
   const saved = useSelector(selectSavedItems);
 
   const cart = (
-    <span className={styles.cart}></span>
-  )
+    <span className={styles.cart}>
+      <Link to="/cart">
+        <RiShoppingCartLine size={20} className={styles["cart-icon"]}/>
+        <p>{cartTotalQty}</p>
+      </Link>
+    </span>
+  );
+
+  useEffect(() => {
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  }, [dispatch]);
+
+  const fixNavbar = () => {
+    if (window.scrollY > 50) {
+      setScrollPage(true);
+    } else {
+      setScrollPage(false);
+    }
+  };
+  
+  window.addEventListener("scroll", fixNavbar);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user => {
+      if (user) {
+        if (user) {
+          if (user.displayName === null ) {
+            
+          }
+        }
+      }
+    }))
+  })
 
 } 
  
