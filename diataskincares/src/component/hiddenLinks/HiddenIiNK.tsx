@@ -27,3 +27,4 @@ export const ShowOnLogout: React.FC<ShowOnLogoutProps> = ({ children }) => {
     return <>{children}</>; // Use fragment to return children
   }
   return null
+}
