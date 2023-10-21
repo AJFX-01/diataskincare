@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { NavLink, useNavigate,  Link } from "react-router-dom"
-import {
-    RiMenuAddLine,
-    RiShoppingCartLine,
-    VscEyeClosed,
-  } from "react-icons/all";
+import { VscEyeClosed } from "react-icons/vsc";
+import { FaUserCircle, FaRegEnvelope, FaUserTimes } from "react-icons/fa";
+import { RiMenuAddLine, RiShoppingCartLine, } from "react-icons/ri";
 import styles from "./header.module.scss";
 import { useAuth } from "../../contexts/auth";
 import { auth } from "../../firebase/firebase";
@@ -14,8 +12,7 @@ import {
   REMOVE_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import { onAuthStateChanged } from "firebase/auth";
-import { ShowOnLogin } from "../hiddenLinks/HiddenIiNK";
-import { ShowOnLogout } from "../hiddenLinks/HiddenIiNK";
+import { ShowOnLogin, ShowOnLogout } from "../hiddenLinks/HiddenIiNK";
 import { AdminOnlyLink } from "../adminOnlyRoute/AdminOnlyLink";
 import {
   CALCULATE_TOTAL_QUANTITY,
@@ -39,7 +36,7 @@ const activeLink = (isActive: boolean ) => isActive ? `${styles.active}` : "";
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPage, setScrollPage] = useState(false);
-  const [displayName, setDisplayName] = useState<string | null>(null);
+  const [displayName, setDisplayName] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {logout, user } = useAuth();
@@ -74,8 +71,18 @@ function Header() {
       if (user) {
         if (user) {
           if (user.displayName === null ) {
-            
-          }
+            const u1 = user.email.substring(0, user.email?.indexOf("@"));
+            const uName = u1.charAt(0).toUpperCase() + u1?.slice(1);
+            setDisplayName(uName);
+          } else {
+            setDisplayName(user.displayName);
+          };
+          dispatch(SET_ACTIVE_USER({
+            email: user.email,
+            userID: user.uid,
+            userName: user.displayName || displayName,
+
+          }))
         }
       }
     }))
