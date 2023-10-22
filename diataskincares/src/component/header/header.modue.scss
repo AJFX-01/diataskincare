@@ -217,5 +217,38 @@
             }
           }
         }
-          
+        .cart {
+            display: block;
+            padding: 5px 0;
+            // border-bottom: 1px solid #333;
+            a {
+              color: #fff;
+              position: relative;
+              &:hover {
+                color: #c07d53;
+              }
+              p {
+                position: absolute;
+                top: -1rem;
+                left: 2rem;
+                font-weight: 500;
+                color: #fff;
+              }
+            }
+          }
+          .show-nav {
+            transform: translateX(0);
+          }
+          .hide-nav {
+            transform: translateX(-200%);
+          }
+          .menu-icon {
+            display: flex;
+            > * {
+              margin-left: 2rem;
+            }
+          }
+        }
+      }
+        
 }  
