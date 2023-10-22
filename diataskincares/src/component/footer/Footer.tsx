@@ -1,6 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IoIosHome, RiContactsBookUploadFill, RiLuggageCartFill, TiShoppingCart, HiSaveAs, IoNotifications, BiLogOut, FaUserMinus, BiLogIn, HiUserAdd } from 'react-icons/all';
+import { IoIosHome } from "react-icons/io";
+import { IoNotifications } from "react-icons/io5";
+import { HiSaveAs, HiUserAdd } from "react-icons/hi";
+import { BiLogOut, BiLogIn } from "react-icons/bi";
+import { FaUserMinus } from "react-icons/fa";
+import { TiShoppingCart } from "react-icons/ti";
+import { RiContactsBookUploadFill, RiLuggageCartFill } from "react-icons/ri";
 import { useAuth } from '../../contexts/auth';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../redux/slice/authSlice';
