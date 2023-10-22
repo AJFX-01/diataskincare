@@ -1,0 +1,60 @@
+.fixed {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    transition: all 0.5s;
+    z-index: 9;
+  }
+  
+  header {
+    width: 100%;
+    background-color: var(--dark-blue);
+    color: #fff;
+  
+    .header {
+      width: 100%;
+      height: 8rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+  
+    .logo a h3 {
+      width: 25%;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 700;
+      span {
+        color: #c07d53;
+      }
+    }
+  
+    nav {
+      width: 75%;
+      display: flex;
+      justify-content: space-between;
+      ul {
+        display: flex;
+        justify-content: space-between;
+        list-style: none;
+  
+        .logo-mobile {
+          display: none;
+        }
+  
+        li {
+          margin: 0 5px;
+          a {
+            color: #fff;
+            &:hover {
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+}  
