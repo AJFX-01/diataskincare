@@ -62,7 +62,14 @@ const Footer: React.FC = () => {
                             </li> 
                         </>
                     )}
-                    {}
+                    {!isLoggedIn ? (
+                        <>
+                           <li>
+                                <BiLogIn />
+                                <Link to='/login'>ohi</Link>
+                           </li> 
+                        </>
+                    )}
                 </div>
             </ul>
         </div>
