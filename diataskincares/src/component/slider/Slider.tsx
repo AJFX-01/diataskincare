@@ -46,4 +46,15 @@ const Slider = () => {
             }
         };
     }, [currentSlide, slideInterval, autoScroll]);
+
+    return (
+        <div className="slider">
+            <AiOutlineArrowLeft onClick={prevSlide} className="arrow prev" />
+            <AiOutlineArrowRight onClick={nextSlide} className="arrow next" />
+            {sliderData.map((slide: SliderItem, index: number) => (
+                <div key={index}
+                    className={index === currentSlide ? "slide current" : "slide"}></div>
+            ))}
+        </div>
+    )
 } 
