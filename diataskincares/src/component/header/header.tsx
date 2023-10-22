@@ -78,7 +78,7 @@ function Header() {
             setDisplayName(user.displayName);
           };
           dispatch(SET_ACTIVE_USER({
-            email: user.email,
+            email: user.email || "",
             userID: user.uid,
             userName: user.displayName || displayName,
 
