@@ -90,4 +90,23 @@
     top: 45%;
     transform: translateY(-50%);
     z-index: 2;
-  }   
+  }
+  
+  .arrow:hover {
+    background: #fff;
+  }
+  
+  .next {
+    right: 0.5rem;
+    color: #c07d53;
+  }
+  .prev {
+    left: 0.5rem;
+    color: #c07d53;
+  }
+  
+  hr {
+    height: 2px;
+    background: #fff;
+    width: 50%;
+  }  
