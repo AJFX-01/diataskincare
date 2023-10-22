@@ -61,8 +61,19 @@ const ReviewProducts: React.FC = () => {
             name: user?.displayName,
             productID: id,
             rate,
-            
+            review,
+            createdAt: Timestamp.now().toDate()
 
+        };
+
+        try {
+            await addDoc(collection(database, "Reviews"), reviewConfig );
+            toast.success("Your review has been submitted, thank you.");
+            setRate(0);
+            setReview("");
+            navigate("/order-history");
+        } catch (error) {
+            toast.error(error.message);
         }
     }
 }  
