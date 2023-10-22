@@ -17,14 +17,15 @@ export const ShowOnLogin: React.FC<ShowOnLoginProps> = ({ children }) => {
 };
 
 interface ShowOnLogoutProps {
-  children: ReactNode; // Define children prop as ReactNode
+  children: ReactNode;
+  className?: string; // Define children prop as ReactNode
 }
 
-export const ShowOnLogout: React.FC<ShowOnLogoutProps> = ({ children }) => {
+export const ShowOnLogout: React.FC<ShowOnLogoutProps> = ({ children, className }) => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   if (!isLoggedIn) {
-    return <>{children}</>; // Use fragment to return children
+    return <div className={className}>{children}</div> ; // Use fragment to return children
   }
   return null
 }

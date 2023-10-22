@@ -19,7 +19,7 @@ import {
   selectCartTotalQuantity,
   selectSavedItems,
 } from "../../redux/slice/cartSlice";
-import { subscribe } from "diagnostics_channel";
+
 
 
 const logo = (
@@ -32,7 +32,10 @@ const logo = (
   </div>
 );
 
-const activeLink = (isActive: boolean ) => isActive ? `${styles.active}` : "";
+// const activeLink = (isActive: boolean ) => isActive ? `${styles.active}` : "";
+const activeLink = ({ isActive, isPending }: { isActive: boolean; isPending: boolean; }) => {
+  return isActive ? `${styles.active}` : " ";
+};
 
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
@@ -178,11 +181,23 @@ function Header() {
                 </NavLink>
               </ShowOnLogin>
             </span>
+            {cart}
+            <ShowOnLogin>
+              <Link to="/delete-account">
+                <button className={styles.delete}>
+                  <FaUserTimes size={20} />
+                </button>
+              </Link>
+            </ShowOnLogin>
           </div>
         </nav>
+        <div className={styles["menu-icon"]}>
+          {cart}
+          <RiMenuAddLine size={28} onClick={toggleMenu} />
+        </div>
       </div>
     </header>
-  )
+  );
 
 } 
  
