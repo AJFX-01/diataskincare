@@ -44,4 +44,29 @@
       }
     }
   }
+ 
+  
+  @media (max-width: 550px) {
+    .range {
+      border-bottom: 0;
+    }
+    .range h2 {
+      font-size: 2rem;
+    }
+    .range h1 {
+      font-size: 3rem;
+    }
+    .range .range-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
+    .range .range-grid::-webkit-scrollbar {
+      display: none;
+    }
+    .range .range-grid .range-data .range-image img {
+      width: 80vw;
+    }
+  }
+  
   
