@@ -51,4 +51,15 @@
       font-weight: 700;
     }
   }
-  
+  @media (max-width: 500px) {
+    .footer ul span {
+      display: block;
+      margin-bottom: 1rem;
+      font-size: 2.1rem;
+    }
+    .footer ul .flex {
+      grid-template-columns: repeat(2, 1fr);
+      justify-items: baseline;
+      gap: 1rem;
+    }
+  }
