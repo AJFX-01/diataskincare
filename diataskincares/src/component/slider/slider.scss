@@ -28,4 +28,66 @@
   
   .slide img {
     height: 100%;
-  } 
+  }
+  .content {
+    position: absolute;
+    text-align: center;
+    top: 40rem;
+    left: 50%;
+    opacity: 0;
+    width: 50%;
+    padding: 3rem;
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    flex-direction: column;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    animation: slide-up 1s ease 0.5s;
+    animation-fill-mode: forwards;
+    h2 {
+      font-size: 3rem;
+    }
+  }
+  
+  @keyframes slide-up {
+    0% {
+      top: 23rem;
+    }
+    100% {
+      top: 17rem;
+    }
+  }
+  
+  @media screen and (max-width: 600px) {
+    .content {
+      width: 80%;
+    }
+  }
+  
+  .content > * {
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  
+  .current {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .current .content {
+    opacity: 1;
+  }
+  .arrow {
+    border: 2px solid #c07d53;
+    border-radius: 50%;
+    background: transparent;
+    color: #fff;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    z-index: 2;
+  }   
