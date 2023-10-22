@@ -23,7 +23,29 @@ const Footer: React.FC = () => {
     return (
         <div className={styles.footer}>
             <ul className='container'>
-                <span></span>
+                <span>Quick links</span>
+                <div className={styles.flex}>
+                    <li>
+                        <IoIosHome/>
+                        <Link to='/'>Home</Link>
+                    </li>
+                    <li>
+                        <RiContactsBookUploadFill />
+                        <Link to='/contact'>Contact</Link>
+                    </li>
+                    <li>
+                        <RiLuggageCartFill />
+                        <Link to='/order-history'>Orders</Link>
+                    </li>
+                    <li>
+                        <TiShoppingCart />
+                        <Link to='/cart'>Cart</Link>
+                    </li>
+                    <li>
+                        <HiSaveAs />
+                        <Link to='/saved-products'>Saved products</Link>
+                    </li>
+                </div>
             </ul>
         </div>
     )
