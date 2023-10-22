@@ -57,4 +57,52 @@
         }
       }
     }
+    .header-right {
+        display: flex;
+    
+        .cart a {
+          display: flex;
+          color: #fff;
+          position: relative;
+          &.active {
+            color: var(--color-danger);
+          }
+          p {
+            position: absolute;
+            top: -1rem;
+            right: -1rem;
+            font-weight: 500;
+            border-radius: 50%;
+          }
+        }
+    
+        .mode {
+          list-style: none;
+          margin-left: 1.3rem;
+          cursor: pointer;
+        }
+    
+        span {
+          margin: 0 5px;
+    
+          p {
+            color: #fff;
+          }
+        }
+    
+        .links a {
+          margin: 0 5px;
+          color: #fff;
+          &.active {
+            color: var(--color-danger);
+          }
+        }
+        .welcome {
+          color: #fff;
+          background: #c07d53;
+          padding: 0.5rem;
+          border-radius: 0.3rem;
+          &:hover {
+            color: #fff;
+          }
 }  
