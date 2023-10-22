@@ -80,11 +80,12 @@ function Header() {
           dispatch(SET_ACTIVE_USER({
             email: user.email || "",
             userID: user.uid,
-            userName: user.displayName || displayName,
-
-          }))
-        }
-      
+            userName: user.displayName || displayName || ""
+          }));
+        } else {
+          setDisplayName("");
+          dispatch(REMOVE_ACTIVE_USER());
+        }      
     }))
   })
 
