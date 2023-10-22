@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./range.module.scss";
+import { rangeData } from "./rangeDAta";
 
 interface RangeData {
     id: number;
