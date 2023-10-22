@@ -32,7 +32,7 @@ const logo = (
   </div>
 );
 
-const activeLink = (isActive: string ) => isActive ? `${styles.active}` : "";
+const activeLink = (isActive: boolean ) => isActive ? `${styles.active}` : "";
 
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
@@ -131,9 +131,54 @@ function Header() {
               </AdminOnlyLink>
             </li>
             <li>
-              <NavLink to="/" className={activeLink}></NavLink>
+              <NavLink to="/" className={activeLink}>
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact" className={activeLink}>
+                Contact Us
+              </NavLink>
             </li>
           </ul>
+          <div className={styles["header-right"]} onClick={hideMenu}>
+            <span className={styles.links}>
+              <ShowOnLogout>
+                <NavLink to="/login" className={activeLink}>
+                  ogin
+                </NavLink>
+              </ShowOnLogout>
+              <ShowOnLogin>
+                <a className={styles.welcome}>
+                  <FaUserCircle size={16} />
+                  &nbsp; Hi, {user?.displayName || displayName}
+                </a>
+              </ShowOnLogin>
+              <ShowOnLogout className={styles.flex}>
+                <NavLink to="/signup" className={activeLink}>
+                  Sign Up
+                </NavLink>
+              </ShowOnLogout>
+              <ShowOnLogin>
+                <NavLink to="/order-history" className={activeLink}>
+                  My orders
+                </NavLink>
+              </ShowOnLogin>
+              <NavLink to="/saved-products" className={activeLink}>
+                Saved<span style={{ color: "#c07d53" }}>({saved.length})</span>
+              </NavLink>
+              <ShowOnLogin>
+                <NavLink to="/" onClick={logoutUser}>
+                  Log out
+                </NavLink>
+              </ShowOnLogin>
+              <ShowOnLogin>
+                <NavLink to="/notifications" className={activeLink}>
+                  <FaRegEnvelope size={15} />
+                </NavLink>
+              </ShowOnLogin>
+            </span>
+          </div>
         </nav>
       </div>
     </header>
