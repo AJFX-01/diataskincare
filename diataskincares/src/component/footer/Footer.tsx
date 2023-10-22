@@ -66,12 +66,20 @@ const Footer: React.FC = () => {
                         <>
                            <li>
                                 <BiLogIn />
-                                <Link to='/login'>ohi</Link>
+                                <Link to='/login'>Login</Link>
+                           </li>
+                           <li>
+                                <HiUserAdd />
+                                <Link to="/signup">Sign up</Link>
                            </li> 
                         </>
-                    )}
+                    ) : null }
                 </div>
             </ul>
+            <div className={styles.copyright}>&copy; {year} All Rights Reserved</div>
         </div>
-    )
-}
+    );
+};
+
+
+export default Footer;
