@@ -26,7 +26,7 @@ const Slider = () => {
 
 
     const autoScroll : boolean = true;
-    let slideInterval: NodeJS.Timeout | null;
+    let slideInterval: NodeJS.Timeout | null = null;
     const intervalTime: number = 4000;
 
     useEffect(() => {
