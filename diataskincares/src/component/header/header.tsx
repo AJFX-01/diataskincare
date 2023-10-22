@@ -19,6 +19,7 @@ import {
   selectCartTotalQuantity,
   selectSavedItems,
 } from "../../redux/slice/cartSlice";
+import { subscribe } from "diagnostics_channel";
 
 
 const logo = (
@@ -31,7 +32,7 @@ const logo = (
   </div>
 );
 
-const activeLink = (isActive: boolean ) => isActive ? `${styles.active}` : "";
+const activeLink = (isActive: string ) => isActive ? `${styles.active}` : "";
 
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
@@ -67,7 +68,7 @@ function Header() {
   window.addEventListener("scroll", fixNavbar);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user => {
+    const unsubscribe = onAuthStateChanged(auth, (user)=> {
       if (user) {
         if (user.displayName === null ) {
           const atIndex = user.email?.indexOf("@");
@@ -86,8 +87,57 @@ function Header() {
           setDisplayName("");
           dispatch(REMOVE_ACTIVE_USER());
         }      
-    }))
-  })
+    });
+    return () => unsubscribe();
+  }, [dispatch, displayName]);
+
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
+  const hideMenu = () => {
+    setShowMenu(false);
+  };
+
+  const logoutUser =async () => {
+    await logout();
+    navigate("/");
+  };
+
+  return (
+    <header className={scrollPage ? `${styles.fixed}` : ""}>
+      <div className={styles.header}>
+        {logo}
+        <nav className={
+          showMenu ? `${styles["show-nav"]}` : `${styles["hide-menu"]}`
+        }>
+          <div className={  
+            showMenu 
+              ? `${styles["nav-wrapper"]} ${styles["show-nav-wrapper"]}` 
+              : `${styles["nav-wrapper"]}`
+            } onClick={hideMenu}>              
+          </div>
+          <ul onClick={hideMenu}>
+            <li className={styles["logo-mobile"]}>
+              {logo}
+              <VscEyeClosed size={22} color="#fff" />
+            </li>
+            <li>
+              <AdminOnlyLink>
+                <Link to="/admin/home">
+                  <button className="--btn --btn-primary">Admin</button>
+                </Link>
+              </AdminOnlyLink>
+            </li>
+            <li>
+              <NavLink to="/" className={activeLink}></NavLink>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  )
 
 } 
  
