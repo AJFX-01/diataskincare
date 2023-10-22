@@ -5,4 +5,16 @@ import "./slider.scss";
 import { Link } from "react-router-dom";
 
 
-intefcae
+interface SliderItem {
+    image: string;
+    heading: string;
+    desc: string;
+}
+
+
+const Slider = () => {
+    const [ currentSlide, setCurrentSlide ] = useState<number>(0);
+    const slideLength : number = sliderData.length;
+
+    
+} 
