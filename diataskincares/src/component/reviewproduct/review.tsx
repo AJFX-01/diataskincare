@@ -25,5 +25,44 @@ interface ReviewConfig {
 }
 
 const ReviewProducts: React.FC = () => {
-    
+    const [rate, setRate] = useState<number>(0);
+    const [review, setReview ] = useState<string>("");
+    const [error, setError] = useState<string | null>(null);
+    const [product, setProduct] = useState<any>(null);
+
+    const { id } = useParams();
+    const { user } = useAuth();
+    const { document } = useFetchDocument("Products", id);
+    const userID = useSelector(selectUserID);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setProduct(document);
+    }, [document]);
+
+    const submitReview = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (rate === 0) {
+            setError("Please give a star rating, star rating cannot be blank.");
+            window.setTimeout(() => setError(""), 5000);
+            return;
+        }
+        if (review === "") {
+            setError("You left the review blank, please enter something before submitting.");
+            window.setTimeout(() => setError(""), 5000);
+            return;
+        }
+
+        const today = new Date();
+        const date = today.toDateString();
+        const reviewConfig: ReviewConfig = {
+            userID,
+            name: user?.displayName,
+            productID: id,
+            rate,
+            
+
+        }
+    }
 }  
