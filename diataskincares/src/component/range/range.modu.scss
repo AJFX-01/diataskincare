@@ -1,0 +1,26 @@
+.range {
+    padding-top: 5rem;
+    border-bottom: 1px solid #888;
+    h2 {
+      text-align: left;
+      color: #c07d53;
+      margin-bottom: 2rem;
+    }
+    .range-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      .range-data {
+        position: relative;
+        .range-image {
+          position: relative;
+          &:after {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #000;
+            opacity: 0.5;
+          }
