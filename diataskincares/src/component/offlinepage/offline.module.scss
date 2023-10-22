@@ -1,1 +1,21 @@
-import React
+.offline {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+  
+    h1,
+    span {
+      color: #c07d53;
+    }
+    .icon {
+      font-size: 10rem;
+      color: #3c4448;
+    }
+    p {
+      color: #3c4448;
+      font-size: 2rem;
+    }
+  }
