@@ -17,3 +17,9 @@
       align-items: center;
     }
   }
+  @media (max-width: 420px) {
+    .info-box {
+      max-width: unset;
+      padding-top: 1rem;
+    }
+  }
