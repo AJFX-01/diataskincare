@@ -53,8 +53,21 @@ const Slider = () => {
             <AiOutlineArrowRight onClick={nextSlide} className="arrow next" />
             {sliderData.map((slide: SliderItem, index: number) => (
                 <div key={index}
-                    className={index === currentSlide ? "slide current" : "slide"}></div>
+                    className={index === currentSlide ? "slide current" : "slide"}>
+                        {index === currentSlide && (
+                            <>
+                                <img src={slide.image} alt={slide.heading} />
+                                <div className="content">
+                                    <h2>{slide.desc}</h2>
+                                    <hr/>
+                                    <h3>ALL PRODUCTS AFFORDABLE</h3>
+                                </div>
+                            </>
+                        )}
+                    </div>
             ))}
         </div>
-    )
+    );
 } 
+
+export default Slider;
