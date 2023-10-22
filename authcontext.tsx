@@ -78,7 +78,7 @@ export default function Header() {
         } else {
           setDisplayName(user.displayName);
         }
-        dispatch(
+        dispatch( 
           SET_ACTIVE_USER({
             email: user.email,
             userID: user.uid,
