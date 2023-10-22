@@ -45,6 +45,24 @@ const Footer: React.FC = () => {
                         <HiSaveAs />
                         <Link to='/saved-products'>Saved products</Link>
                     </li>
+
+                    {user && (
+                        <>
+                            <li>
+                                <IoNotifications />
+                                <Link to='/notifications'>Notifications</Link>
+                            </li>
+                            <li onClick={logoutUser}>
+                                <BiLogOut />
+                                <p>Logout</p>
+                            </li>
+                            <li>
+                                <FaUserMinus />
+                                <Link to='/delete-account'>Delete Account</Link>
+                            </li> 
+                        </>
+                    )}
+                    {}
                 </div>
             </ul>
         </div>
