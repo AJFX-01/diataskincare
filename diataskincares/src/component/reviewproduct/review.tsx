@@ -72,8 +72,8 @@ const ReviewProducts: React.FC = () => {
             setRate(0);
             setReview("");
             navigate("/order-history");
-        } catch (error) {
-            toast.error(error.message);
+        } catch ( error ) {
+            toast.error(error.message)
         }
-    }
+    };
 }  
