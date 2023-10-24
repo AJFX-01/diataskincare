@@ -87,7 +87,26 @@ const ReviewProducts: React.FC = () => {
                     </p>
                 </div>
                 <h2>Rate This Product</h2>
-                {}
+                {product === null ? (
+                    <img src={spinnerImg} alt="loading..."/>
+                ) : (
+                    <>
+                        <p>
+                            <b>Product name:</b> {product.name}
+                        </p>
+                        <img
+                            src={product.imageUrl}
+                            alt={product.name}
+                            style={{ width: "100px" }}
+                        />
+                    </>
+                )}
+
+                <Card cardClass={styles.card}>
+                    <form onSubmit={(e) => submitReview(e)}>
+                        {error && <p className="alert error"></p>}
+                    </form>
+                </Card>
             </div>
         </section>
     )
