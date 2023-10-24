@@ -104,7 +104,20 @@ const ReviewProducts: React.FC = () => {
 
                 <Card cardClass={styles.card}>
                     <form onSubmit={(e) => submitReview(e)}>
-                        {error && <p className="alert error"></p>}
+                        {error && <p className="alert error">{error}</p>}
+                        <label>Rating:</label>
+                        <StarsRating value={rate} onChange={(rate) => {
+                            setRate(rate);
+                        }} />
+                        <label>Review</label> 
+                        <textarea 
+                            value={review} 
+                            onChange={(e) => setReview(e.target.value)}
+                            cols={30} rows={10}>                                
+                        </textarea>
+                        <button type="submit" className="--btn --btn-primary --btn-block">
+                            Submit Review
+                        </button>
                     </form>
                 </Card>
             </div>
