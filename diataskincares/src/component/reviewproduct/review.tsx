@@ -76,4 +76,19 @@ const ReviewProducts: React.FC = () => {
             toast.error(error.message)
         }
     };
+
+
+    return (
+        <section>
+            <div className={`container ${styles.review}`}>
+                <div>
+                    <p onClick={() => navigate(-1)} style={{cursor : "pointer" }}>
+                        &larr; Go back
+                    </p>
+                </div>
+                <h2>Rate This Product</h2>
+                {}
+            </div>
+        </section>
+    )
 }  
