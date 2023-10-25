@@ -20,6 +20,18 @@ const CheckoutSummary: React.FC = () => {
     const subtotal = cartTotalAmount + deliveryFee;
 
     return(
-        
+        <div>
+            <h3>Checkout Summary</h3>
+            <div>
+               {cartItems.length === 0 ? (
+                <> 
+                    <p>No item in your cart.</p>
+                    <button className="--btn">
+                        <Link to="/products">Back To Shop</Link>
+                    </button>
+                </>
+               )} 
+            </div>
+        </div>
     )
 }
