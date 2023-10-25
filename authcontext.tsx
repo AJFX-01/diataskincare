@@ -1,16 +1,20 @@
-const CheckoutSummary = () => {
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { selectCartItems, selectCartTotalAmounts, selectCartTotalQuantity, selectDelieveryFee } from './yourSelectors'; // Import your actual selectors
+
+const CheckoutSummary: React.FC = () => {
   const cartItems = useSelector(selectCartItems);
   const cartTotalAmount = useSelector(selectCartTotalAmounts);
   const cartTotalQuantity = useSelector(selectCartTotalQuantity);
-  const delieveryFee = useSelector(selectDelieveryFee)
-  const subtotal = cartTotalAmount + delieveryFee
-  
+  const delieveryFee = useSelector(selectDelieveryFee);
+  const subtotal = cartTotalAmount + delieveryFee;
 
   return (
     <div>
       <h3>Checkout Summary</h3>
       <div>
-        {cartItems.lenght === 0 ? (
+        {cartItems.length === 0 ? (
           <>
             <p>No item in your cart.</p>
             <button className="--btn">
@@ -33,15 +37,15 @@ const CheckoutSummary = () => {
               const { id, name, price, cartQuantity } = item;
               return (
                 <Card key={id} cardClass={styles.card}>
-                  <h4>{name}</h4> 
+                  <h4>{name}</h4>
                   <p>Quantity: {cartQuantity}</p>
                   <p>Unit price: NGN {new Intl.NumberFormat().format(price)}</p>
                   <p>
-                    Set price:{" "}
+                    Set price:{' '}
                     NGN {new Intl.NumberFormat().format(price * cartQuantity)} (adding quantity)
                   </p>
                   <p>
-                    Total price to checkout: NGN {new Intl.NumberFormat().format(subtotal)} (Delievery fee included)
+                    Total price to checkout: NGN {new Intl.NumberFormat().format(subtotal)} (Delivery fee included)
                   </p>
                 </Card>
               );

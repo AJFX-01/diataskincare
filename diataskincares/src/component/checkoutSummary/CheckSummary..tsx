@@ -10,3 +10,16 @@ import { selectDelieveryFee } from "../../redux/slice/orderSlice";
 import Card from "../card/Card";
 import styles from "./checkoutSummary.module.scss";
 
+
+const CheckoutSummary: React.FC = () => {
+
+    const cartItems = useSelector(selectCartItems);
+    const cartTotalAmount = useSelector(selectCartTotalAmounts);
+    const cartTotalQuantity = useSelector(selectCartTotalQuantity);
+    const deliveryFee = useSelector(selectDelieveryFee);
+    const subtotal = cartTotalAmount + deliveryFee;
+
+    return(
+        
+    )
+}
