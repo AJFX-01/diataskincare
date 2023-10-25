@@ -47,12 +47,23 @@ const CheckoutSummary: React.FC = () => {
                         return (
                             <Card key={id} cardClass={styles.card}>
                                 <h4>{name}</h4>
+                                <p>Quantity: {cartQuantity}</p>
+                                <p>Unit price: NGN {new Intl.NumberFormat().format(price)}</p>
+                                <p>
+                                    Set Price: {" "}
+                                    NGN {new Intl.NumberFormat().format(price * cartQuantity)} (adding quantity)
+                                </p>
+                                <p>
+                                    Total price to checkout: NGN {new Intl.NumberFormat().format(subtotal)} (Delievery fee included)
+                                </p>
                             </Card>
-                        )
+                        );
                     })} 
                 </div>
                )} 
             </div>
         </div>
-    )
-}
+    );
+};
+
+export default CheckoutSummary;
