@@ -50,7 +50,7 @@ export const selectOrderHistory = (state : { orders: OrderState}) => state.order
 export const selectAddress = (state : { orderes : OrderState }) => state.orderes.addressHistory;
 export const selectTotal = (state : { orders : OrderState }) => state.orders.totalOrderAmount;
 export const selectSucessUrl = (state : { orders : OrderState }) => state.orders.successURL;
-export const selectDelievery = (state : { orders : OrderState }) => state.orders.deliveryFee;
+export const selectDelieveryFee = (state : { orders : OrderState }) => state.orders.deliveryFee;
 
 export default orderSlice.reducer;
 
