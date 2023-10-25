@@ -30,6 +30,27 @@ const CheckoutSummary: React.FC = () => {
                         <Link to="/products">Back To Shop</Link>
                     </button>
                 </>
+               ) : (
+                <div>
+                    <p>
+                        <b>{`Cart item(s) : ${cartTotalQuantity}`}</b>
+                    </p>
+                    <p>
+                        <b>{`Delivery Fee: NGN ${new Intl.NumberFormat().format(deliveryFee)}`}</b>
+                    </p>
+                    <div className={styles.text}>
+                        <h4>Subtotal:</h4>
+                        <h3>NGN {new Intl.NumberFormat().format(subtotal)}</h3>
+                    </div> 
+                    {cartItems.map((item) => {
+                        const {id, name, price, cartQuantity} = item;
+                        return (
+                            <Card key={id} cardClass={styles.card}>
+                                <h4>{name}</h4>
+                            </Card>
+                        )
+                    })} 
+                </div>
                )} 
             </div>
         </div>
