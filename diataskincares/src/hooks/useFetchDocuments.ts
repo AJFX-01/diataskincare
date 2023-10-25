@@ -22,7 +22,7 @@ export default function useFetchDocuments(collectionName: string, documentID: st
             
             
             if (docSnap.exists()) {
-                const obj: DocumentData = { id: documentID, ...docSnap.data() as };
+                const obj: DocumentData = { id: documentID, ...docSnap.data() };
                 setDocument(obj); 
             } else {
                 toast.error("Document not found", {

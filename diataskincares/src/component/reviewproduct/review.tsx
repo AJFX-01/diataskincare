@@ -15,9 +15,9 @@ import { useAuth } from "../../contexts/auth";
 
 
 interface ReviewConfig {
-    userID: string;
-    name: string;
-    productID: string;
+    userID: string;  
+    name: string;  
+    productID: string; 
     rate: number;
     review: string;
     reviewDate: string;
@@ -32,7 +32,7 @@ const ReviewProducts: React.FC = () => {
 
     const { id } = useParams();
     const { user } = useAuth();
-    const { document } = useFetchDocument("Products", id);
+    const { document } = id ? useFetchDocument("Products", id) : { document: null };
     const userID = useSelector(selectUserID);
     const navigate = useNavigate();
 
@@ -52,16 +52,17 @@ const ReviewProducts: React.FC = () => {
             setError("You left the review blank, please enter something before submitting.");
             window.setTimeout(() => setError(""), 5000);
             return;
-        }
+        } 
 
         const today = new Date();
         const date = today.toDateString();
         const reviewConfig: ReviewConfig = {
-            userID,
-            name: user?.displayName,
-            productID: id,
+            userID : userID || "",
+            name: user?.displayName || "",
+            productID: id || "",
             rate,
             review,
+            reviewDate: date,
             createdAt: Timestamp.now().toDate()
 
         };
@@ -72,7 +73,7 @@ const ReviewProducts: React.FC = () => {
             setRate(0);
             setReview("");
             navigate("/order-history");
-        } catch ( error ) {
+        } catch ( error: any ) {
             toast.error(error.message)
         }
     };
@@ -106,8 +107,8 @@ const ReviewProducts: React.FC = () => {
                     <form onSubmit={(e) => submitReview(e)}>
                         {error && <p className="alert error">{error}</p>}
                         <label>Rating:</label>
-                        <StarsRating value={rate} onChange={(rate) => {
-                            setRate(rate);
+                        <StarsRating value={rate || 0 } onChange={(rate) => {
+                            if (rate != undefined) setRate(rate);
                         }} />
                         <label>Review</label> 
                         <textarea 
@@ -124,3 +125,5 @@ const ReviewProducts: React.FC = () => {
         </section>
     )
 }  
+
+export default ReviewProducts;
