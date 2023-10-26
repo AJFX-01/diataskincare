@@ -20,3 +20,26 @@ import { selectShippingAddress } from "../../redux/slice/checkoutSlice";
 import { useNavigate } from "react-router-dom";
 import { database } from "../../firebase/firebase";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
+
+
+const CheckoutForm : React.FC = () => {
+
+    const [message, setMessage] = useState<string  | null>(null);
+    const [isLoading,setIsLoading ] = useState<boolean>(false);
+    const stripe = useStripe();
+    const elements = useElements();
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const userID = useSelector(selectUserID);
+    const userEmail = useSelector(selectEmail);
+    const cartItems = useSelector(selectCartItems);
+    const cartTotalAmount = useSelector(selectCartTotalAmounts);
+    const shippingAddress = useSelector(selectShippingAddress);
+
+    return()
+
+}
+
+export default CheckoutForm;
