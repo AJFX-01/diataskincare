@@ -20,6 +20,7 @@ import { selectShippingAddress } from "../../redux/slice/checkoutSlice";
 import { useNavigate } from "react-router-dom";
 import { database } from "../../firebase/firebase";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { URLSearchParams } from "url";
 
 
 const CheckoutForm : React.FC = () => {
@@ -37,6 +38,61 @@ const CheckoutForm : React.FC = () => {
     const cartItems = useSelector(selectCartItems);
     const cartTotalAmount = useSelector(selectCartTotalAmounts);
     const shippingAddress = useSelector(selectShippingAddress);
+
+
+    useEffect(() => {
+        if (!stripe) {
+            return;
+        }
+
+        const clientSecret = new URLSearchParams(window.location.search).get(
+            "payment_intent_client_secret"
+        );
+
+        if (!clientSecret) {
+            return;
+        }
+    }, [stripe]);
+
+    // save order to Order History
+    const saveOrder = async () => {
+        const today = new Date();
+        const date = today.toDateString();
+        const time = today.toLocaleDateString();
+
+        const orderConfig = {
+            userID,
+            userEmail,
+            orderDate: date,
+            orderTime: time,
+            orderAmount: cartTotalAmount,
+            orderStatus: "Order Placed.....",
+            cartItems,
+            shippingAddress,
+            createAt: Timestamp.now().toDate() 
+        };
+
+        try {
+            await addDoc(collection(database, "Orders"),  orderConfig);
+            dispatch(CLEAR_CART());
+            navigate("/checkkout-success");
+        } catch (error: any) {
+            toast.error(error.message);
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setMessage(null);
+
+        if (!stripe || !elements) {
+            return;
+        }
+
+        setIsLoading(true);
+
+        const 
+    }
 
     return()
 
