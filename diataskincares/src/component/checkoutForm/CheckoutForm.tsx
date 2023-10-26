@@ -99,6 +99,12 @@ const CheckoutForm : React.FC = () => {
             },
             redirect: "if_required",
         });
+
+        if (confirmPayment.error) {
+            setMessage(confirmPayment.error.message);
+            setIsLoading(false);
+            return;
+        }
     }
 
     return()
