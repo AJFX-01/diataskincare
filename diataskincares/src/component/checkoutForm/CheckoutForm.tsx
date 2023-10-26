@@ -141,6 +141,7 @@ const CheckoutForm : React.FC = () => {
                                     ) : ("Pay Now")}
                                 </span>
                             </button>
+                            {message && <div id={styles["payment-message"]}>{message}</div>}
                         </Card>
                     </div>
                 </form>
