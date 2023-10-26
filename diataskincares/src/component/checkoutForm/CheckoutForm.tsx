@@ -91,7 +91,14 @@ const CheckoutForm : React.FC = () => {
 
         setIsLoading(true);
 
-        const 
+        const confirmPayment = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+                // Make sure to change this ater
+                return_url: "http://localhost:3000/checkout-success",
+            },
+            redirect: "if_required",
+        });
     }
 
     return()
