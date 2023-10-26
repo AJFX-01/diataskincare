@@ -123,14 +123,24 @@ const CheckoutForm : React.FC = () => {
             <div className={`container ${styles.checkkout}`}>
                 <h2>Checkout</h2>
                 <form onSubmit={handleSubmit}>
-                    <div>
+                    <div> 
                         <Card cardClass={styles.card}>
                             <CheckoutSummary/>
                         </Card>
                     </div>
                     <div>
                         <Card cardClass={`${styles.card} ${styles.pay}`}>
-                            
+                            <h3>Stripe Checkout</h3>
+                            <PaymentElement id={styles["payment-element"]} />
+                            <button disabled={isLoading || !stripe || !elements } id="submit" className={styles.button}>
+                                <span id="button-text">
+                                    {isLoading ? (
+                                        <img src={spinnerImg} alt="loading..."
+                                            style={{ width: "20px "}}
+                                        />
+                                    ) : ("Pay Now")}
+                                </span>
+                            </button>
                         </Card>
                     </div>
                 </form>
