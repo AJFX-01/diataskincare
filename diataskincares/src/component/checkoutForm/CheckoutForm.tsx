@@ -147,8 +147,8 @@ const CheckoutForm : React.FC = () => {
                 </form>
             </div>
         </section>
-     )
+     );
 
-}
+};
 
 export default CheckoutForm;
