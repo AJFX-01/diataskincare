@@ -152,3 +152,41 @@ const CheckoutForm: React.FC = () => {
 };
 
 export default CheckoutForm;
+// Inside your useEffect
+useEffect(() => {
+    if (!stripe) {
+      return;
+    }
+  
+    const clientSecret = new URLSearchParams(window.location.search).get(
+      "payment_intent_client_secret"
+    );
+  
+    if (!clientSecret) {
+      return;
+    }
+  
+    // Now, you are sure that clientSecret is not undefined
+    setMessage(null);
+  }, [stripe]);
+  
+  const confirmPayment = await stripe.confirmPayment({
+    elements,
+    confirmParams: {
+      // Make sure to change this to your payment completion page
+      return_url: "http://localhost:3000/checkout-success",
+    },
+    redirect: "if_required",
+  });
+  
+  if (confirmPayment.error) {
+    setMessage(confirmPayment.error.message);
+    setIsLoading(false);
+  } else if (confirmPayment.paymentIntent) {
+    if (confirmPayment.paymentIntent.status === "succeeded") {
+      setIsLoading(false);
+      toast.success("Payment successful");
+      saveOrder();
+    }
+  }
+  

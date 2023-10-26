@@ -52,6 +52,8 @@ const CheckoutForm : React.FC = () => {
         if (!clientSecret) {
             return;
         }
+
+        setMessage(null);
     }, [stripe]);
 
     // save order to Order History
@@ -101,13 +103,13 @@ const CheckoutForm : React.FC = () => {
         });
 
         if (confirmPayment.error) {
-            setMessage(confirmPayment.error.message);
+            setMessage(confirmPayment.error.message || null);
             setIsLoading(false);
             return;
         }
 
         if (confirmPayment.paymentIntent) {
-            if (confirmPayment.paymentIntent.status === "success") {
+            if (confirmPayment.paymentIntent.status === "succeeded") {
                 setIsLoading(false);
                 toast.success("Payment successful");
                 saveOrder();
