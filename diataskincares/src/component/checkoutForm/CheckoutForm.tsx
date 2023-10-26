@@ -105,9 +105,38 @@ const CheckoutForm : React.FC = () => {
             setIsLoading(false);
             return;
         }
-    }
 
-    return()
+        if (confirmPayment.paymentIntent) {
+            if (confirmPayment.paymentIntent.status === "success") {
+                setIsLoading(false);
+                toast.success("Payment successful");
+                saveOrder();
+            }
+            
+        }
+
+
+    };
+
+    return(
+        <section>
+            <div className={`container ${styles.checkkout}`}>
+                <h2>Checkout</h2>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <Card cardClass={styles.card}>
+                            <CheckoutSummary/>
+                        </Card>
+                    </div>
+                    <div>
+                        <Card cardClass={`${styles.card} ${styles.pay}`}>
+                            
+                        </Card>
+                    </div>
+                </form>
+            </div>
+        </section>
+     )
 
 }
 
