@@ -35,6 +35,6 @@ function CheckForm(props: CheckoutFormProps) {
   }, [stripe]);
 
   const saveOrder = () => {
-    
-  }
+    console.log('Order saved');
+  };
 }
