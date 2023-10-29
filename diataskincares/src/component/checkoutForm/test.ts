@@ -37,4 +37,24 @@ function CheckForm(props: CheckoutFormProps) {
   const saveOrder = () => {
     console.log('Order saved');
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMessage(null);
+
+
+    if(!stripe || !elements ) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    const confirmPayment = await stripe.confirmPayment({
+      elements,
+      confirmParams:{ 
+        return_url: 'http://localhost:3000/checkout-success',
+      },
+      redirect: 'if_required',
+    }) 
+  }
 }
