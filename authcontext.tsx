@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface RedirectSuccessProps {
-  // Define your props here if needed
+  message?: string; // Define the message prop as an optional string
 }
 
 const RedirectSuccess: React.FC<RedirectSuccessProps> = (props) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState<string>(
+    props.message ||
     "Permission denied, this page's contents will only be rendered after a purchase."
   );
 
