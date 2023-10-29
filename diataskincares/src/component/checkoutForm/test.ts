@@ -55,6 +55,22 @@ function CheckForm(props: CheckoutFormProps) {
         return_url: 'http://localhost:3000/checkout-success',
       },
       redirect: 'if_required',
-    }) 
+    })
+    .then((result) => {
+      if (result.error ) {
+        toast.error(result.error.message);
+        setMessage(result.error.message);
+      }
+
+      if (result.paymentIntent) {
+        if (result.paymentIntent.status === 'succeeded') {
+          setIsLoading(false);
+          toast.success('Payment Successful');
+          saveOrder();
+        }
+      }
+    });
+    
+    setIsLoading(false);
   }
 }
