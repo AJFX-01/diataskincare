@@ -12,6 +12,20 @@ import ProductFilter from "./productFiter/ProductFilter";
 import ProductList from "./productList/ProductList";
 import Spinner from "../../assets/spinner.jpg";
 
+// const convertCollectionDataToProduct = (collectionData: CollectionData[]): Product[] => {
+//     return collectionData.map((data: CollectionData) => {
+//       // Perform the conversion here
+//       return {
+//         id: data.id,
+//         name: data.name,
+//         price: data.price,
+//         description: data.description,
+//         imageUrl: data.imageUrl,
+//         // Map other properties as needed
+//       };
+//     });
+//   };
+
 const Product: React.FC = () => {
     const { data , loading } = useFetchcollection("Products");
     const dispatch = useDispatch();

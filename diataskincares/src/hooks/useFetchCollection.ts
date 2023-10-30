@@ -5,8 +5,9 @@ import { toast } from "react-toastify";
 
 
 
-interface Product {
-    id: number;
+
+interface CollectionData {
+    id: string;
     name: string;
     price: number;
     description : string;
@@ -14,8 +15,7 @@ interface Product {
     brand: string;
     Avaliability : string;
     category: string;
-};
-
+}
 
 const useFetchCollection = (collectionName : string ) => {
     const [data, setData] = useState<CollectionData[]>([]);
@@ -28,7 +28,7 @@ const useFetchCollection = (collectionName : string ) => {
                 const docRef = collection(database, collectionName);
                 const q = query(docRef, orderBy("createdAt", "desc"));
                 onSnapshot(q, (snapshot) => {
-                    const allData: CollectionData[] = [];
+                    let allData: CollectionData[] = [];
                     snapshot.docs.forEach((doc: QueryDocumentSnapshot) => {
                         allData.push({ id: doc.id, ...doc.data()});
                     });
