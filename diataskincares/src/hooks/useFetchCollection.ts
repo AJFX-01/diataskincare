@@ -3,10 +3,19 @@ import { useEffect, useState } from "react";
 import { database } from "../firebase/firebase";
 import { toast } from "react-toastify";
 
-interface CollectionData {
-    id: string;
-    [key: string ]: any;
-}
+
+
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    description : string;
+    imageUrl: string;
+    brand: string;
+    Avaliability : string;
+    category: string;
+};
+
 
 const useFetchCollection = (collectionName : string ) => {
     const [data, setData] = useState<CollectionData[]>([]);
