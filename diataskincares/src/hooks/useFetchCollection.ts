@@ -2,14 +2,13 @@ import { collection, onSnapshot, orderBy, query, QueryDocumentSnapshot } from "f
 import { useEffect, useState } from "react";
 import { database } from "../firebase/firebase";
 import { toast } from "react-toastify";
-import { Collection } from "typescript";
 
 interface CollectionData {
     id: string;
     [key: string ]: any;
 }
 
-const useFetchCollection = (collection.name : string ) => {
+const useFetchCollection = (collectionName : string ) => {
     const [data, setData] = useState<CollectionData[]>([]);
     const [loading , setLoading] = useState<boolean>(false);
 
@@ -27,7 +26,7 @@ const useFetchCollection = (collection.name : string ) => {
                     setData(allData);
                     setLoading(false);
                 });
-            } catch (error) {
+            } catch (error : any) {
                 setLoading(false);
                 toast.error(error.message);
             }
