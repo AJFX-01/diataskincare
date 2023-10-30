@@ -13,7 +13,7 @@ import { FILTER_BY_SEARCH,
 
 interface Product {
     name: string;
-    id: number;
+    id: string;
     category: string;
     price: number;
     brand: string;

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface Product {
     name : string;
-    id: number;
+    id: string;
     category : string;
     price: number;
     brand: string;

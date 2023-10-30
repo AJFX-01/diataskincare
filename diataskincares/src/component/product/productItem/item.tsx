@@ -9,7 +9,7 @@ import { ADD_TO_CART, CALCULATE_TOTAL_QUANTITY } from '../../../redux/slice/cart
 
 interface ProductItemType {
     name : string;
-    id: number;
+    id: string;
     price : number;
     description : string;
     imageUrl : string;

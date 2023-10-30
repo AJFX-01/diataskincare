@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import Item from "../../component/product/productItem/item";
 
 interface Product {
-    id: number;
+    id: string;
     name: string;
     price: number;
     description : string;
