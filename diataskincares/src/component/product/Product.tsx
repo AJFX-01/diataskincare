@@ -32,6 +32,11 @@ const Product: React.FC = () => {
             })
         );
     }, [dispatch, data]);
+
+
+    return (
+        
+    )
 }
 
 
