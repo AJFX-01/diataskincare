@@ -10,10 +10,10 @@ interface CollectionData {
     id: string;
     name: string;
     price: number;
-    description : string;
+    description: string;
     imageUrl: string;
     brand: string;
-    Avaliability : string;
+    Avaliability: string;
     category: string;
 }
 
@@ -28,10 +28,16 @@ const useFetchCollection = (collectionName : string ) => {
                 const docRef = collection(database, collectionName);
                 const q = query(docRef, orderBy("createdAt", "desc"));
                 onSnapshot(q, (snapshot) => {
-                    let allData: CollectionData[] = [];
-                    snapshot.docs.forEach((doc: QueryDocumentSnapshot) => {
-                        allData.push({ id: doc.id, ...doc.data()});
-                    });
+                    const allData: CollectionData[] = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({
+                        id: doc.id,
+                        name: doc.data().name,
+                        price: doc.data().price,
+                        description: doc.data().description,
+                        imageUrl: doc.data().imageUrl,
+                        brand: doc.data().brand,
+                        Avaliability: doc.data().Availability,
+                        category: doc.data().category,
+                    }));
                     setData(allData);
                     setLoading(false);
                 });
