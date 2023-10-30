@@ -36,7 +36,41 @@ const Product: React.FC = () => {
 
     return (
         <section className={styles.section}>
-            <h2 style={{textAlign: 'center', padding'3rem 0', color: '#c07d53'}}>Explore our products</h2>
+            <h2 style={{textAlign: 'center', padding:'3rem 0', color: '#c07d53'}}>Explore our products</h2>
+            <div className={`container ${styles.product}`}>
+                <aside className={
+                    showFilter ? `${styles.filter} ${styles.show}` : `${styles.filter}`
+                }>
+                    {loading ? null : (
+                        <ProductFilter showFilter={showFilter}
+                            setShowFilter={setShowFilter}/>
+                    )}
+                </aside>
+                <div className={styles.content}>
+                    {loading ? (
+                        <img src={Spinner}
+                        alt="spinner"
+                        style={{ width: "50px"}}
+                        className="--center-all"  
+                        />   
+                    ) : (
+                        <ProductList products={products} />
+                    )}
+                    <div className={styles.icon}
+                        onClick={() => setShowFilter(!showFilter)} 
+                    >
+                        &nbsp; {" "}
+                        {products.length ? (
+                            <> 
+                                <FaCogs size={20} color="#c07d53" />
+                                <p>
+                                    <b>{ showFilter ? "Hide Filter" : "Show Filter"}</b>
+                                </p>
+                            </>
+                         ) : null }
+                    </div>    
+                </div>
+            </div>
         </section>
     );
 }
