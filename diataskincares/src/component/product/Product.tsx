@@ -8,6 +8,7 @@ import {
   STORE_PRODUCTS,
 } from "../../redux/slice/productSlice";
 import styles from "./product.module.scss";
-import ProductFilter from "./productFilter/ProductFilter";
+import ProductFilter from "./productFiter/ProductFilter";
 import ProductList from "./productList/ProductList";
 import Spinner from "../../assets/spinner.jpg";
+
