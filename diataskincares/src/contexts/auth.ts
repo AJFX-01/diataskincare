@@ -119,6 +119,12 @@ interface AuthProviderProps {
         setUserName,
         loading,
     };
+
+    return (
+        <AuthContext.Provider value={values}>
+            {children}
+        </AuthContext.Provider>
+    ); 
     
  }
 
