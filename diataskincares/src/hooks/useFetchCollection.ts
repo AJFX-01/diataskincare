@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 
 type CollectionData = {
-    id: string;
+    id:string;
     [key: string]: any;
     // name: string;
     // price: number;
@@ -56,36 +56,7 @@ type CollectionData = {
 
 //     return { data, loading };
 // };
-const useFetchCollection = <T extends CollectionData>(collectionName: string): T[] => {
-    const [data, setData] = useState<T[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-  
-    useEffect(() => {
-      const getCollection = async () => {
-        setLoading(true);
-        try {
-          const docRef = collection(database, collectionName);
-          const q = query(docRef, orderBy("createdAt", "desc"));
-  
-          const snapshot = await getDocs(q);
-          const allData: T[] = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-  
-          setData(allData);
-          setLoading(false);
-        } catch (error: any) {
-          setLoading(false);
-          toast.error(error.message);
-        }
-      };
-  
-      getCollection();
-    }, [collection]);
-  
-    return { data, loading };
-  };
+
 
 export default useFetchCollection;
 
