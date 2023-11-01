@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useFetchcollection from "../../hooks/useFetchCollection";
 import {
   GET_PRICE_RANGE,
+  Product,
   selectProducts,
   STORE_PRODUCTS,
 } from "../../redux/slice/productSlice";
@@ -11,12 +12,23 @@ import styles from "./product.module.scss";
 import ProductFilter from "./productFiter/ProductFilter";
 import ProductList from "./productList/ProductList";
 import Spinner from "../../assets/spinner.jpg";
-import { Product } from "../../redux/slice/productSlice";
+
 
 
 
 const Product: React.FC = () => {
-    const { data , loading } = useFetchcollection<Product>("Products");
+
+    type products = {
+    id: string;
+    name: string;
+    price: number;
+    description: string;
+    imageUrl: string;
+    brand: string;
+    Availability: string; // Corrected the typo in "Availability"
+    category: string;
+};
+    const { data , loading } = useFetchcollection<products[]>();
     const dispatch = useDispatch();
     const products = useSelector(selectProducts);
     const [showFilter, setShowFilter] = useState<boolean>(false);
