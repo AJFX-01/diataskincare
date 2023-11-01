@@ -4,8 +4,8 @@ import { RenderResult } from '@testing-library/react';
 
 
 const renderWithContext = (ui: React.ReactElement, options?: RenderOptions): RenderResult =>
-    render(ui, { wrapper: AuthProvider, ...options });
-
+  render(ui, { wrapper: AuthProvider, ...options });
+    
 export * from '@testing-library/react';
 
 
