@@ -8,85 +8,50 @@ import { toast } from "react-toastify";
 
 type CollectionData = {
     id:string;
-    [key: string]: any;
-    // name: string;
-    // price: number;
-    // description: string;
-    // imageUrl: string;
-    // brand: string;
-    // Avaliability: string;
-    // category: string;
+    name: string;
+    price: number;
+    description: string;
+    imageUrl: string;
+    brand: string;
+    Avaliability: string;
+    category: string;
 }
 
-// const useFetchCollection = (collectionName : string ) : T[] => {
-//     const [data, setData] = useState<CollectionData[]>([]);
-//     const [loading , setLoading] = useState<boolean>(false);
-
-//     useEffect(() => {
-//         const getCollection = () => {
-//             setLoading(true);
-//             try {
-//                 const docRef = collection(database, collectionName);
-//                 const q = query(docRef, orderBy("createdAt", "desc"));
-//                 onSnapshot(q, (snapshot) => {
-//                     const allData: T[] = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({
-//                         id: doc.id,
-//                         ...doc.data()
-//                     }) as T);
-//                     // const allData: CollectionData[] = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({
-//                     //     id: doc.id,
-//                     //     name: doc.data().name,
-//                     //     price: doc.data().price,
-//                     //     description: doc.data().description,
-//                     //     imageUrl: doc.data().imageUrl,
-//                     //     brand: doc.data().brand,
-//                     //     Avaliability: doc.data().Availability,
-//                     //     category: doc.data().category,
-//                     // }));
-//                     setData(allData);
-//                     setLoading(false);
-//                 });
-//             } catch (error : any) {
-//                 setLoading(false);
-//                 toast.error(error.message);
-//             }
-//         };
-//         getCollection();
-//     }, [collection]);
-
-//     return { data, loading };
-// };
-const useFetchCollection = (collectionName: string): CollectionData[] => {
+const useFetchCollection = (collectionName : string ) => {
     const [data, setData] = useState<CollectionData[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-  
+    const [loading , setLoading] = useState<boolean>(false);
+
     useEffect(() => {
-      const getCollection = async () => {
-        setLoading(true);
-        try {
-          const docRef = collection(database, collectionName);
-          const q = query(docRef, orderBy("createdAt", "desc"));
-  
-          const snapshot = await getDocs(q);
-          const allData: CollectionData[] = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-  
-          setData(allData);
-          setLoading(false);
-        } catch (error: any) {
-          setLoading(false);
-          toast.error(error.message);
-        }
-      };
-  
-      getCollection();
+        const getCollection = () => {
+            setLoading(true);
+            try {
+                const docRef = collection(database, collectionName);
+                const q = query(docRef, orderBy("createdAt", "desc"));
+                onSnapshot(q, (snapshot) => {
+                   
+                    const allData: CollectionData[] = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({
+                        id: doc.id,
+                        name: doc.data().name,
+                        price: doc.data().price,
+                        description: doc.data().description,
+                        imageUrl: doc.data().imageUrl,
+                        brand: doc.data().brand,
+                        Avaliability: doc.data().Availability,
+                        category: doc.data().category,
+                    }));
+                    setData(allData);
+                    setLoading(false);
+                });
+            } catch (error : any) {
+                setLoading(false);
+                toast.error(error.message);
+            }
+        };
+        getCollection();
     }, [collection]);
-  
-    return { data;
-  };
-  
+
+    return { data, loading };
+};
 
 export default useFetchCollection;
 

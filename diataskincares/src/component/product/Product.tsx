@@ -19,7 +19,7 @@ import Spinner from "../../assets/spinner.jpg";
 
 const Product: React.FC = () => {
 
-    const { product , loading } = useFetchcollection<Product>("Products");
+    const { data , loading } = useFetchcollection("Products");
     const dispatch = useDispatch();
     const products = useSelector(selectProducts);
     const [showFilter, setShowFilter] = useState<boolean>(false);
