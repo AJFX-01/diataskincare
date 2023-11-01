@@ -56,7 +56,37 @@ type CollectionData = {
 
 //     return { data, loading };
 // };
-
+const useFetchCollection = (collectionName: string): CollectionData[] => {
+    const [data, setData] = useState<CollectionData[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+  
+    useEffect(() => {
+      const getCollection = async () => {
+        setLoading(true);
+        try {
+          const docRef = collection(database, collectionName);
+          const q = query(docRef, orderBy("createdAt", "desc"));
+  
+          const snapshot = await getDocs(q);
+          const allData: CollectionData[] = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+  
+          setData(allData);
+          setLoading(false);
+        } catch (error: any) {
+          setLoading(false);
+          toast.error(error.message);
+        }
+      };
+  
+      getCollection();
+    }, [collection]);
+  
+    return { data;
+  };
+  
 
 export default useFetchCollection;
 
