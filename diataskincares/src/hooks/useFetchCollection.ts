@@ -8,13 +8,14 @@ import { toast } from "react-toastify";
 
 interface CollectionData {
     id: string;
-    name: string;
-    price: number;
-    description: string;
-    imageUrl: string;
-    brand: string;
-    Avaliability: string;
-    category: string;
+    [key: string]: any;
+    // name: string;
+    // price: number;
+    // description: string;
+    // imageUrl: string;
+    // brand: string;
+    // Avaliability: string;
+    // category: string;
 }
 
 const useFetchCollection = (collectionName : string ) => {
@@ -30,14 +31,18 @@ const useFetchCollection = (collectionName : string ) => {
                 onSnapshot(q, (snapshot) => {
                     const allData: CollectionData[] = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({
                         id: doc.id,
-                        name: doc.data().name,
-                        price: doc.data().price,
-                        description: doc.data().description,
-                        imageUrl: doc.data().imageUrl,
-                        brand: doc.data().brand,
-                        Avaliability: doc.data().Availability,
-                        category: doc.data().category,
-                    }));
+                        ...doc.data()
+                    }) as CollectionData);
+                    // const allData: CollectionData[] = snapshot.docs.map((doc: QueryDocumentSnapshot) => ({
+                    //     id: doc.id,
+                    //     name: doc.data().name,
+                    //     price: doc.data().price,
+                    //     description: doc.data().description,
+                    //     imageUrl: doc.data().imageUrl,
+                    //     brand: doc.data().brand,
+                    //     Avaliability: doc.data().Availability,
+                    //     category: doc.data().category,
+                    // }));
                     setData(allData);
                     setLoading(false);
                 });

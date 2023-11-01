@@ -12,6 +12,7 @@ import ProductFilter from "./productFiter/ProductFilter";
 import ProductList from "./productList/ProductList";
 import Spinner from "../../assets/spinner.jpg";
 
+
 // const convertCollectionDataToProduct = (collectionData: CollectionData[]): Product[] => {
 //     return collectionData.map((data: CollectionData) => {
 //       // Perform the conversion here
@@ -27,7 +28,7 @@ import Spinner from "../../assets/spinner.jpg";
 //   };
 
 const Product: React.FC = () => {
-    const { data , loading } = useFetchcollection("Products");
+    const { data , loading } = useFetchcollection<CollectionData>("Products");
     const dispatch = useDispatch();
     const products = useSelector(selectProducts);
     const [showFilter, setShowFilter] = useState<boolean>(false);
