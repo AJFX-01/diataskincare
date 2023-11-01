@@ -11,11 +11,12 @@ import styles from "./product.module.scss";
 import ProductFilter from "./productFiter/ProductFilter";
 import ProductList from "./productList/ProductList";
 import Spinner from "../../assets/spinner.jpg";
+import { Product } from "../../redux/slice/productSlice";
 
 
 
 const Product: React.FC = () => {
-    const { data , loading } = useFetchcollection<CollectionData>("Products");
+    const { data , loading } = useFetchcollection<Product>("Products");
     const dispatch = useDispatch();
     const products = useSelector(selectProducts);
     const [showFilter, setShowFilter] = useState<boolean>(false);
