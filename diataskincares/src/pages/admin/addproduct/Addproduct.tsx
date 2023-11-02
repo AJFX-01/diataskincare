@@ -25,5 +25,8 @@ import { BsIntersect } from "react-icons/bs";
 
 interface Product {
     id: string;
-    name: string
+    name: string;
+    price: string;
+    category: string;
+    Avaliability:
 }
