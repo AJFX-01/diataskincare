@@ -6,7 +6,7 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
-import { app, database, storage } from "../../../firebase/firebase";
+import { database, storage } from "../../../firebase/firebase";
 import styles from "./addProduct.module.scss";
 import { toast } from "react-toastify";
 import { 
@@ -15,7 +15,7 @@ import {
     doc, 
     setDoc,
     Timestamp,
-    getFirestore
+    
  } from "firebase/firestore";
 import Loader from "../../../component/loader/loader";
 import { useNavigate, useParams } from "react-router-dom";
@@ -65,7 +65,7 @@ const AddProduct: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
   const products = useSelector(selectProducts);
   const productEdit = id ? products.find((item) => item.id === id) : undefined;
-  const firestore = getFirestore(app)
+  
 
   const [product, setProduct] = useState<Product>(() => {
     if (id && productEdit) {
