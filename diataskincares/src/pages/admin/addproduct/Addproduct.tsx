@@ -24,9 +24,60 @@ import { BsIntersect } from "react-icons/bs";
 
 
 interface Product {
-    id: string;
+    imageURL: string;
     name: string;
     price: string;
     category: string;
-    Avaliability:
+    Avaliability: string;
+    brand: string;
+    count: string;
+    description: string;
 }
+
+const categories = [
+  { id: 1, name: "Body Cleanser" },
+  { id: 2, name: "Exfloliator"},
+  { id: 3 , name: "Face Lotion"},
+  { id: 4 , name:" Body Lotion"},
+  {id: 5, name:"Face Cleaner"}
+];
+
+const status = [
+  {id: 1, name: "In-stock"},
+  {id: 2, name: "Out-Of-Stock"}
+];
+
+const initialState: Product = {
+  name: "",
+  imageURL: "",
+  price: "",
+  category: "",
+  Avaliability: "",
+  brand: "",
+  count: "",
+  description: ""
+};
+
+const AddProduct: React.FC = () => {
+
+  const { id } = useParams<{ id: string}>();
+  const products = useSelector(selectProducts);\
+  const prodcutsEdit = products.find((item) => item.id === id);
+  const [product, setProduct] = useState<Product>(() => {
+    const newState = detectForm(id, { ...initialState}, prodcutsEdit);
+    return newState;
+  });
+
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error ,setError] = useState<string | false>(false);
+  const navigate = useNavigate();
+
+  function detectForm(id: string, arg1: Product, arg2: Product | undefined): Product {
+    if (id == "ADD") {
+      return arg1;
+    } else {
+      return arg2 || arg1;
+    }
+  } 
+} 
