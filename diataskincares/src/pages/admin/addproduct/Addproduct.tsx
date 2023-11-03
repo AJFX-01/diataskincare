@@ -81,7 +81,7 @@ const AddProduct: React.FC = () => {
   const [error ,setError] = useState<string | false>(false);
   const navigate = useNavigate();
 
-  function detectForm(id: string, arg1: Product, arg2: Product | undefined): Product {
+  function detectForm(id: string, arg1: any, arg2: any): any {
     if (id == "ADD") {
       return arg1;
     } else {
@@ -219,11 +219,11 @@ const AddProduct: React.FC = () => {
       {products && (
         <div className={styles.product}>
          <h2>
-         {String(detectForm(id, "Add New Product", "Edit Product"))}
+         {String(detectForm(id ?? "", "Add New Product", "Edit Product"))}
           </h2>
          <span>
           {String(detectForm(
-            id,
+            id ?? "",
             "Do not refresh this page, this would cause data to be unavaliable, but if for some reason it refreshes, leave this page and the data would be back, then you can proceed to edit this product.",""
           ))}
          </span>
@@ -349,7 +349,7 @@ const AddProduct: React.FC = () => {
                 required
               />
               <button className="--btn --btn-primary --btn-block">
-                {String(detectForm(id, "Save Product", "Edit Product"))}
+                {String(detectForm(id ?? "", "Save Product", "Edit Product"))}
               </button>
           </form>
          </Card>
