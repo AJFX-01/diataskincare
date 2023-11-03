@@ -145,8 +145,8 @@ const AddProduct: React.FC = () => {
         createdAt: Timestamp.now().toDate(),
       });
       setLoading(false);
-      toast.info("Product will be added (IF YOU ARE AN AUTHORIZED ADMIN, else it will fail to be added)"{
-        parseOnFocusLoss: false,
+      toast.info("Product will be added (IF YOU ARE AN AUTHORIZED ADMIN, else it will fail to be added)", {
+        pauseOnFocusLoss: false,
       });
       setProduct({ ...initialState });
       setUploadProgress(9);
