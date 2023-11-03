@@ -90,6 +90,25 @@ const AddProduct: React.FC = () => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
     
-    const storageRef = ref(storage, `DiataSkincares/${Date.now()}${file.name}`)
-  }
+    const storageRef = ref(storage, `DiataSkincares/${Date.now()}${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadProgress(progress);
+      },
+      (error) => {
+        toast.error("Image not added, only AJFX can add image to the database");
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setProduct({ ...product, imageURL: downloadURL});
+        });
+      }
+    );
+  };
+
+  
 } 
