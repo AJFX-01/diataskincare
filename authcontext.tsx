@@ -122,7 +122,7 @@ export default function AddProduct() {
       setError(
         "Since this product is in stock, the number of product available cannot be 0"
       );
-      window.setTimeout(() => setError(false), 10000);
+      window.setTimeout(() => setError(false), 10000)
       setLoading(false);
       return;
     }
