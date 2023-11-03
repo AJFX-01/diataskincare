@@ -4,12 +4,13 @@ import { createSlice } from '@reduxjs/toolkit';
 export type Product = {
     id: string;
     name: string;
-    price: number;
+    price: string;
     description : string;
     imageUrl: string;
     brand: string;
     Avaliability : string;
     category: string;
+    count: string;
 };
 
 type ProductState = {
@@ -39,7 +40,7 @@ const productSlice = createSlice({
            
            const priceArray: number[] = [];
            action.payload.products.forEach((product) => {
-            priceArray.push(product.price);
+            priceArray.push(parseInt(product.price));
            });
            const max = Math.max(...priceArray);
            const min = Math.min(...priceArray);

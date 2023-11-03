@@ -23,7 +23,7 @@ import { selectProducts } from "../../../redux/slice/productSlice";
 
 
 interface Product {
-    imageURL: string;
+    imageUrl: string;
     name: string;
     price: string;
     category: string;
@@ -49,7 +49,7 @@ const status = [
 const initialState: Product = {
   
   name: "",
-  imageURL: "",
+  imageUrl: "",
   price: "",
   category: "",
   Avaliability: "",
@@ -60,13 +60,18 @@ const initialState: Product = {
 
 const AddProduct: React.FC = () => {
 
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id?: string }>();
   const products = useSelector(selectProducts);
-  const prodcutsEdit = products.find((item) => item.id === id);
+  const productEdit = id ? products.find((item) => item.id === id) : undefined;
+
   const [product, setProduct] = useState<Product>(() => {
-    const newState = detectForm(id, { ...initialState}, prodcutsEdit);
-    return newState;
+    if (id && productEdit) {
+      return detectForm(id, { ...initialState }, productEdit);
+    } else {
+      return { ...initialState };
+    }
   });
+
 
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
@@ -104,7 +109,7 @@ const AddProduct: React.FC = () => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setProduct({ ...product, imageURL: downloadURL});
+          setProduct({ ...product, imageUrl: downloadURL});
         });
       }
     );
@@ -136,7 +141,7 @@ const AddProduct: React.FC = () => {
       addDoc(collectionRef, {
         Avaliability: product.Avaliability,
         name: product.name, 
-        imageURL: product.imageURL,
+        imageURL: product.imageUrl,
         price: parseFloat(product.price),
         category: product.category,
         count: parseFloat(product.count),
@@ -161,8 +166,8 @@ const AddProduct: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (product.imageURL !== prodcutsEdit?.imageUrl) {
-      const storageRef = ref(storage, prodcutsEdit?.imageUrl);
+    if (product.imageUrl !== productEdit?.imageUrl) {
+      const storageRef = ref(storage, productEdit?.imageUrl);
       deleteObject(storageRef);
     }
 
@@ -185,13 +190,13 @@ const AddProduct: React.FC = () => {
       setDoc(docRef, {
         Availability: product.Avaliability,
         name: product.name,
-        imageUrl: product.imageURL,
+        imageUrl: product.imageUrl,
         price: parseFloat(product.price),
         category: product.category,
         brand: product.brand,
         count: parseFloat(product.count),
         description: product.description,
-        createdAt: prodcutsEdit?.createdAt,
+        createdAt: productEdit?.createdAt,
         editedAt: Timestamp.now().toDate(),
       })
     }
