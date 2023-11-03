@@ -200,7 +200,7 @@ const AddProduct: React.FC = () => {
         editedAt: Timestamp.now().toDate(),
       })
     }
-  }
+  };
 
   return(
    <>
