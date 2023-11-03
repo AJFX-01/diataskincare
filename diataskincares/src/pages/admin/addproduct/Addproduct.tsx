@@ -301,6 +301,39 @@ const AddProduct: React.FC = () => {
                   </option>
                 ))}
               </select>
+              <label>Number of product available:</label>
+              <input
+                type="number"
+                placeholder="The number available in stock (e.g 3)"
+                value={product && product.count}
+                name="count"
+                onChange={(e) => handleInputChange(e)}
+                required
+              />
+              {error && (
+                <p
+                  style={{
+                    color: "red",
+                    fontWeight: 700,
+                    paddingBottom: "2rem",
+                  }}
+                >
+                  {error}
+                </p>
+              )}
+              <label>Product Description:</label>
+              <textarea
+                name="description"
+                placeholder="Describe this product"
+                value={product && product.description}
+                onChange={(e) => handleInputChange(e)}
+                cols={30}
+                rows={10}
+                required
+              />
+              <button className="--btn --btn-primary --btn-block">
+                {detectForm(id, "Save Product", "Edit Product")}
+              </button>
           </form>
          </Card>
         </div>
