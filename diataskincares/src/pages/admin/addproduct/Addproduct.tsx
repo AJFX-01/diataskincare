@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../../component/card/Card";
 import {
   ref,
@@ -39,7 +39,7 @@ const categories = [
   { id: 2, name: "Exfloliator"},
   { id: 3 , name: "Face Lotion"},
   { id: 4 , name:" Body Lotion"},
-  {id: 5, name:"Face Cleaner"}
+  { id: 5, name:"Face Cleaner"}
 ];
 
 const status = [
@@ -48,6 +48,7 @@ const status = [
 ];
 
 const initialState: Product = {
+  
   name: "",
   imageURL: "",
   price: "",
@@ -60,7 +61,7 @@ const initialState: Product = {
 
 const AddProduct: React.FC = () => {
 
-  const { id } = useParams<{ id: string}>();
+  const { id } = useParams<{ id: string }>();
   const products = useSelector(selectProducts);
   const prodcutsEdit = products.find((item) => item.id === id);
   const [product, setProduct] = useState<Product>(() => {
@@ -99,7 +100,7 @@ const AddProduct: React.FC = () => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setUploadProgress(progress);
       },
-      (error) => {
+      (error : any) => {
         toast.error("Image not added, only AJFX can add image to the database");
       },
       () => {
@@ -109,5 +110,30 @@ const AddProduct: React.FC = () => {
       }
     );
   };
+
+  const addProductToDatabase = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if(parseInt(product.count) < 0) {
+      setError("Product avaliable cannot be less than 0");
+      window.setTimeout(() => setError(false), 7000);
+      setLoading(false);
+      return;
+    }
+
+    if (product.Avaliability === "In-stock" && parseInt(product.count) <= 0) {
+      setError(
+        "Since this product is in stock, the number of product available cannot be 0"
+      );
+      window.setTimeout(() => setError(false), 1000);
+      setLoading(false);
+      return;
+    }
+  }
+
+  return(
+    <div></div>
+  )
 
 } 
