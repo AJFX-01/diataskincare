@@ -215,7 +215,24 @@ const AddProduct: React.FC = () => {
             Product Name:
           </label>
           <form onSubmit={{detectForm(id, addProductToDatabase, editProductInDatabase)}}>
-
+            <input
+              type="text"
+              placeholder="Product Name"
+              value={product && product.name}
+              name="name"
+              onChange={(e) => handleInputChange(e)}
+              required
+            />
+            <label>Product Image:</label>
+            <Card cardClass={styles.group}>
+              {uploadProgress === 0 ? null : (
+                <div className={styles.progress}>
+                  <div className={styles["progress-bar"]}
+                    style={{ width: `${uploadProgress}%`}}>
+                  </div>
+                </div>
+              )}
+            </Card>
           </form>
          </Card>
         </div>
