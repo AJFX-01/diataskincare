@@ -154,11 +154,33 @@ const AddProduct: React.FC = () => {
     } catch (errror) {
       toast.error("Products not added, only AJFX can added products to datase");
       setLoading(false);
+      return;
     }
   };
 
   return(
-    <div></div>
+   <>
+      {loading && <Loader />}
+      {products && (
+        <div className={styles.product}>
+         <h2>{detectForm(id, "Add New Product", "Edit Product")}</h2>
+         <span>
+          {detectForm(
+            id,
+            "Do not refresh this page, this would cause data to be unavaliable, but if for some reason it refreshes, leave this page and the data would be back, then you can proceed to edit this product."
+          )}
+         </span>
+         <Card cardClass={styles.card}>
+          <label style={{ fontSize: "1.4rem", fontWeight: 500 }}>
+            Product Name:
+          </label>
+          <form onSubmit={{detectForm(id, addProductToDatabase, editProductInDatabase)}}>
+            
+          </form>
+         </Card>
+        </div>
+      )}
+   </>
   )
 
 } 
