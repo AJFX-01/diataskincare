@@ -229,9 +229,20 @@ const AddProduct: React.FC = () => {
                 <div className={styles.progress}>
                   <div className={styles["progress-bar"]}
                     style={{ width: `${uploadProgress}%`}}>
+                      {uploadProgress < 100
+                        ? `Uploading ${uploadProgress}%`
+                        : `Upload Complete ${uploadProgress}%`}
                   </div>
                 </div>
               )}
+
+              <input 
+                type="file"
+                accept="image/*"
+                placeholder="Product image"
+                name="image"
+                onChange={(e) => handleImageChange(e)}
+              />
             </Card>
           </form>
          </Card>
