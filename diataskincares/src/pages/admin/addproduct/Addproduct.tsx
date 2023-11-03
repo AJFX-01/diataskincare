@@ -130,7 +130,32 @@ const AddProduct: React.FC = () => {
       setLoading(false);
       return;
     }
-  }
+
+
+    try {
+      const collectionRef = collection(database, "Products");
+      addDoc(collectionRef, {
+        Avaliability: product.Avaliability,
+        name: product.name, 
+        imageURL: product.imageURL,
+        price: parseFloat(product.price),
+        category: product.category,
+        count: parseFloat(product.count),
+        description: product.description,
+        createdAt: Timestamp.now().toDate(),
+      });
+      setLoading(false);
+      toast.info("Product will be added (IF YOU ARE AN AUTHORIZED ADMIN, else it will fail to be added)"{
+        parseOnFocusLoss: false,
+      });
+      setProduct({ ...initialState });
+      setUploadProgress(9);
+      navigate("/admin/all-products");
+    } catch (errror) {
+      toast.error("Products not added, only AJFX can added products to datase");
+      setLoading(false);
+    }
+  };
 
   return(
     <div></div>
