@@ -6,14 +6,16 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
-import { database, storage } from "../../../firebase/firebase";
+import { app, database, storage } from "../../../firebase/firebase";
 import styles from "./addProduct.module.scss";
 import { toast } from "react-toastify";
-import { addDoc, 
+import { 
+    addDoc, 
     collection, 
     doc, 
     setDoc,
-    Timestamp
+    Timestamp,
+    getFirestore
  } from "firebase/firestore";
 import Loader from "../../../component/loader/loader";
 import { useNavigate, useParams } from "react-router-dom";
@@ -63,6 +65,7 @@ const AddProduct: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
   const products = useSelector(selectProducts);
   const productEdit = id ? products.find((item) => item.id === id) : undefined;
+  const firestore = getFirestore(app)
 
   const [product, setProduct] = useState<Product>(() => {
     if (id && productEdit) {
@@ -198,7 +201,15 @@ const AddProduct: React.FC = () => {
         description: product.description,
         createdAt: productEdit?.createdAt,
         editedAt: Timestamp.now().toDate(),
-      })
+      });
+      setLoading(false);
+      toast.info("Product will be edited (IF YOU ARE AN AUTHORIZED ADMIN, else it will reverse and not be edited)");
+      navigate("/admin/all-products");
+    } catch (error : any) {
+      toast.error(error.message, {
+        pauseOnFocusLoss: false,
+      });
+      setLoading(false);
     }
   };
 
