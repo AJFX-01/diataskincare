@@ -79,5 +79,17 @@ const AddProduct: React.FC = () => {
     } else {
       return arg2 || arg1;
     }
-  } 
+  } ;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value} = e.target;
+    setProduct{{ ...product, [name]: value}};
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    
+    const storageRef = ref(storage, `DiataSkincares/${Date.now()}${file.name}`)
+  }
 } 
