@@ -61,7 +61,7 @@ const initialState: Product = {
 const AddProduct: React.FC = () => {
 
   const { id } = useParams<{ id: string}>();
-  const products = useSelector(selectProducts);\
+  const products = useSelector(selectProducts);
   const prodcutsEdit = products.find((item) => item.id === id);
   const [product, setProduct] = useState<Product>(() => {
     const newState = detectForm(id, { ...initialState}, prodcutsEdit);
@@ -83,7 +83,7 @@ const AddProduct: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value} = e.target;
-    setProduct{{ ...product, [name]: value}};
+    setProduct({ ...product, [name]: value });
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,5 +110,4 @@ const AddProduct: React.FC = () => {
     );
   };
 
-  
 } 
