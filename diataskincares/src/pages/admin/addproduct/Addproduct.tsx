@@ -93,7 +93,15 @@ const AddProduct: React.FC = () => {
     const { name, value} = e.target;
     setProduct({ ...product, [name]: value });
   };
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setProduct({ ...product, [name]: value });
+  };
 
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setProduct({ ...product, [name]: value });
+  };
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
@@ -282,7 +290,7 @@ const AddProduct: React.FC = () => {
               name="category"
               required
               value={product && product.category}
-              onChange={(e) => handleInputChange(e)}
+              onChange={(e) => handleSelectChange(e)}
             >
               <option value="" disabled>
                 --choose product category--
@@ -307,7 +315,7 @@ const AddProduct: React.FC = () => {
                 name="availability"
                 required
                 value={(product && product.Avaliability) || ""}
-                onChange={(e) => handleInputChange(e)}
+                onChange={(e) => handleSelectChange(e)}
               >
                 <option value="" disabled>
                   --choose availability status--
@@ -343,7 +351,7 @@ const AddProduct: React.FC = () => {
                 name="description"
                 placeholder="Describe this product"
                 value={product && product.description}
-                onChange={(e) => handleInputChange(e)}
+                onChange={(e) => handleTextareaChange(e)}
                 cols={30}
                 rows={10}
                 required
