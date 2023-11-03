@@ -158,6 +158,46 @@ const AddProduct: React.FC = () => {
     }
   };
 
+  const editProductInDatabase = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (product.imageURL !== prodcutsEdit?.imageUrl) {
+      const storageRef = ref(storage, prodcutsEdit?.imageUrl);
+      deleteObject(storageRef);
+    }
+
+    if (parseInt(product.count) < 0) {
+      setError("Product avaliable cannot be less than 0");
+      window.setTimeout(() => setError(false), 7000);
+      setLoading(false);
+      return;
+    }
+
+    if (product.Avaliability === "Out of stock" && parseInt(product.count) > 0) {
+      setError("Since this product is out of stock, the number of product available has to be 0");
+      window.setTimeout(() => setError(false), 1000);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const docRef = doc(database, "Products", id);
+      setDoc(docRef, {
+        Availability: product.Avaliability,
+        name: product.name,
+        imageUrl: product.imageURL,
+        price: parseFloat(product.price),
+        category: product.category,
+        brand: product.brand,
+        count: parseFloat(product.count),
+        description: product.description,
+        createdAt: prodcutsEdit?.createdAt,
+        editedAt: Timestamp.now().toDate(),
+      })
+    }
+  }
+
   return(
    <>
       {loading && <Loader />}
@@ -175,7 +215,7 @@ const AddProduct: React.FC = () => {
             Product Name:
           </label>
           <form onSubmit={{detectForm(id, addProductToDatabase, editProductInDatabase)}}>
-            
+
           </form>
          </Card>
         </div>
