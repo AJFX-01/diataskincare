@@ -243,7 +243,64 @@ const AddProduct: React.FC = () => {
                 name="image"
                 onChange={(e) => handleImageChange(e)}
               />
+              {product && product.imageURL === "" ? null : (
+                <input 
+                  type="text"
+                  name="imageURL"
+                  disabled
+                  placeholder="Image Url:"
+                  value={product && product.imageURL}
+                />
+              )}
             </Card>
+            <label>Product Price:</label>
+            <input 
+              type="text"
+              placeholder="Produxct Price"
+              value={product && product.price}
+              onChange={(e) => handleInputChange(e)}
+            />
+            <label>Choose product category:</label>
+            <select 
+              name="category"
+              required
+              value={product && product.category}
+              onChange={(e) => handleInputChange(e)}
+            >
+              <option value="" disabled>
+                --choose product category--
+              </option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.name}>
+                    {category.name}
+                  </option>
+                ))}
+            </select>
+            <label>Product Company/Brand:</label>
+              <input
+                type="text"
+                placeholder="Product Brand (e.g Nike)"
+                value={product && product.brand}
+                name="brand"
+                onChange={(e) => handleInputChange(e)}
+                required
+              />
+              <label>Select availability status:</label>
+              <select
+                name="availability"
+                required
+                value={(product && product.Avaliability) || ""}
+                onChange={(e) => handleInputChange(e)}
+              >
+                <option value="" disabled>
+                  --choose availability status--
+                </option>
+                {status.map((stat) => (
+                  <option key={stat.id} value={stat.name}>
+                    {stat.name}
+                  </option>
+                ))}
+              </select>
           </form>
          </Card>
         </div>
