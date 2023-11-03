@@ -218,18 +218,20 @@ const AddProduct: React.FC = () => {
       {loading && <Loader />}
       {products && (
         <div className={styles.product}>
-         <h2>{detectForm(id, "Add New Product", "Edit Product")}</h2>
+         <h2>
+         {String(detectForm(id, "Add New Product", "Edit Product"))}
+          </h2>
          <span>
-          {detectForm(
+          {String(detectForm(
             id,
-            "Do not refresh this page, this would cause data to be unavaliable, but if for some reason it refreshes, leave this page and the data would be back, then you can proceed to edit this product."
-          )}
+            "Do not refresh this page, this would cause data to be unavaliable, but if for some reason it refreshes, leave this page and the data would be back, then you can proceed to edit this product.",""
+          ))}
          </span>
          <Card cardClass={styles.card}>
           <label style={{ fontSize: "1.4rem", fontWeight: 500 }}>
             Product Name:
           </label>
-          <form onSubmit={{detectForm(id, addProductToDatabase, editProductInDatabase)}}>
+          <form onSubmit={id === "ADD" ? addProductToDatabase : editProductInDatabase}>
             <input
               type="text"
               placeholder="Product Name"
@@ -258,13 +260,13 @@ const AddProduct: React.FC = () => {
                 name="image"
                 onChange={(e) => handleImageChange(e)}
               />
-              {product && product.imageURL === "" ? null : (
+              {product && product.imageUrl === "" ? null : (
                 <input 
                   type="text"
                   name="imageURL"
                   disabled
                   placeholder="Image Url:"
-                  value={product && product.imageURL}
+                  value={product && product.imageUrl}
                 />
               )}
             </Card>
@@ -347,7 +349,7 @@ const AddProduct: React.FC = () => {
                 required
               />
               <button className="--btn --btn-primary --btn-block">
-                {detectForm(id, "Save Product", "Edit Product")}
+                {String(detectForm(id, "Save Product", "Edit Product"))}
               </button>
           </form>
          </Card>
