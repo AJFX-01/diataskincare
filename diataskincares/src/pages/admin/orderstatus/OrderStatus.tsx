@@ -7,3 +7,31 @@ import Card from "../../../component/card/Card";
 import Loader from "../../../component/loader/loader";
 import styles from "./changeOrderStatus.module.scss";
 import { BsInfoCircle } from "react-icons/bs";
+
+
+interface Order {
+    id: string;
+    userID: string;
+    userEmail: DOMStringList;
+    orderDate: string;
+    ordertime: string;
+    orderAmount: number;
+    orderStatus: string;
+    orderNotifications: string;
+    cartItem: {
+        id: string;
+        name: string;
+        price: number;
+        imageUrl: string;
+        cartQuantity: number;
+    }[];
+    createdAt: Date;
+}
+
+const OrderStatus: React.FC<{ order: Order; id: string }> = ({ order, id}) => {
+
+
+    return ();
+};
+
+export default OrderStatus;
