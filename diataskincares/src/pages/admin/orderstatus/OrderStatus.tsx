@@ -29,7 +29,8 @@ interface Order {
 }
 
 const OrderStatus: React.FC<{ order: Order; id: string }> = ({ order, id}) => {
-
+    const [status, setStatus] = useState<string>("")
+    c
 
     return ();
 };
