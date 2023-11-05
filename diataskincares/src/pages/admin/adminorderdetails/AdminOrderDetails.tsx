@@ -48,9 +48,39 @@ interface Order {
         setOrder(document);
     }, [document]);
 
-    
+    if (!order) {
+      return <Loader />
+    }
 
-    return ()
+    return (
+      <>
+        <div className={styles.table}>
+          <div>
+            <Link to="/admin/orders">&larr; Back To Orders</Link>
+          </div>
+          <br />
+          <div className={styles.flex}>
+            <Card cardClass={styles.card}>
+              <h3 style={{ textDecoration : "underline"}}>Order Details</h3>
+              <>
+                <p>
+                  <b>Order Amount:</b> &nbsp;NGN(" ")
+                  {new Intl.NumberFormat().format(order.orderAmount)}
+                </p>
+                <p className={
+                    order.orderStatus === "Delivered"
+                      ? `${styles.delievered}`
+                      : `${styles.pending}`
+                  }
+                >
+                  
+                </p>
+              </>
+            </Card>
+          </div>
+        </div>
+      </>
+    )
   };
 
 
