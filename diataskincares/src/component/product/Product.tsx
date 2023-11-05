@@ -25,15 +25,28 @@ const Product: React.FC = () => {
 
 
     useEffect(() => {
+
+        const products = data.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            description: item.description,
+            imageUrl: item.imageUrl,
+            brand: item.brand,
+            Avaliability: item.Avaliability,
+            category: item.category,
+            count: item.count,
+        }));
+
         dispatch(
             STORE_PRODUCTS({
-                products: data,
+                products
             })
         );
 
         dispatch(
             GET_PRICE_RANGE({
-                products: data,
+                products
             })
         );
     }, [dispatch, data]);
