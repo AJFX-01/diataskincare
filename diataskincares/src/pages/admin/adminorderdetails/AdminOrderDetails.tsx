@@ -8,3 +8,22 @@ import { STORE_ADDRESS } from "../../../redux/slice/orderSlice";
 import useFetchCollection from "../../../hooks/useFetchCollection";
 import Card from "../../../component/card/Card";
 import Loader from "../../../component/loader/loader";
+
+
+
+interface Order {
+    id: string;
+    orderAmount: number;
+    orderStatus: string;
+    orderNotification: string;
+    userEmail: string;
+    cartItems: {
+      id: string;
+      name: string;
+      price: number;
+      imageUrl: string;
+      cartQuantity: number;
+    }[];
+  }
+
+  

@@ -185,7 +185,7 @@ const OrderDetails: React.FC = () => {
         <ChangeOrderStatus order={order} id={id} />
       </div>
     </>
-  );
+  );interface
 };
 
 export default OrderDetails;
