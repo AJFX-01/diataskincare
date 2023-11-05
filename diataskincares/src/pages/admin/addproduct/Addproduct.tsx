@@ -33,7 +33,7 @@ interface Product {
     brand: string;
     count: string;
     description: string;
-    addedAt: Date | undefined
+    addedAt: Date | null;
 }
 
 const categories = [
@@ -59,12 +59,12 @@ const initialState: Product = {
   brand: "",
   count: "",
   description: "",
-  addedAt: undefined
+  addedAt: null,
 };
 
 const AddProduct: React.FC = () => {
 
-  const { id } = useParams<{ id?: string }>();
+  const { id } = useParams();
   const products = useSelector(selectProducts);
   const productEdit = id ? products.find((item) => item.id === id) : undefined;
   
@@ -83,13 +83,14 @@ const AddProduct: React.FC = () => {
   const [error ,setError] = useState<string | false>(false);
   const navigate = useNavigate();
 
-  function detectForm(id: string, arg1: any, arg2: any): any {
-    if (id == "ADD") {
+
+  function detectForm(id: string, arg1: any, arg2?: any): any {
+    if (id === "ADD") {
       return arg1;
     } else {
       return arg2 || arg1;
     }
-  } ;
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value} = e.target;
@@ -197,21 +198,33 @@ const AddProduct: React.FC = () => {
       setLoading(false);
       return;
     }
-
+    const PrdouctConfig = {
+      Availability: product.Avaliability,
+      name: product.name,
+      imageUrl: product.imageUrl,
+      price: parseFloat(product.price),
+      category: product.category,
+      brand: product.brand,
+      count: parseFloat(product.count),
+      description: product.description,
+      addedAt: product.addedAt,
+      editedAt: Timestamp.now().toDate(),
+    }
     try {
-      const docRef = doc(database, "Products", id);
-      setDoc(docRef, {
-        Availability: product.Avaliability,
-        name: product.name,
-        imageUrl: product.imageUrl,
-        price: parseFloat(product.price),
-        category: product.category,
-        brand: product.brand,
-        count: parseFloat(product.count),
-        description: product.description,
-        addedAt: productEdit?.addedAt,
-        editedAt: Timestamp.now().toDate(),
-      });
+      setDoc(doc(database, "Products", id), PrdouctConfig);
+      // const docRef = doc(database, "Products", id);
+      // setDoc(docRef, {
+      //   Availability: product.Avaliability,
+      //   name: product.name,
+      //   imageUrl: product.imageUrl,
+      //   price: parseFloat(product.price),
+      //   category: product.category,
+      //   brand: product.brand,
+      //   count: parseFloat(product.count),
+      //   description: product.description,
+      //   addedAt: product.addedAt,
+      //   editedAt: Timestamp.now().toDate(),
+      // });
       setLoading(false);
       toast.info("Product will be edited (IF YOU ARE AN AUTHORIZED ADMIN, else it will reverse and not be edited)");
       navigate("/admin/all-products");
