@@ -68,10 +68,69 @@ const OrderStatus: React.FC<{ order: Order; id: string }> = ({ order, id}) => {
 
         try {
             setDoc(doc(database, "Orders", id), orderConfig);
+
+            setIsLoading(false);
+            toast.success("Order status & notification changed successfully");
+            navigate("/admin/orders");
+        } catch (error : any) {
+            setIsLoading(false);
+            toast.error(error.message);
         }
-    }
+    };
     
-    return ();
+    return (
+        <>
+            {loading && <Loader />}
+
+            <div className={styles.status}>
+                <Card cardClass={styles.card}>
+                    {disable ? (
+                        <p className={styles["örder-alert"]}>
+                            <BsInfoCircle size={13} />
+                            &nbsp;  Product has been delivered, so you can't change its status.
+                        </p>
+                    ) : null}
+                    {!disable ? (
+                        <p className={styles["order-alert"]}>
+                            <BsInfoCircle size={13} />
+                            &nbsp; Only change status and notification to Delivered when you
+                            have confirmed that the user has received this product.
+                        </p>
+                    ) : null}
+                    <h4>Update Status</h4>
+                    <form onSubmit={(e) => editOrder(e, id)}>
+                        <span>
+                            <select 
+                                value={status}
+                                onChange={(e) => setStatus(e.target.value)}
+                                required
+                                disabled={disable}
+                            >
+                                <option value="" disabled>
+                                -- Choose one --
+                                </option>
+                                <option value="Order Placed...">Order Placed...</option>
+                                <option value="Processing...">Processing...</option>
+                                <option value="Shipped...">Shipped...</option>
+                                <option value="Delivered">Delivered</option>
+                            </select>
+                        </span>
+                        <br/>
+
+                        <span>
+                            <h4>
+                                Update Notification
+                                <br/>
+                                <select 
+                                    value={notif}
+                                    onChange={}></select>
+                            </h4>
+                        </span>
+                    </form>
+                </Card>
+            </div>
+        </>
+    );
 };
 
 export default OrderStatus;
