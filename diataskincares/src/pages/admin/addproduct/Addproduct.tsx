@@ -25,6 +25,7 @@ import { selectProducts } from "../../../redux/slice/productSlice";
 
 
 interface Product {
+    id: string;
     imageUrl: string;
     name: string;
     price: string;
@@ -50,7 +51,7 @@ const status = [
 ];
 
 const initialState: Product = {
-  
+  id: "",
   name: "",
   imageUrl: "",
   price: "",
@@ -153,6 +154,7 @@ const AddProduct: React.FC = () => {
     try {
       const collectionRef = collection(database, "Products");
       addDoc(collectionRef, {
+        id: product.id,
         Avaliability: product.Avaliability,
         name: product.name, 
         imageURL: product.imageUrl,
@@ -199,6 +201,7 @@ const AddProduct: React.FC = () => {
       return;
     }
     const PrdouctConfig = {
+      id: product.id,
       Availability: product.Avaliability,
       name: product.name,
       imageUrl: product.imageUrl,
