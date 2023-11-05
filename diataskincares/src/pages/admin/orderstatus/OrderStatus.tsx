@@ -123,9 +123,29 @@ const OrderStatus: React.FC<{ order: Order; id: string }> = ({ order, id}) => {
                                 <br/>
                                 <select 
                                     value={notif}
-                                    onChange={}></select>
+                                    onChange={(e) => setNotif(e.target.value)}
+                                    required
+                                    disabled={disable}
+                                >
+                                    <option value="" disabled>
+                                    -- Choose one --
+                                    </option>
+                                    <option value="Your order has been Placed.....">
+                                    Your order has been Placed.....
+                                    </option>
+                                    <option value="Your order has been changed to the status of PROCESSING...">
+                                    Your order has been changed to the status of PROCESSING...
+                                    </option>
+                                    <option value="Your order has been changed to the status of SHIPPED...">
+                                    Your order has been changed to the status of SHIPPED...
+                                    </option>
+                                    <option value="Your order has been changed to the status of DELIEVERED!">
+                                    Your order has been changed to the status of DELIEVERED!
+                                    </option> 
+                                </select>
                             </h4>
                         </span>
+                        <button></button>
                     </form>
                 </Card>
             </div>
