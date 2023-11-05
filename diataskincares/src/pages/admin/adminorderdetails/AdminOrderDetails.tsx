@@ -34,7 +34,15 @@ interface Order {
     const { data } = useFetchCollection("Shipping-Address");
     const filteredAddress = data.find(
         (address) => address.userEmail === order?.userEmail
-    )
+    );
+
+    useEffect(() => {
+        dispatch(STORE_ADDRESS(data));
+    }, [dispatch, data]);
+
+    useEffect(() => {
+        setOrder(document);
+    }, [document])
 
     return ()
   };
