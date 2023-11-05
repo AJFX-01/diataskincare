@@ -1,12 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
 
 interface Order {
     orderAmount : number;
     orderStatus: string;
 };
+
 interface OrderState {
     orderHistory : Order[];
-    addressHistory : any[];
+    addressHistory : Document[];
     totalOrderAmount : number | null;
     successURL : string;
     deliveryFee : 3000
@@ -14,7 +16,7 @@ interface OrderState {
 
 const initialState : OrderState = {
     orderHistory : [],
-    addressHistory : [],
+    addressHistory : [] as Document[],
     totalOrderAmount : null,
     successURL : "",
     deliveryFee : 3000,
@@ -33,10 +35,9 @@ const orderSlice = createSlice({
             const totalAmount = subTotalArray.reduce((curr, init) => curr + init, 0);
             state.totalOrderAmount = totalAmount;
         },
-        STORE_ADDRESS: (state, action : { payload : { addressHistory : any[] }}) => ({
-            ...state,
-            addressHistory : action.payload.addressHistory,
-        }),
+        STORE_ADDRESS: (state, action : PayloadAction<Document[]>) => {
+            state.addressHistory = action.payload;
+        },
         SAVE_SUCCESS_URL: (state, action : { payload : { successURL : string}}) => ({
             ...state,
             successURL : action.payload.successURL
