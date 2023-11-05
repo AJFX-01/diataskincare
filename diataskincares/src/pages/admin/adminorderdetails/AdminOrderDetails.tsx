@@ -46,7 +46,9 @@ interface Order {
 
     useEffect(() => {
         setOrder(document);
-    }, [document])
+    }, [document]);
+
+    
 
     return ()
   };
