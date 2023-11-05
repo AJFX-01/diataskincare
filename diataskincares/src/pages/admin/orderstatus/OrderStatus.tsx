@@ -145,7 +145,13 @@ const OrderStatus: React.FC<{ order: Order; id: string }> = ({ order, id}) => {
                                 </select>
                             </h4>
                         </span>
-                        <button></button>
+                        <button  
+                            type="submit" 
+                            className="--btn --btn-primary"
+                            disabled={disable}
+                            style={{ opacity : disable ? 0.6 : 1}}>
+                                Update Status & Notification
+                        </button>
                     </form>
                 </Card>
             </div>
