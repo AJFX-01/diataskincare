@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 type CollectionData = {
     id:string;
     name: string;
-    price: number;
+    price: string;
     description: string;
     imageUrl: string;
     brand: string;

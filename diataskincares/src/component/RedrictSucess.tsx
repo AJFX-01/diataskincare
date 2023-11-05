@@ -38,4 +38,4 @@ const RedirectSuccess: React.FC<RedirectSuccessProps> = (props) => {
     );
 }
 
-export default RedirectSuccess;88888888888888888888888      
+export default RedirectSuccess;     
