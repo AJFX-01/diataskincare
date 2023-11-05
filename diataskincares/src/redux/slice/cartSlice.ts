@@ -5,7 +5,7 @@ import Item from "../../component/product/productItem/item";
 interface Product {
     id: string;
     name: string;
-    price: number;
+    price: string;
     description : string;
     imageUrl : string;
 };
@@ -95,7 +95,7 @@ const cartSlice = createSlice({
         const subTotalArray: number[] = [];
         state.cartItems.map((item) => {
             const { price, cartQuantity } = item;
-            const cartItemAmount = price * cartQuantity;
+            const cartItemAmount = parseInt(price) * cartQuantity;
             return subTotalArray.push(cartItemAmount);
         });
         const totalAmount = subTotalArray.reduce((curr, init) => {

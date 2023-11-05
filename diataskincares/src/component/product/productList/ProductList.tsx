@@ -15,7 +15,7 @@ interface Product {
     name: string;
     id: string;
     category: string;
-    price: number;
+    price: string;
     brand: string;
     description: string; // Add these properties
     imageUrl: string; 

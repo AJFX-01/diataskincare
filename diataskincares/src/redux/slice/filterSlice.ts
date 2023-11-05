@@ -4,7 +4,7 @@ interface Product {
     name : string;
     id: string;
     category : string;
-    price: number;
+    price: string;
     brand: string;
     description : string;
     imageUrl : string;
@@ -43,10 +43,10 @@ const filterSlice = createSlice({
                     tempProducts = products;
                     break;
                 case "lowest-price":
-                    tempProducts = products.slice().sort((a, b) => a.price - b.price);
+                    tempProducts = products.slice().sort((a, b) => parseInt(a.price) - parseInt(b.price));
                     break;
                 case "highest_price":
-                    tempProducts = products.slice().sort((a, b) => b.price - a.price);
+                    tempProducts = products.slice().sort((a, b) => parseInt( b.price) - parseInt(a.price));
                     break;
                 case "a-z":
                     tempProducts = products.slice().sort((a, b) => a.name.localeCompare(b.name));
@@ -98,7 +98,7 @@ const filterSlice = createSlice({
 
             let tempProducts: Product[] = [];
 
-            tempProducts = products.filter((product) => product.price <= price);
+            tempProducts = products.filter((product) => parseInt(product.price) <= price);
 
             state.filteredProducts = tempProducts;
         },
