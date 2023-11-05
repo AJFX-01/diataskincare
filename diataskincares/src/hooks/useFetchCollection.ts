@@ -15,6 +15,7 @@ type CollectionData = {
     brand: string;
     Avaliability: string;
     category: string;
+    count: string;
 }
 
 const useFetchCollection = (collectionName : string ) => {
@@ -38,6 +39,7 @@ const useFetchCollection = (collectionName : string ) => {
                         brand: doc.data().brand,
                         Avaliability: doc.data().Availability,
                         category: doc.data().category,
+                        count: doc.data().count
                     }));
                     setData(allData);
                     setLoading(false);
@@ -49,9 +51,8 @@ const useFetchCollection = (collectionName : string ) => {
         };
         getCollection();
     }, [collection]);
-
     return { data, loading };
 };
 
 export default useFetchCollection;
-
+     

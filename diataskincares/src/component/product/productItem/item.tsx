@@ -49,7 +49,7 @@ const ProductItem : React.FC<ProductItemProps> = ({ product , grid }) => {
                 </Link>
                 <div className={styles.content}>
                     <div className={styles.details}>
-                        <p>NGN {new Intl.NumberFormat().format(price)}</p>
+                        <p>NGN {new Intl.NumberFormat().format(parseInt(price))}</p>
                         <h4>{name.substring(0, 21)}...</h4>
                     </div>
                     {!grid && (
