@@ -29,9 +29,48 @@ interface Order {
 }
 
 const OrderStatus: React.FC<{ order: Order; id: string }> = ({ order, id}) => {
-    const [status, setStatus] = useState<string>("")
-    c
+    const [status, setStatus] = useState<string>("");
+    const [notif, setNotif] = useState<string>("");
+    const [disable, setDisable] = useState<boolean>(false);
+    const [loading, setIsLoading] = useState<boolean>(false);
+    const navigate = useNavigate();
 
+
+    useEffect(() => {
+        if (order !== null && order.orderNotifications !== null) {
+            if (
+                order.orderNotifications === "Your order has been changed to the status of DELIEVERED!" || 
+                order.orderStatus === "Delivered"
+            ) {
+                setDisable(true);
+            } else {
+                setDisable(false);
+            }
+        }
+    }, [order]);
+
+    const editOrder = (e: React.FormEvent, id: string) => {
+        e.preventDefault();
+        setIsLoading(true);
+
+        const orderConfig = {
+            userID: order.userID,
+            userEmail: order.userEmail,
+            orderDate: order.orderDate,
+            orderTime: order.ordertime,
+            orderAmount: order.orderAmount,
+            orderStatus: status,
+            orderNotification: order.orderNotifications,
+            cartItems: order.cartItem,
+            createdAt: order.createdAt,
+            editedAt: Timestamp.now().toDate(), 
+        };
+
+        try {
+            setDoc(doc(database, "Orders" id), orderConfig);
+        }
+    }
+    
     return ();
 };
 
