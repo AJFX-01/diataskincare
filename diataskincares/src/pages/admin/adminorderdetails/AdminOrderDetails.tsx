@@ -29,7 +29,7 @@ interface Order {
   const OrderDetails: React.FC = () => {
     const [order, setOrder] = useState<Order | null>(null);
     const { id } = useParams();
-    const { document } =useFetchDocument("Orders", id);
+    const { document } = useFetchDocument("Orders", id ?? "");
     const dispatch = useDispatch();
     const { data } = useFetchCollection("Shipping-Address");
     const filteredAddress = data.find(

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import useFetchcollection from "../../hooks/useFetchCollection";
 import {
   GET_PRICE_RANGE,
-  Product as pr,
   selectProducts,
   STORE_PRODUCTS,
 } from "../../redux/slice/productSlice";
