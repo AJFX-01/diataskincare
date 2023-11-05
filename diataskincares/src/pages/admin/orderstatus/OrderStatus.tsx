@@ -67,7 +67,7 @@ const OrderStatus: React.FC<{ order: Order; id: string }> = ({ order, id}) => {
         };
 
         try {
-            setDoc(doc(database, "Orders" id), orderConfig);
+            setDoc(doc(database, "Orders", id), orderConfig);
         }
     }
     

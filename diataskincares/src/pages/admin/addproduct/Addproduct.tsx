@@ -33,6 +33,7 @@ interface Product {
     brand: string;
     count: string;
     description: string;
+    addedAt: Date | undefined
 }
 
 const categories = [
@@ -57,7 +58,8 @@ const initialState: Product = {
   Avaliability: "",
   brand: "",
   count: "",
-  description: ""
+  description: "",
+  addedAt: undefined
 };
 
 const AddProduct: React.FC = () => {
@@ -157,7 +159,7 @@ const AddProduct: React.FC = () => {
         category: product.category,
         count: parseFloat(product.count),
         description: product.description,
-        createdAt: Timestamp.now().toDate(),
+        addedAt: Timestamp.now().toDate(),
       });
       setLoading(false);
       toast.info("Product will be added (IF YOU ARE AN AUTHORIZED ADMIN, else it will fail to be added)", {
@@ -207,7 +209,7 @@ const AddProduct: React.FC = () => {
         brand: product.brand,
         count: parseFloat(product.count),
         description: product.description,
-        createdAt: productEdit?.createdAt,
+        addedAt: productEdit?.addedAt,
         editedAt: Timestamp.now().toDate(),
       });
       setLoading(false);
