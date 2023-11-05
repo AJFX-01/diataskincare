@@ -4,6 +4,10 @@ interface Order {
     orderAmount : number;
     orderStatus: string;
 };
+
+interface Address {
+    userEmail: string
+}
 interface OrderState {
     orderHistory : Order[];
     addressHistory : any[];
@@ -33,7 +37,7 @@ const orderSlice = createSlice({
             const totalAmount = subTotalArray.reduce((curr, init) => curr + init, 0);
             state.totalOrderAmount = totalAmount;
         },
-        STORE_ADDRESS: (state, action : { payload : { addressHistory : any[] }}) => ({
+        STORE_ADDRESS: (state, action : { payload : { addressHistory : [] }}) => ({
             ...state,
             addressHistory : action.payload.addressHistory,
         }),

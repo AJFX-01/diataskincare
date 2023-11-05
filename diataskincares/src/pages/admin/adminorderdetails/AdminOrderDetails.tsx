@@ -26,6 +26,8 @@ interface Order {
     }[];
   }
 
+  
+
   const OrderDetails: React.FC = () => {
     const [order, setOrder] = useState<Order | null>(null);
     const { id } = useParams();
@@ -37,6 +39,8 @@ interface Order {
     );
 
     useEffect(() => {
+
+
         dispatch(STORE_ADDRESS(data));
     }, [dispatch, data]);
 
