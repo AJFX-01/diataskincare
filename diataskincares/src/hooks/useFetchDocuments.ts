@@ -1,4 +1,3 @@
-
 import { doc, getDoc, DocumentReference, DocumentSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
