@@ -62,7 +62,41 @@ const User: React.FC = () => {
     }
 
     return (
-        <section>77</section>
+        <section className={styles.sec}>
+            <div className={`container ${styles.order}`}>
+                <h2>Users</h2>
+                <br/>
+                <>
+                    <div className={styles.table}>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Assigned ID</th>
+                                    <th>Date Joined</th>
+                                    <th>Email</th>
+                                    <th>Username</th>
+                                    <th>Delete User</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {users.map((user, index) => {
+                                    const { id, email, username, joinedAt } = user;
+                                    return (
+                                        <tr key={id}>
+                                            <td>{index + 1}</td>
+                                            <td>{id}</td>
+                                            <td>{joinedAt.toDateString()}</td>
+                                            
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                </>
+            </div>
+        </section>
     );
 } 
 
