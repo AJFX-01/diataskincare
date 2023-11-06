@@ -23,9 +23,21 @@ import Loader from "../../../component/loader/loader";
     );
 
     useEffect(() => {
+      const filteredAddress = data.filter(
+        (document) => document.data().userEmail !== undefined
+      );
+      
+      
+      const addressHistory: Address[] = filteredAddress.map((document : any) => {
+        const address = document.data() as Address;
+        return {
+          ...address,
+          userEmail: address.userEmail ?? "", // Handle missing values
+        };
+      });
+      
 
-
-        dispatch(STORE_ADDRESS({addressHistory: data}));
+        dispatch(STORE_ADDRESS({addressHistory}));
     }, [dispatch, data]);
 
     useEffect(() => { 
