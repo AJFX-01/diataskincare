@@ -9,7 +9,7 @@ import styles from "./changeOrderStatus.module.scss";
 import { BsInfoCircle } from "react-icons/bs";
 
 
-interface Order {
+ export interface Order {
     id: string;
     userID: string;
     userEmail: DOMStringList;
@@ -26,7 +26,7 @@ interface Order {
         cartQuantity: number;
     }[];
     createdAt: Date;
-}
+};
 
 const OrderStatus: React.FC<{ order: Order; id: string }> = ({ order, id}) => {
     const [status, setStatus] = useState<string>("");

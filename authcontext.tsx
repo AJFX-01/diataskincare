@@ -189,23 +189,3 @@ const OrderDetails: React.FC = () => {
 };
 
 export default OrderDetails;
-
-
-// ... other imports and code ...
-
-const orderSlice = createSlice({
-  name: 'order',
-  initialState: {
-     addressHistory: [],
-  },
-  reducers: {
-     // ... other reducers ...
-     fetchOrderHistorySuccess: (state, action: PayloadAction<Document[]>) => {
-       state.addressHistory = action.payload;
-     },
-  },
- });
- 
- export const { fetchOrderHistorySuccess } = orderSlice.actions;
- 
- export default orderSlice.reducer;

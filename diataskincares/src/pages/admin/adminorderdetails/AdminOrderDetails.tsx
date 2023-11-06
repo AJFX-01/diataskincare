@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useFetchDocument from "../../../hooks/useFetchDocuments";
 import styles from "./adminOrderDetails.module.scss";
 import { Link, useParams } from "react-router-dom";
-import OrderStatus from "../orderstatus/OrderStatus";
+import OrderStatus, { Order } from "../orderstatus/OrderStatus";
 import { useDispatch } from "react-redux";
 import { STORE_ADDRESS } from "../../../redux/slice/orderSlice";
 import useFetchCollection from "../../../hooks/useFetchCollection";
@@ -11,20 +11,6 @@ import Loader from "../../../component/loader/loader";
 
 
 
-interface Order {
-    id: string;
-    orderAmount: number;
-    orderStatus: string;
-    orderNotification: string;
-    userEmail: string;
-    cartItems: {
-      id: string;
-      name: string;
-      price: number;
-      imageUrl: string;
-      cartQuantity: number;
-    }[];
-  }
 
   
 
@@ -75,7 +61,7 @@ interface Order {
                 >
                  <b>Order Status:</b> &nbso;{order.orderStatus}
                  <br/>
-                 <b>Order Notification:</b> &nbsp; {order.orderNotification}
+                 <b>Order Notification:</b> &nbsp; {order.orderNotifications}
                  <br/>
                  <b>Order Placed:</b> &nbsp; {order.userEmail}
                  <br/>
@@ -104,16 +90,86 @@ interface Order {
                           <b>Name: </b>
                           {filteredAddress.name}
                         </p>
+                        <p>
+                          <b>Phone Number: </b>
+                          {filteredAddress.phone}
+                        </p>
+                        <p>
+                          <b>Address 1: </b>
+                          {filteredAddress.line1}
+                        </p>
+                        <p>
+                          <b>Address 2: </b>
+                          {filteredAddress.line2}
+                        </p>
+                        <p>
+                          <b>Country: </b>
+                          {filteredAddress.country}
+                        </p>
+                        <p>
+                          <b>State: </b>
+                          {filteredAddress.state}
+                        </p>
+                        <p>
+                          <b>City: </b>
+                          {filteredAddress.city}
+                        </p>
+                        <br/>
                       </div>
+                    ) : (
+                      <h4>
+                        This order was made before the address functionality was added
+                      </h4>
                     )}
-                  </Card>
+                 </Card>
+                ) : (
+                  <h4>
+                    This order was made before the address functionality was added.
+                  </h4>
                 )}
               </div>
             </div>
           </div>
+          <br />
+
+          <table>
+            <thead>
+              <tr>
+                <th>S/N</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Toatal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {order.cartItem.map((cart, index) => {
+                const {id, name, price, imageUrl, cartQuantity } = cart;
+                return (
+                  <tr key={id}>
+                    <td>
+                      <b>{index + 1}</b>
+                    </td>
+                    <td>
+                      <p>
+                        <b>{name}</b>
+                      </p>
+                      <img src={imageUrl} alt={name} style={{ width: "100px"}} />
+                    </td>
+                    <td>NGM {new Intl.NumberFormat().format(price)} </td>
+                    <td>{cartQuantity}</td>
+                    <td>
+                      NGN {new Intl.NumberFormat().format(price * cartQuantity)}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <OrderStatus order={order} id={id} />
         </div>
       </>
-    )
+    );
   };
 
 
