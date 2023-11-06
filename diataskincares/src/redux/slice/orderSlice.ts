@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface Order {
-    orderAmount : number;
+    id: string;
+    orderDate: string;
+    orderTime: string;
+    orderAmount: number;
     orderStatus: string;
 };
 

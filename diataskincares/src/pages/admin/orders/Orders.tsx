@@ -59,7 +59,26 @@ const Orders: React.FC = () => {
                         <tbody>
                             {orders.map((order, index) => {
                                 const { id, orderDate, orderTime, orderAmount, orderStatus } = order;
-                                return ()
+                                return (
+                                    <tr key={id} onClick={() => handleClick(id)}>
+                                        <td>{ index + 1 }</td>
+                                        <td>
+                                            {orderDate} at {orderTime}
+                                        </td>
+                                        <td>{id}</td>
+                                        <td>NGN { new Intl.NumberFormat().format(orderAmount)}</td>
+                                        <td>
+                                            <p className={
+                                                orderStatus != "Delivered"
+                                                    ? `${styles.pending}`
+                                                    : `${styles.delivered}`
+                                            }
+                                            >
+                                                {orderStatus}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                );
                             })}
                         </tbody>
                     </table>
@@ -67,5 +86,7 @@ const Orders: React.FC = () => {
                 </>
             </div>
         </section>
-    )
-}
+    );
+};
+
+export default Orders;
