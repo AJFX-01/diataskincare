@@ -19,7 +19,7 @@ const Orders: React.FC = () => {
 
     useEffect(() => {
         if (data) {
-            dispatch(STORE_ORDERS({data}))
+            dispatch(STORE_ORDERS({ orderHistory: data}))
         }
     }, [dispatch, data]);
 
