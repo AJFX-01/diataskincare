@@ -166,7 +166,7 @@ import Loader from "../../../component/loader/loader";
               })}
             </tbody>
           </table>
-          <OrderStatus order={order} id={id} />
+          <OrderStatus order={order} id={id ?? ""} />
         </div>
       </>
     );
