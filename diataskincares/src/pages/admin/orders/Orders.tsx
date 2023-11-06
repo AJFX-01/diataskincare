@@ -18,9 +18,19 @@ const Orders: React.FC = () => {
 
 
     useEffect(() => {
-        if (data) {
-            dispatch(STORE_ORDERS({ orderHistory: data}))
-        }
+
+        const orders = data.map((item) => ({
+            id: item.id,
+            orderDate: item.orderDate,
+            orderTime: item.orderTime,
+            orderAmount: item.orderAmount,
+            orderStatus: item.orderStatus
+
+        }));
+
+        dispatch(STORE_ORDERS({
+            orderHistory: orders
+        }))
     }, [dispatch, data]);
 
 
