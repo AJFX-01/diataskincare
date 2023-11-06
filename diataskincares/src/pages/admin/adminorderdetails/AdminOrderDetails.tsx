@@ -73,10 +73,43 @@ interface Order {
                       : `${styles.pending}`
                   }
                 >
-                  
+                 <b>Order Status:</b> &nbso;{order.orderStatus}
+                 <br/>
+                 <b>Order Notification:</b> &nbsp; {order.orderNotification}
+                 <br/>
+                 <b>Order Placed:</b> &nbsp; {order.userEmail}
+                 <br/>
+                 { filteredAddress && (
+                    <> 
+                      <b>Time of Order: </b> &nbsp;{filteredAddress.time}
+                      <br />
+                      <br>Date of Order</br> &nbsp;{filteredAddress.date}
+                    </>
+                 )} 
                 </p>
+                <br />
               </>
             </Card>
+
+            <div>
+              <div>
+                {filteredAddress ? (
+                  <Card cardClass={styles.card}>
+                    <h3 style={{ textDecoration : "underline"}}>
+                      Customer Details
+                    </h3>
+                    { filteredAddress ? (
+                      <div>
+                        <p>
+                          <b>Name: </b>
+                          {filteredAddress.name}
+                        </p>
+                      </div>
+                    )}
+                  </Card>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </>
