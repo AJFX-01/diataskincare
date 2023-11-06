@@ -4,7 +4,7 @@ import styles from "./adminOrderDetails.module.scss";
 import { Link, useParams } from "react-router-dom";
 import OrderStatus, { Order } from "../orderstatus/OrderStatus";
 import { useDispatch } from "react-redux";
-import { STORE_ADDRESS } from "../../../redux/slice/orderSlice";
+import { Address, STORE_ADDRESS } from "../../../redux/slice/orderSlice";
 import useFetchCollection from "../../../hooks/useFetchCollection";
 import Card from "../../../component/card/Card";
 import Loader from "../../../component/loader/loader";
@@ -25,7 +25,7 @@ import Loader from "../../../component/loader/loader";
     useEffect(() => {
 
 
-        dispatch(STORE_ADDRESS({ addressHistory: data}));
+        dispatch(STORE_ADDRESS({addressHistory: data}));
     }, [dispatch, data]);
 
     useEffect(() => { 

@@ -5,12 +5,12 @@ interface Order {
     orderStatus: string;
 };
 
-interface Address {
+export interface Address {
     userEmail: string;
     [key: string]: any;
   }
 
-interface OrderState {
+ export interface OrderState {
     orderHistory : Order[];
     addressHistory : Address[];
     totalOrderAmount : number | null;
