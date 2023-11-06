@@ -10,3 +10,62 @@ import {
 import styles from "./orders.module.scss";
 
 
+const Orders: React.FC = () => {
+    const {data, loading }= useFetchCollection("Orders");
+    const orders = useSelector(selectOrderHistory);
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+
+
+    useEffect(() => {
+        if (data) {
+            dispatch(STORE_ORDERS({data}))
+        }
+    }, [dispatch, data]);
+
+
+    const handleClick =(id: string) => {
+        navigate(`/admin/order-details/${id}`);
+    };
+
+    if (loading) {
+        return <Loader />; 
+    }
+    if (orders.length === 0) {
+        return <p>No orders found.</p>
+    }
+
+
+    return (
+        <section>
+            <div className={`container ${styles.order}`}>
+                <h2>All Orders</h2>
+                <p>
+                    Open an order to <b>change order status</b>
+                </p>
+                <br/>
+                <>
+                   <div className={styles.table}>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Date</th>
+                                <th>Order ID</th>
+                                <th>Order Amount</th>
+                                <th>Order Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {orders.map((order, index) => {
+                                const { id, orderDate, orderTime, orderAmount, orderStatus } = order;
+                                return ()
+                            })}
+                        </tbody>
+                    </table>
+                  </div> 
+                </>
+            </div>
+        </section>
+    )
+}
