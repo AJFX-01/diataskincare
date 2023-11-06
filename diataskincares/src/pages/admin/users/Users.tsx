@@ -61,7 +61,9 @@ const User: React.FC = () => {
         return <p>You have no users at the moment</p>
     }
 
-    return ();
+    return (
+        <section>77</section>
+    );
 } 
 
 
