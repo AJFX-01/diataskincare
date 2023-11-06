@@ -1,191 +1,98 @@
-import React, { useEffect, useState } from "react";
-import useFetchDocument from "../../../hooks/useFetchDocuments";
-import styles from "./adminOrderDetails.module.scss";
-import { Link, useParams } from "react-router-dom";
-import ChangeOrderStatus from "../changeOrderStatus/ChangeOrderStatus";
-import { useDispatch } from "react-redux";
-import { STORE_ADDRESS } from "../../../redux/slice/orderSlice";
-import useFetchCollection from "../../../hooks/useFetchCollection";
-import Card from "../../../components/card/Card";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../../components/loader/Loader";
+import useFetchCollection from "../../../hooks/useFetchCollection";
+import {
+  selectOrderHistory,
+  STORE_ORDERS,
+} from "../../../redux/slice/orderSlice";
+import styles from "./orders.module.scss";
 
 interface Order {
   id: string;
+  orderDate: string;
+  orderTime: string;
   orderAmount: number;
   orderStatus: string;
-  orderNotification: string;
-  userEmail: string;
-  cartItems: {
-    id: string;
-    name: string;
-    price: number;
-    imageUrl: string;
-    cartQuantity: number;
-  }[];
 }
 
-const OrderDetails: React.FC = () => {
-  const [order, setOrder] = useState<Order | null>(null);
-  const { id } = useParams<{ id: string }>();
-  const { document } = useFetchDocument("Orders", id);
+const Orders: React.FC = () => {
+  const { data, loading } = useFetchCollection<Order>("Orders");
+  const orders = useSelector(selectOrderHistory);
   const dispatch = useDispatch();
-  const { data } = useFetchCollection("Shipping-Address");
-  const filteredAddress = data.find(
-    (address) => address.userEmail === order?.userEmail
-  );
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(STORE_ADDRESS(data));
+    if (data) {
+      dispatch(STORE_ORDERS(data));
+    }
   }, [dispatch, data]);
 
-  useEffect(() => {
-    setOrder(document);
-  }, [document]);
+  const handleClick = (id: string) => {
+    navigate(`/admin/order-details/${id}`);
+  };
 
-  if (!order) {
+  if (loading) {
     return <Loader />;
   }
 
+  if (orders.length === 0) {
+    return <p>No orders found.</p>;
+  }
+
   return (
-    <>
-      <div className={styles.table}>
-        <div>
-          <Link to="/admin/orders">&larr; Back To Orders</Link>
-        </div>
+    <section>
+      <div className={`container ${styles.order}`}>
+        <h2>All Orders</h2>
+        <p>
+          Open an order to <b>change order status</b>
+        </p>
         <br />
-        <div className={styles.flex}>
-          <Card cardClass={styles.card}>
-            <h3 style={{ textDecoration: "underline" }}>Order Details</h3>
-            <>
-              <p>
-                <b>Order ID:</b> &nbsp;{order.id}
-              </p>
-              <p>
-                <b>Order Amount:</b> &nbsp;NGN{" "}
-                {new Intl.NumberFormat().format(order.orderAmount)}
-              </p>
-              <p
-                className={
-                  order.orderStatus === "Delivered"
-                    ? `${styles.delievered}`
-                    : `${styles.pending}`
-                }
-              >
-                <b>Order Status:</b> &nbsp;{order.orderStatus}
-                <br />
-                <b>Order Notification:</b> {order.orderNotification}
-                <br />
-                <b>Order placed by:</b> &nbsp;{order.userEmail}
-                <br />
-                {filteredAddress && (
-                  <>
-                    <b>Time Of Order: </b> &nbsp;{filteredAddress.time}
-                    <br />
-                    <b>Date Of Order: </b> &nbsp; {filteredAddress.date}
-                  </>
-                )}
-              </p>
-              <br />
-            </>
-          </Card>
-
-          <div>
-            <div>
-              {filteredAddress ? (
-                <Card cardClass={styles.card}>
-                  <h3 style={{ textDecoration: "underline" }}>
-                    Customer Details
-                  </h3>
-                  {filteredAddress ? (
-                    <div>
-                      <p>
-                        <b>Name: </b>
-                        {filteredAddress.name}
-                      </p>
-                      <p>
-                        <b>Phone Number: </b>
-                        {filteredAddress.phone}
-                      </p>
-                     
-                      <p>
-                        <b>Address 1: </b>
-                        {filteredAddress.line1}
-                      </p>
-                      <p>
-                        <b>Address 2: </b>
-                        {filteredAddress.line2}
-                      </p>
-                      <p>
-                        <b>Country: </b>
-                        {filteredAddress.country}
-                      </p>
-                      <p>
-                        <b>State: </b>
-                        {filteredAddress.state}
-                      </p>
-                      <p>
-                        <b>City: </b>
-                        {filteredAddress.city}
-                      </p>
-
-                      <br />
-                    </div>
-                  ) : (
-                    <h4>
-                      This order was made before the address functionality was
-                      added.
-                    </h4>
-                  )}
-                </Card>
-              ) : (
-                <h4>
-                  This order was made before the address functionality was
-                  added.
-                </h4>
-              )}
-            </div>
-          </div>
-        </div>
-        <br />
-
-        <table>
-          <thead>
-            <tr>
-              <th>S/N</th>
-              <th>Product</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {order.cartItems.map((cart, index) => {
-              const { id, name, price, imageUrl, cartQuantity } = cart;
-              return (
-                <tr key={id}>
-                  <td>
-                    <b>{index + 1}</b>
-                  </td>
-                  <td>
-                    <p>
-                      <b>{name}</b>
-                    </p>
-                    <img src={imageUrl} alt={name} style={{ width: "100px" }} />
-                  </td>
-                  <td>NGN {new Intl.NumberFormat().format(price)}</td>
-                  <td>{cartQuantity}</td>
-                  <td>
-                    NGN {new Intl.NumberFormat().format(price * cartQuantity)}
-                  </td>
+        <>
+          <div className={styles.table}>
+            <table>
+              <thead>
+                <tr>
+                  <th>S/N</th>
+                  <th>Date</th>
+                  <th>Order ID</th>
+                  <th>Order Amount</th>
+                  <th>Order Status</th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <ChangeOrderStatus order={order} id={id} />
+              </thead>
+              <tbody>
+                {orders.map((order, index) => {
+                  const { id, orderDate, orderTime, orderAmount, orderStatus } = order;
+                  return (
+                    <tr key={id} onClick={() => handleClick(id)}>
+                      <td>{index + 1}</td>
+                      <td>
+                        {orderDate} at {orderTime}
+                      </td>
+                      <td>{id}</td>
+                      <td>NGN {new Intl.NumberFormat().format(orderAmount)}</td>
+                      <td>
+                        <p
+                          className={
+                            orderStatus !== "Delivered"
+                              ? `${styles.pending}`
+                              : `${styles.delivered}`
+                          }
+                        >
+                          {orderStatus}
+                        </p>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
       </div>
-    </>
-  );interface
+    </section>
+  );
 };
 
-export default OrderDetails;
+export default Orders;
