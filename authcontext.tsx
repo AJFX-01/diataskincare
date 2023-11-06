@@ -1,53 +1,74 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Loader from "../../../components/loader/Loader";
+import { selectUsers, STORE_USERS } from "../../../redux/slice/authSlice";
 import useFetchCollection from "../../../hooks/useFetchCollection";
-import {
-  selectOrderHistory,
-  STORE_ORDERS,
-} from "../../../redux/slice/orderSlice";
-import styles from "./orders.module.scss";
+import { doc, deleteDoc } from "firebase/firestore";
+import { database } from "../../../firebase/firebase";
+import { FaTrashAlt } from "react-icons/fa";
+import styles from "./users.module.scss";
+import Loader from "../../../components/loader/Loader";
+import Notiflix from "notiflix";
+import { toast } from "react-toastify";
 
-interface Order {
+interface User {
   id: string;
-  orderDate: string;
-  orderTime: string;
-  orderAmount: number;
-  orderStatus: string;
+  email: string;
+  username: string;
+  joinedAt: Date;
 }
 
-const Orders: React.FC = () => {
-  const { data, loading } = useFetchCollection<Order>("Orders");
-  const orders = useSelector(selectOrderHistory);
+export default function Users(): React.FC {
+  const { data, loading } = useFetchCollection<User>("Users");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const users = useSelector(selectUsers);
 
   useEffect(() => {
     if (data) {
-      dispatch(STORE_ORDERS(data));
+      dispatch(STORE_USERS(data));
     }
   }, [dispatch, data]);
 
-  const handleClick = (id: string) => {
-    navigate(`/admin/order-details/${id}`);
+  const deleteUserFromDatabase = async (id: string) => {
+    try {
+      await deleteDoc(doc(database, "Users", id));
+      toast.success(`User deleted successfully`);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const confirmDelete = (id: string, username: string) => {
+    Notiflix.Confirm.show(
+      "Delete User",
+      `Are you sure you want to delete ${username} from the users list?`,
+      "DELETE",
+      "CANCEL",
+      function okCb() {
+        deleteUserFromDatabase(id);
+      },
+      function cancelCb() {},
+      {
+        width: "320px",
+        borderRadius: "5px",
+        titleColor: "#c07d53",
+        okButtonBackground: "#c07d53",
+        cssAnimationStyle: "zoom",
+      }
+    );
   };
 
   if (loading) {
     return <Loader />;
   }
 
-  if (orders.length === 0) {
-    return <p>No orders found.</p>;
+  if (users.length === 0) {
+    return <p>You have no users at the moment</p>;
   }
 
   return (
-    <section>
+    <section className={styles.sec}>
       <div className={`container ${styles.order}`}>
-        <h2>All Orders</h2>
-        <p>
-          Open an order to <b>change order status</b>
-        </p>
+        <h2>Users</h2>
         <br />
         <>
           <div className={styles.table}>
@@ -55,33 +76,31 @@ const Orders: React.FC = () => {
               <thead>
                 <tr>
                   <th>S/N</th>
-                  <th>Date</th>
-                  <th>Order ID</th>
-                  <th>Order Amount</th>
-                  <th>Order Status</th>
+                  <th>Assigned ID</th>
+                  <th>Date Joined</th>
+                  <th>Email</th>
+                  <th>Username</th>
+                  <th>Delete User</th>
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order, index) => {
-                  const { id, orderDate, orderTime, orderAmount, orderStatus } = order;
+                {users.map((user, index) => {
+                  const { id, email, username, joinedAt } = user;
                   return (
-                    <tr key={id} onClick={() => handleClick(id)}>
+                    <tr key={id}>
                       <td>{index + 1}</td>
-                      <td>
-                        {orderDate} at {orderTime}
-                      </td>
                       <td>{id}</td>
-                      <td>NGN {new Intl.NumberFormat().format(orderAmount)}</td>
+                      <td>{joinedAt.toDateString()}</td>
+                      <td>{email}</td>
                       <td>
-                        <p
-                          className={
-                            orderStatus !== "Delivered"
-                              ? `${styles.pending}`
-                              : `${styles.delivered}`
-                          }
-                        >
-                          {orderStatus}
-                        </p>
+                        <p style={{ fontWeight: "500" }}>{username}</p>
+                      </td>
+                      <td>
+                        <FaTrashAlt
+                          size={18}
+                          color="red"
+                          onClick={() => confirmDelete(id, username)}
+                        />
                       </td>
                     </tr>
                   );
@@ -93,6 +112,4 @@ const Orders: React.FC = () => {
       </div>
     </section>
   );
-};
-
-export default Orders;
+}

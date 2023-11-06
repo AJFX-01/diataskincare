@@ -13,9 +13,6 @@ import ProductList from "./productList/ProductList";
 import Spinner from "../../assets/spinner.jpg";
 
 
-
-
-
 const Product: React.FC = () => {
 
     const { data , loading } = useFetchcollection("Products");
