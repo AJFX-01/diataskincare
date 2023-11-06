@@ -10,8 +10,6 @@ import Card from "../../../component/card/Card";
 import Loader from "../../../component/loader/loader";
 
 
-
-
   
 
   const OrderDetails: React.FC = () => {
@@ -27,11 +25,14 @@ import Loader from "../../../component/loader/loader";
     useEffect(() => {
 
 
-        dispatch(STORE_ADDRESS(data));
+        dispatch(STORE_ADDRESS({ addressHistory: data}));
     }, [dispatch, data]);
 
-    useEffect(() => {
-        setOrder(document);
+    useEffect(() => { 
+      if (document) {
+        const order = document.data() as Order;
+        setOrder(order);
+      }
     }, [document]);
 
     if (!order) {
