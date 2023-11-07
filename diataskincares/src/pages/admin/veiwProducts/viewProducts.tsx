@@ -64,7 +64,15 @@ const ViewProducts= () => {
     const confirmDelete = (id : stringify, imageUrl: string, name: string) => {
         Notiflix.Confirm.show(
             "Delete Product",
-            
+            `Are you sure you want to delete ${name}?`,
+            "DELETE",
+            "CANCEL",
+            function okCb() {
+                deleteProduct(id, imageUrl);
+                toast.success(
+                    `${name} deleted, if you are not an authorized admin, this would be reversed within seconds.`
+                )
+            }
         )
     }
 }
