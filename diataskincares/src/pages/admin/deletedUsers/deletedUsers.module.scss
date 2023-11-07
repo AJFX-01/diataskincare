@@ -32,4 +32,22 @@
           }
         }
       }
+      
+      tr {
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+      }
   
+      tr:nth-child(even) {
+        background-color: #eee;
+      }
+      .delievered {
+        color: orangered;
+        font-weight: 500;
+      }
+      .pending {
+        color: green;
+        font-weight: 500;
+      }
+    }
+  }
