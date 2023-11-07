@@ -60,4 +60,11 @@ const ViewProducts= () => {
             })
         );
     } , [dispatch, products, search]);
+
+    const confirmDelete = (id : stringify, imageUrl: string, name: string) => {
+        Notiflix.Confirm.show(
+            "Delete Product",
+            
+        )
+    }
 }
