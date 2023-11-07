@@ -6,7 +6,7 @@ interface AuthorizationState {
     email: string |  null;
     userID: string | null;
     userName: string | null;
-    users: string[];
+    users: any[];
     deletedUsers: string[];
 };
 

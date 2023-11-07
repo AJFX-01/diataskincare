@@ -20,7 +20,7 @@ const User: React.FC = () => {
 
     const {data, loading} = useFetchCollection("Users");
     const dispatch = useDispatch();
-    const users = useSelector(selectUsers);
+    const users : User[] = useSelector(selectUsers);
 
     useEffect(() => {
         if(data) {
