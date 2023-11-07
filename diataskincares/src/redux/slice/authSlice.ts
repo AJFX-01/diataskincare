@@ -7,7 +7,7 @@ interface AuthorizationState {
     userID: string | null;
     userName: string | null;
     users: any[];
-    deletedUsers: string[];
+    deletedUsers: any[];
 };
 
 const initialState: AuthorizationState = {

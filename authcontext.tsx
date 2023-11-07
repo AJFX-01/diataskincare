@@ -1,112 +1,54 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUsers, STORE_USERS } from "../../../redux/slice/authSlice";
+import { DELETED_USERS, selectDeletedUsers } from "../../../redux/slice/authSlice";
 import useFetchCollection from "../../../hooks/useFetchCollection";
-import { doc, deleteDoc } from "firebase/firestore";
-import { database } from "../../../firebase/firebase";
-import { FaTrashAlt } from "react-icons/fa";
-import styles from "./users.module.scss";
+import styles from "./deletedUsers.module.scss";
 import Loader from "../../../components/loader/Loader";
-import Notiflix from "notiflix";
-import { toast } from "react-toastify";
 
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  joinedAt: Date;
-}
-
-export default function Users(): React.FC {
-  const { data, loading } = useFetchCollection<User>("Users");
+export default function Users() {
+  const { data, loading } = useFetchCollection("Deleted-Users");
   const dispatch = useDispatch();
-  const users = useSelector(selectUsers);
+  const deletedUsers = useSelector(selectDeletedUsers);
 
   useEffect(() => {
-    if (data) {
-      dispatch(STORE_USERS(data));
-    }
+    dispatch(DELETED_USERS(data));
   }, [dispatch, data]);
-
-  const deleteUserFromDatabase = async (id: string) => {
-    try {
-      await deleteDoc(doc(database, "Users", id));
-      toast.success(`User deleted successfully`);
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  const confirmDelete = (id: string, username: string) => {
-    Notiflix.Confirm.show(
-      "Delete User",
-      `Are you sure you want to delete ${username} from the users list?`,
-      "DELETE",
-      "CANCEL",
-      function okCb() {
-        deleteUserFromDatabase(id);
-      },
-      function cancelCb() {},
-      {
-        width: "320px",
-        borderRadius: "5px",
-        titleColor: "#c07d53",
-        okButtonBackground: "#c07d53",
-        cssAnimationStyle: "zoom",
-      }
-    );
-  };
-
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (users.length === 0) {
-    return <p>You have no users at the moment</p>;
-  }
 
   return (
     <section className={styles.sec}>
       <div className={`container ${styles.order}`}>
-        <h2>Users</h2>
+       {!loading && <h2>Deleted Users</h2>}
         <br />
         <>
+          {loading && <Loader />}
           <div className={styles.table}>
-            <table>
-              <thead>
-                <tr>
-                  <th>S/N</th>
-                  <th>Assigned ID</th>
-                  <th>Date Joined</th>
-                  <th>Email</th>
-                  <th>Username</th>
-                  <th>Delete User</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user, index) => {
-                  const { id, email, username, joinedAt } = user;
-                  return (
-                    <tr key={id}>
-                      <td>{index + 1}</td>
-                      <td>{id}</td>
-                      <td>{joinedAt.toDateString()}</td>
-                      <td>{email}</td>
-                      <td>
-                        <p style={{ fontWeight: "500" }}>{username}</p>
-                      </td>
-                      <td>
-                        <FaTrashAlt
-                          size={18}
-                          color="red"
-                          onClick={() => confirmDelete(id, username)}
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            {deletedUsers.length === 0 ? (
+              <p>You have no deleted users at the moment</p>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>S/N</th>
+                    <th>Assigned ID</th>
+                    <th>Date Deleted</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {deletedUsers.map((user, index) => {
+                    const { id, email, deletedAt } = user;
+                    return (
+                      <tr key={id}>
+                        <td>{index + 1}</td>
+                        <td>{id}</td>
+                        <td>{deletedAt}</td>
+                        <td>{email}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
           </div>
         </>
       </div>
