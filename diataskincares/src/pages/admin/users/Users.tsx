@@ -10,7 +10,12 @@ import Loader from "../../../component/loader/loader";
 import Notiflix from "notiflix";
 import { toast } from "react-toastify";
 
-
+ interface User {
+    id: string,
+    email: string;
+    username: string;
+    joinedAt: Date
+ }
 const User: React.FC = () => {
 
     const {data, loading} = useFetchCollection("Users");
@@ -87,9 +92,19 @@ const User: React.FC = () => {
                                             <td>{index + 1}</td>
                                             <td>{id}</td>
                                             <td>{joinedAt.toDateString()}</td>
-                                            
+                                            <td>{email}</td>
+                                            <td>
+                                                <p style={{ fontWeight: "500"}}>{username}</p>
+                                            </td>
+                                            <td>
+                                                <FaTrashAlt 
+                                                    size={18}
+                                                    color="red"
+                                                    onClick={() => confirmDelete(id, username)}
+                                                />
+                                            </td>
                                         </tr>
-                                    )
+                                    );
                                 })}
                             </tbody>
                         </table>
