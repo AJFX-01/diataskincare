@@ -25,7 +25,7 @@ import Pagination from "../../../component/pagination/Pagination";
 
 const ViewProducts= () => {
     const { data, loading } = useFetchcollection("Products")
-    const [ search, setSearch] = useState("");
+    const [ search, setSearch] = useState<string>("");
     const dispatch = useDispatch();
 
     const products : Product[] = useSelector(selectProducts);
@@ -39,5 +39,25 @@ const ViewProducts= () => {
     // =========== currremt products=========
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-    const currentProducts = filteredProducts.slice
+    const currentProducts = filteredProducts.slice(
+        indexOfFirstProduct,
+        indexOfLastProduct
+    );
+
+    useEffect(() => {
+        dispatch(
+            STORE_PRODUCTS({
+                products
+            })
+        );
+    }, [dispatch, data])
+
+    useEffect(() => {
+        dispatch(
+            FILTER_BY_SEARCH({
+                products,
+                search,
+            })
+        );
+    } , [dispatch, products, search]);
 }
