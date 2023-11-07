@@ -12,7 +12,7 @@ import Notiflix from "notiflix";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectProducts,
-  STORE_PRODUCTS,
+  STORE_PRODUCTS, Product
 } from "../../../redux/slice/productSlice";
 import useFetchcollection from "../../../hooks/useFetchCollection";
 import {
@@ -23,13 +23,13 @@ import Search from "../../../component/search/Search";
 import Pagination from "../../../component/pagination/Pagination";
 
 
-const User = () => {
+const ViewProducts= () => {
     const { data, loading } = useFetchcollection("Products")
     const [ search, setSearch] = useState("");
     const dispatch = useDispatch();
 
-    const products = useSelector(selectProducts);
-    const filteredProducts = useSelector(selectFilterdProducts);
+    const products : Product[] = useSelector(selectProducts);
+    const filteredProducts: Product[] = useSelector(selectFilterdProducts);
 
     // ====== Paginatiuon=========
 

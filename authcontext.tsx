@@ -1,40 +1,44 @@
 import { useEffect, useState } from "react";
-import { database } from "../../../firebase/firebase";
-import Loader from "../../../components/loader/Loader";
-import { toast } from "react-toastify";
-import styles from "./viewProducts.module.scss";
-import { doc, deleteDoc } from "firebase/firestore";
-import { storage } from "../../../firebase/firebase";
-import { ref, deleteObject } from "firebase/storage";
-import { Link } from "react-router-dom";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import Notiflix from "notiflix";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectProducts,
-  STORE_PRODUCTS,
-} from "../../../redux/slice/productSlice";
-import useFetchcollection from "../../../hooks/useFetchCollection";
+import { selectProducts, STORE_PRODUCTS } from "../../../redux/slice/productSlice";
+import useFetchCollection from "../../../hooks/useFetchCollection";
 import {
   FILTER_BY_SEARCH,
   selectFilteredProducts,
 } from "../../../redux/slice/filterSlice";
+import { doc, deleteDoc } from "firebase/firestore";
+import { database } from "../../../firebase/firebase";
+import Loader from "../../../components/loader/Loader";
+import { toast } from "react-toastify";
+import styles from "./viewProducts.module.scss";
+import { ref, deleteObject } from "firebase/storage";
+import { Link } from "react-router-dom";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import Notiflix from "notiflix";
 import Search from "../../../components/search/Search";
 import Pagination from "../../../components/pagination/Pagination";
 
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+  category: string;
+}
+
 export default function ViewProducts() {
-  const [search, setSearch] = useState("");
-  const { data, loading } = useFetchcollection("Products");
+  const [search, setSearch] = useState<string>("");
+  const { data, loading } = useFetchCollection("Products");
   const dispatch = useDispatch();
 
-  const products = useSelector(selectProducts);
-  const filteredProducts = useSelector(selectFilteredProducts);
+  const products: Product[] = useSelector(selectProducts);
+  const filteredProducts: Product[] = useSelector(selectFilteredProducts);
 
   // ========pagination==========
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(10);
 
-  //get current products
+  // Get current products
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(
@@ -59,7 +63,7 @@ export default function ViewProducts() {
     );
   }, [dispatch, products, search]);
 
-  const confirmDelete = (id, imageUrl, name) => {
+  const confirmDelete = (id: string, imageUrl: string, name: string) => {
     Notiflix.Confirm.show(
       "Delete Product",
       `Are you sure you want to delete ${name}?`,
@@ -82,13 +86,13 @@ export default function ViewProducts() {
     );
   };
 
-  const deleteProduct = async (id, imageUrl) => {
+  const deleteProduct = async (id: string, imageUrl: string) => {
     try {
       await deleteDoc(doc(database, "Products", id));
       const storageRef = ref(storage, imageUrl);
       await deleteObject(storageRef)
         .then(() => {
-          "";
+          // Handle success if needed
         })
         .catch((error) => {
           toast.error(error.message);
@@ -121,8 +125,7 @@ export default function ViewProducts() {
               }}
             >
               <b>
-                Products including '{" "}
-                <i style={{ color: "#ff847c" }}>{search}</i> '
+                Products including ' <i style={{ color: "#ff847c" }}>{search}</i> '
               </b>
             </p>
           )}
@@ -145,7 +148,7 @@ export default function ViewProducts() {
               </tr>
             </thead>
             <tbody>
-              {currentProducts?.map((product, index) => {
+              {currentProducts.map((product, index) => {
                 const { id, name, price, imageUrl, category } = product;
                 return (
                   <tr key={id}>

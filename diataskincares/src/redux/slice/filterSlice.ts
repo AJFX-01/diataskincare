@@ -9,6 +9,7 @@ interface Product {
     description : string;
     imageUrl : string;
     Avaliability : string;
+    count: string;
 }
 
 interface FilterState {
