@@ -21,3 +21,23 @@ import {
 } from "../../../redux/slice/filterSlice";
 import Search from "../../../component/search/Search";
 import Pagination from "../../../component/pagination/Pagination";
+
+
+const User = () => {
+    const { data, loading } = useFetchcollection("Products")
+    const [ search, setSearch] = useState("");
+    const dispatch = useDispatch();
+
+    const products = useSelector(selectProducts);
+    const filteredProducts = useSelector(selectFilterdProducts);
+
+    // ====== Paginatiuon=========
+
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [productsPerPage, setProductsPerPage ] = useState<number>(10);
+
+    // =========== currremt products=========
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = filteredProducts.slice
+}
