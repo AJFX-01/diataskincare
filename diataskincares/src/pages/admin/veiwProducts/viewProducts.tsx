@@ -128,6 +128,61 @@ const ViewProducts= () => {
                         )}
                     </p>
                 </div>
+                {filteredProducts.length === 0 ? (
+                    <h2>
+                        <b>
+                            No Product(s) Found.
+                        </b>
+                    </h2>
+                ) : (
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {currentProducts.map((product, index) => {
+                                const { id, name, price, imageUrl, category } = product;
+                                return (
+                                    <tr key={id}>
+                                        <td>{index + 1}</td>
+                                        <td>
+                                            <img src={imageUrl}
+                                            alt={name}
+                                            style={{ width: "100px"}}
+                                            />
+                                        </td>
+                                        <td>{name}</td>
+                                        <td>{category}</td>
+                                        <td>NGN {new Intl.NumberFormat().format(parseInt(price))}</td>
+                                        <td className={styles.icons}>
+                                            <Link to={`/admin/add-product/${id}`}>
+                                                <FaEdit size={20} color="green" />
+                                            </Link>
+                                            &nbsp;
+                                            <FaTrashAlt
+                                                size={18}
+                                                color="red"
+                                                onClick={() => confirmDelete(id, imageUrl, name)}
+                                            />
+                                        </td>
+                                    </tr>
+                                );
+                        })}
+                        </tbody>
+                    </table>
+                )}
+                <Pagination
+                    productsPerPage={productsPerPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalProducts={filteredProducts.length}
+                />
             </div>
         </>
     )
