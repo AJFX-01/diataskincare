@@ -4,6 +4,12 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "../../../contexts/auth";
 import styles from "./navbar.module.scss";
 
+interface ActiveLinkProps {
+    isActive: boolean;
+  }
+  
+const activeLink = ({ isActive }:  ActiveLinkProps) => (isActive ? `${styles.active}` : "");
+
 const Navbar = () => {
     const { user } = useAuth();
 
