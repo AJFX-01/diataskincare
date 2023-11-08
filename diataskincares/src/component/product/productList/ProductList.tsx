@@ -20,6 +20,7 @@ interface Product {
     description: string; // Add these properties
     imageUrl: string; 
     Avaliability: string;
+    count: string;
    
 }
 

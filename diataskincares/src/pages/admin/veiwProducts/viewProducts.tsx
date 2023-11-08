@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-import { useEffect, useState } from "react";
-=======
+
 import React, { useEffect, useState } from "react";
->>>>>>> 63a977d (chnages)
 import { database } from "../../../firebase/firebase";
 import Loader from "../../../component/loader/loader";
 import { toast } from "react-toastify";
@@ -65,39 +62,29 @@ const ViewProducts= () => {
         );
     } , [dispatch, products, search]);
 
-<<<<<<< HEAD
-    const confirmDelete = (id : stringify, imageUrl: string, name: string) => {
-=======
-    const confirmDelete = (id : string, imageUrl: string, name: string) => {
->>>>>>> 63a977d (chnages)
+    const confirmDelete = (id: string, imageUrl: string, name: string) => {
         Notiflix.Confirm.show(
-            "Delete Product",
-            `Are you sure you want to delete ${name}?`,
-            "DELETE",
-            "CANCEL",
-            function okCb() {
-                deleteProduct(id, imageUrl);
-                toast.success(
-                    `${name} deleted, if you are not an authorized admin, this would be reversed within seconds.`
-<<<<<<< HEAD
-                )
-            }
-        )
-    }
-=======
-                );
-            },
-            function cancelCb() {},
-            {
-                width: "320px",
-                borderRadius: "5px",
-                titleColor: "#c07d53",
-                okButtonBackground: "#c07d53",
-                cssAnimationStyle: "zoom",
-            }
-        )
-    };
-
+          "Delete Product",
+          `Are you sure you want to delete ${name}?`,
+          "DELETE",
+          "CANCEL",
+          function okCb() {
+            deleteProduct(id, imageUrl);
+            toast.success(
+              `${name} deleted, if you are not an authorized admin, this would be reversed within seconds.`
+            );
+          },
+          function cancelCb() {},
+          {
+            width: "320px",
+            borderRadius: "5px",
+            titleColor: "#c07d53",
+            okButtonBackground: "#c07d53",
+            cssAnimationStyle: "zoom",
+          }
+        );
+      };
+    
     const deleteProduct = async (id: string, imageUrl: string) => {
         try {
             await deleteDoc(doc(database, "Products", id));
@@ -144,5 +131,4 @@ const ViewProducts= () => {
             </div>
         </>
     )
->>>>>>> 63a977d (chnages)
 }
