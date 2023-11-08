@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
+=======
+import React, { useEffect, useState } from "react";
+>>>>>>> 63a977d (chnages)
 import { database } from "../../../firebase/firebase";
 import Loader from "../../../component/loader/loader";
 import { toast } from "react-toastify";
@@ -61,7 +65,11 @@ const ViewProducts= () => {
         );
     } , [dispatch, products, search]);
 
+<<<<<<< HEAD
     const confirmDelete = (id : stringify, imageUrl: string, name: string) => {
+=======
+    const confirmDelete = (id : string, imageUrl: string, name: string) => {
+>>>>>>> 63a977d (chnages)
         Notiflix.Confirm.show(
             "Delete Product",
             `Are you sure you want to delete ${name}?`,
@@ -71,8 +79,70 @@ const ViewProducts= () => {
                 deleteProduct(id, imageUrl);
                 toast.success(
                     `${name} deleted, if you are not an authorized admin, this would be reversed within seconds.`
+<<<<<<< HEAD
                 )
             }
         )
     }
+=======
+                );
+            },
+            function cancelCb() {},
+            {
+                width: "320px",
+                borderRadius: "5px",
+                titleColor: "#c07d53",
+                okButtonBackground: "#c07d53",
+                cssAnimationStyle: "zoom",
+            }
+        )
+    };
+
+    const deleteProduct = async (id: string, imageUrl: string) => {
+        try {
+            await deleteDoc(doc(database, "Products", id));
+            const storageRef = ref(storage, imageUrl);
+            await deleteObject(storageRef).then(() => {
+                // handle sucess if needed
+            })
+            .catch((error : any) => {
+                toast.error(error.message);
+            });
+        } catch (error : any) {
+            if (error.message === "Missing or insufficient permissions.") {
+                toast.error(
+                    "D;ELETE REQUEST REVERSED, only AJFX can delete products from the database"
+                );
+            }
+        }
+    };
+
+    return (
+        <>
+            {loading && <Loader />}
+            <div className={styles.table}>
+                <h1>All Products</h1>
+                <div className={styles.search}>
+                    <p>
+                        <p>
+                            <b>{currentProducts.length}</b> Prooduct(s) Found
+                        </p>
+                        <Search value={search} onChange={(e) => setSearch(e.target.value)} />
+                        {search && (
+                            <p style={{
+                                textAlign: "center",
+                                margin: "2rem 0",
+                                fontSize: "1.9rem"
+                                }}>
+                                <b>
+                                    Products including ' <i style={{ color: "#ff847c"}}>{search}</i>'
+                                </b>
+                            </p>
+                        )}
+                    </p>
+                </div>
+            </div>
+        </>
+    )
+>>>>>>> 63a977d (chnages)
 }
