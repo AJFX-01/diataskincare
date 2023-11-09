@@ -1,117 +1,93 @@
-import React, { useEffect } from "react";
-import InfoBox from "../../../components/infoBox/InfoBox";
-import spinnerImg from "../../../assets/spinner.jpg";
-import styles from "./home.module.scss";
-import { TbCurrencyNaira } from "react-icons/tb";
-import { BsCart4 } from "react-icons/bs";
-import { FaCartArrowDown } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectProducts,
-  STORE_PRODUCTS,
-} from "../../../redux/slice/productSlice";
-import {
-  CALCULATE_TOTAL_ORDER_AMOUNTS,
-  selectOrderHistory,
-  selectTotalOrderAmount,
-  STORE_ORDERS,
-} from "../../../redux/slice/orderSlice";
-import useFetchCollection from "../../../hooks/useFetchCollection";
-import Chart from "../../../components/chart/Chart";
+import React, { ReactNode } from "react";
 
-// Define types or interfaces if necessary
-interface Product {
-  // Define your product properties here
+interface ActionProviderProps {
+  createChatBotMessage: (message: string, options?: Record<string, any>) => any;
+  setState: React.Dispatch<React.SetStateAction<any>>;
+  children: ReactNode;
 }
 
-interface Order {
-  // Define your order properties here
-}
+const ActionProvider: React.FC<ActionProviderProps> = ({
+  createChatBotMessage,
+  setState,
+  children,
+}) => {
+  const handleHello = () => {
+    const botMessage = createChatBotMessage("Hello. Nice to meet you.");
 
-const earningIcon = <TbCurrencyNaira size={30} color="#c07d53" />;
-const productIcon = <BsCart4 size={30} color="#000" />;
-const ordersIcon = <FaCartArrowDown size={30} color="#3c4448" />;
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+  };
 
-const Home: React.FC = () => {
-  const products: Product[] = useSelector(selectProducts);
-  const orders: Order[] = useSelector(selectOrderHistory);
-  const totalOrderAmount: number = useSelector(selectTotalOrderAmount);
+  const handleThanks = () => {
+    const botMessage = createChatBotMessage("You are welcome!");
 
-  const dbProducts = useFetchCollection("Products");
-  const { data } = useFetchCollection("Orders");
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+  };
 
-  const dispatch = useDispatch();
+  const handleOkay = () => {
+    const botMessage = createChatBotMessage("That's great to hear!");
 
-  useEffect(() => {
-    dispatch(
-      STORE_PRODUCTS({
-        products: dbProducts.data,
-      })
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+  };
+
+  const handleGood = () => {
+    const botMessage = createChatBotMessage("I'm great!, how about you?");
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+  };
+
+  const handleAccount = () => {
+    const botMessage = createChatBotMessage(
+      "Having trouble signing in or setting up your account? let us know, go to the contact page and send us a message."
     );
 
-    dispatch(STORE_ORDERS(data));
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+  };
 
-    dispatch(CALCULATE_TOTAL_ORDER_AMOUNTS());
-  }, [dispatch, data, dbProducts]);
+  const handleProducts = () => {
+    const botMessage = createChatBotMessage(
+      "If you have any inquiries about a product or you need assistance in any way, go to our contact page and submit your issue. All the best!.",
+      {
+        widget: "Product",
+      }
+    );
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+  };
 
   return (
-    <div className={styles.home}>
-      <h2>Dashboard</h2>
-      <div className={styles["info-box"]}>
-        <InfoBox
-          cardClass={`${styles.card} ${styles.card1}`}
-          title={"Earnings"}
-          count={
-            totalOrderAmount === 0 ? (
-              <img
-                src={spinnerImg}
-                alt="loading"
-                style={{ width: "20px", height: "20px" }}
-              />
-            ) : (
-              `NGN ${new Intl.NumberFormat().format(totalOrderAmount)}`
-            )
-          }
-          icon={earningIcon}
-        />
-        <InfoBox
-          cardClass={`${styles.card} ${styles.card2}`}
-          title={"Products"}
-          count={
-            products.length === 0 ? (
-              <img
-                src={spinnerImg}
-                alt="loading"
-                style={{ width: "20px", height: "20px" }}
-              />
-            ) : (
-              products.length
-            )
-          }
-          icon={productIcon}
-        />
-        <InfoBox
-          cardClass={`${styles.card} ${styles.card3}`}
-          title={"Orders"}
-          count={
-            orders.length === 0 ? (
-              <img
-                src={spinnerImg}
-                alt="loading"
-                style={{ width: "20px", height: "20px" }}
-              />
-            ) : (
-              orders.length
-            )
-          }
-          icon={ordersIcon}
-        />
-      </div>
-      <div>
-        <Chart />
-      </div>
+    <div>
+      {React.Children.map(children, (child) => {
+        return React.cloneElement(child, {
+          actions: {
+            handleHello,
+            handleProducts,
+            handleThanks,
+            handleGood,
+            handleOkay,
+            handleAccount,
+          },
+        });
+      })}
     </div>
   );
 };
 
-export default Home;
+export default ActionProvider;
