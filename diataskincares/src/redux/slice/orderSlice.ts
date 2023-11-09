@@ -16,7 +16,7 @@ export interface Address {
  export interface OrderState {
     orderHistory : Order[];
     addressHistory : Address[];
-    totalOrderAmount : number | null;
+    totalOrderAmount : number;
     successURL : string;
     deliveryFee : 3000
 };
@@ -24,7 +24,7 @@ export interface Address {
 const initialState : OrderState = {
     orderHistory : [],
     addressHistory : [],
-    totalOrderAmount : null,
+    totalOrderAmount : 0,
     successURL : "",
     deliveryFee : 3000,
 };

@@ -30,7 +30,7 @@ const ordersIcon = <FaCartArrowDown size={30} color="#3c4448" />;
 const Home: React.FC = () => {
     const products: Product[] = useSelector(selectProducts);
     const orders: Order[] = useSelector(selectOrderHistory);
-    const totalOrderAmount: number | null = useSelector(selectTotal);
+    const totalOrderAmount: number = useSelector(selectTotal);
   
     const dbProducts = useFetchCollection("Products");
     const { data } = useFetchCollection("Orders");
