@@ -44,4 +44,19 @@
       transform: scale(1);
     }
   }
+  @media (max-width: 540px) {
+    .home {
+      .bot {
+        bottom: 6rem;
+        right: 6rem;
+      }
+    }
+  }
   
+  @media (max-width: 420px) {
+    .home {
+      .bot {
+        right: 5rem;
+      }
+    }
+  }
