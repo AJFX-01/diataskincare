@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Card from "../../component/card/Card";
 import { IoIosEye, IoMdEyeOff } from "react-icons/io";
 
@@ -35,8 +35,6 @@ const DeleteUser = () => {
                     </form>
                 </div>
             </Card>
-        </section>
-    );
-}
-
-export default DeleteUser;
+       </section>
+    )
+                                }

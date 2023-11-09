@@ -1,5 +1,5 @@
 import styles from "./auth.module.scss";
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { FaGoggle } from "react-icons/fa";
 import { Link , useNavigate } from "react-router-dom";
 import { IoIosEye, IoMdEyeOff } from 'react-icons/io';

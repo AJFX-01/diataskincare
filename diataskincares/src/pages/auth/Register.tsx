@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef } from "react";
+import React, {useState, useEffect, useRef } from "react";
 import Card from "../../component/card/Card";
 import styles from "./auth.module.scss";
 import { FaGoogle } from "react-icons/fa";

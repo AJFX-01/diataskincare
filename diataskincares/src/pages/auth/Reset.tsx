@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styles from "./auth.module.scss";
 
 import { Link, useNavigate } from "react-router-dom"
