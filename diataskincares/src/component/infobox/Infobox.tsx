@@ -9,7 +9,7 @@ interface InfoBoxProps {
     icon: ReactNode;
 }
 
-function InfoBox({ cardClass, title, count, icon }: InfoBoxProps) {
+const InfoBox = ({ cardClass, title, count, icon }: InfoBoxProps) => {
     return (
         <div className={styles["info-box"]}>
             <Card cardClass={cardClass}>
@@ -22,3 +22,5 @@ function InfoBox({ cardClass, title, count, icon }: InfoBoxProps) {
         </div>
     );
 }
+
+export default InfoBox;
