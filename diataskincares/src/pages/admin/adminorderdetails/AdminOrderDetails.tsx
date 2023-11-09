@@ -36,7 +36,7 @@ import Loader from "../../../component/loader/loader";
         };
       });
       
-
++
         dispatch(STORE_ADDRESS({addressHistory}));
     }, [dispatch, data]);
 
