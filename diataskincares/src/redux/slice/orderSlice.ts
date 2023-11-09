@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface Order {
+export interface Order {
     id: string;
     orderDate: string;
     orderTime: string;

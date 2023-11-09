@@ -1,15 +1,42 @@
-//Icons
+import React, { useEffect } from "react";
+import InfoBox from "../../../components/infoBox/InfoBox";
+import spinnerImg from "../../../assets/spinner.jpg";
+import styles from "./home.module.scss";
+import { TbCurrencyNaira } from "react-icons/tb";
+import { BsCart4 } from "react-icons/bs";
+import { FaCartArrowDown } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectProducts,
+  STORE_PRODUCTS,
+} from "../../../redux/slice/productSlice";
+import {
+  CALCULATE_TOTAL_ORDER_AMOUNTS,
+  selectOrderHistory,
+  selectTotalOrderAmount,
+  STORE_ORDERS,
+} from "../../../redux/slice/orderSlice";
+import useFetchCollection from "../../../hooks/useFetchCollection";
+import Chart from "../../../components/chart/Chart";
+
+// Define types or interfaces if necessary
+interface Product {
+  // Define your product properties here
+}
+
+interface Order {
+  // Define your order properties here
+}
+
 const earningIcon = <TbCurrencyNaira size={30} color="#c07d53" />;
 const productIcon = <BsCart4 size={30} color="#000" />;
 const ordersIcon = <FaCartArrowDown size={30} color="#3c4448" />;
 
-const Home = () => {
-  const products = useSelector(selectProducts);
-  
-  const orders = useSelector(selectOrderHistory);
-  const totalOrderAmount = useSelector(selectTotalOrderAmount);
+const Home: React.FC = () => {
+  const products: Product[] = useSelector(selectProducts);
+  const orders: Order[] = useSelector(selectOrderHistory);
+  const totalOrderAmount: number = useSelector(selectTotalOrderAmount);
 
-  //doing this to save the info to redux and fetch it here from there directly, cause fetching it from frontend means if we refresh the page, we loose the data.
   const dbProducts = useFetchCollection("Products");
   const { data } = useFetchCollection("Orders");
 
@@ -26,7 +53,6 @@ const Home = () => {
 
     dispatch(CALCULATE_TOTAL_ORDER_AMOUNTS());
   }, [dispatch, data, dbProducts]);
-
 
   return (
     <div className={styles.home}>
