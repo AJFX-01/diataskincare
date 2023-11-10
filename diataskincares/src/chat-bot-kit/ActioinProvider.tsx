@@ -8,4 +8,17 @@ interface ActionProviderProps {
 };
 
 
-const ActionProvider: React.FC<ActionProviderProps>
+const ActionProvider: React.FC<ActionProviderProps> = ({
+    createChatBotMessage,
+    setState,
+    children
+}) => {
+    const handleHello = () => {
+        const botMessage = createChatBotMessage("Hello. Nice to meeet you");
+
+        setState((prev) => {
+            ...prev,
+            messages: [...prev.messages, botMessage]
+        })
+    } 
+}
