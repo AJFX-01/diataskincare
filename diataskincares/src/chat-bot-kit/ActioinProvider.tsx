@@ -91,7 +91,7 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
                         handleOkay,
                         handleAccount,
                     },
-                });
+                })
             })}
         </div>
     );

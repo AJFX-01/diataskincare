@@ -1,95 +1,54 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
-interface ActionProviderProps {
-  createChatBotMessage: (message: string, options?: Record<string, any>) => any;
-  setState: React.Dispatch<React.SetStateAction<any>>;
+interface MessageParserProps {
   children: ReactNode;
+  actions: {
+    handleHello: () => void;
+    handleGood: () => void;
+    handleOkay: () => void;
+    handleProducts: () => void;
+    handleThanks: () => void;
+    handleAccount: () => void;
+  };
 }
 
-const ActionProvider: React.FC<ActionProviderProps> = ({
-  createChatBotMessage,
-  setState,
-  children,
-}) => {
-  const handleHello = () => {
-    const botMessage = createChatBotMessage('Hello. Nice to meet you.');
+const MessageParser: React.FC<MessageParserProps> = ({ children, actions }) => {
+  const parse = (message: string) => {
+    if (message.includes('hello') || message.includes('hi') || message.includes('hey') || message.includes('good')) {
+      actions.handleHello();
+    }
 
-    setState((prev) => ({
-      ...prev,
-      messages: [...prev.messages, botMessage],
-    }));
-  };
+    if (message.includes('how')) {
+      actions.handleGood();
+    }
 
-  const handleThanks = () => {
-    const botMessage = createChatBotMessage('You are welcome!');
+    if (message.includes('good') || message.includes('fine') || message.includes('great') || message.includes('okay')) {
+      actions.handleOkay();
+    }
 
-    setState((prev) => ({
-      ...prev,
-      messages: [...prev.messages, botMessage],
-    }));
-  };
+    if (message.includes('product') || message.includes('item') || message.includes('help') || message.includes('assistance') || message.includes('password')) {
+      actions.handleProducts();
+    }
 
-  const handleOkay = () => {
-    const botMessage = createChatBotMessage('That\'s great to hear!');
+    if (message.includes('thank')) {
+      actions.handleThanks();
+    }
 
-    setState((prev) => ({
-      ...prev,
-      messages: [...prev.messages, botMessage],
-    }));
-  };
-
-  const handleGood = () => {
-    const botMessage = createChatBotMessage('I\'m great!, how about you?');
-
-    setState((prev) => ({
-      ...prev,
-      messages: [...prev.messages, botMessage],
-    }));
-  };
-
-  const handleAccount = () => {
-    const botMessage = createChatBotMessage(
-      'Having trouble signing in or setting up your account? let us know, go to the contact page and send us a message.'
-    );
-
-    setState((prev) => ({
-      ...prev,
-      messages: [...prev.messages, botMessage],
-    }));
-  };
-
-  const handleProducts = () => {
-    const botMessage = createChatBotMessage(
-      'If you have any inquiries about a product or you need assistance in any way, go to our contact page and submit your issue. All the best!.',
-      {
-        widget: 'Product',
-      }
-    );
-
-    setState((prev) => ({
-      ...prev,
-      messages: [...prev.messages, botMessage],
-    }));
+    if (message.includes('login') || message.includes('account') || message.includes('sign')) {
+      actions.handleAccount();
+    }
   };
 
   return (
     <div>
       {React.Children.map(children, (child) => {
         return React.cloneElement(child, {
-          actions: {
-            handleHello,
-            handleProducts,
-            handleThanks,
-            handleGood,
-            handleOkay,
-            handleAccount,
-          },
+          parse,
+          actions,
         });
       })}
     </div>
   );
 };
 
-export
- 
-default ActionProvider;
+export default MessageParser;
