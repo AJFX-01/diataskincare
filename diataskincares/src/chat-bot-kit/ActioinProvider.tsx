@@ -18,7 +18,16 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
 
         setState((prev) => {
             ...prev,
+            messages: [...prev.messages, botMessage],
+        });
+    };
+
+    const handleThanks = () => {
+        const botMessage = createChatBotMessage("You are welcome!");
+
+        setState((prev) => ({
+            ...prev,
             messages: [...prev.messages, botMessage]
-        })
-    } 
+        }));
+    }
 }
