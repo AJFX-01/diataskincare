@@ -1,1 +1,8 @@
-import React, { ReactNode } from "react" 
+import React, { ReactNode } from "react"
+
+
+interface ActionProviderProps {
+    createChatBotMessage: (message : string, option?: Record<string , any>) => any;
+    setState: React.Dispatch<React.SetStateAction<any>>;
+    children: ReactNode;
+},
