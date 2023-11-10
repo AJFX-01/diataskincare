@@ -28,7 +28,7 @@ const config: BotConfig = {
     },
 };
 
-// export default config;
+export default config;
 
 // import { createChatBotMessage } from "react-chatbot-kit";
 
