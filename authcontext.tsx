@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 
 interface ActionProviderProps {
   createChatBotMessage: (message: string, options?: Record<string, any>) => any;
@@ -12,7 +12,7 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
   children,
 }) => {
   const handleHello = () => {
-    const botMessage = createChatBotMessage("Hello. Nice to meet you.");
+    const botMessage = createChatBotMessage('Hello. Nice to meet you.');
 
     setState((prev) => ({
       ...prev,
@@ -21,7 +21,7 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
   };
 
   const handleThanks = () => {
-    const botMessage = createChatBotMessage("You are welcome!");
+    const botMessage = createChatBotMessage('You are welcome!');
 
     setState((prev) => ({
       ...prev,
@@ -30,7 +30,7 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
   };
 
   const handleOkay = () => {
-    const botMessage = createChatBotMessage("That's great to hear!");
+    const botMessage = createChatBotMessage('That\'s great to hear!');
 
     setState((prev) => ({
       ...prev,
@@ -39,7 +39,7 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
   };
 
   const handleGood = () => {
-    const botMessage = createChatBotMessage("I'm great!, how about you?");
+    const botMessage = createChatBotMessage('I\'m great!, how about you?');
 
     setState((prev) => ({
       ...prev,
@@ -49,7 +49,7 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
 
   const handleAccount = () => {
     const botMessage = createChatBotMessage(
-      "Having trouble signing in or setting up your account? let us know, go to the contact page and send us a message."
+      'Having trouble signing in or setting up your account? let us know, go to the contact page and send us a message.'
     );
 
     setState((prev) => ({
@@ -60,9 +60,9 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
 
   const handleProducts = () => {
     const botMessage = createChatBotMessage(
-      "If you have any inquiries about a product or you need assistance in any way, go to our contact page and submit your issue. All the best!.",
+      'If you have any inquiries about a product or you need assistance in any way, go to our contact page and submit your issue. All the best!.',
       {
-        widget: "Product",
+        widget: 'Product',
       }
     );
 
@@ -90,4 +90,6 @@ const ActionProvider: React.FC<ActionProviderProps> = ({
   );
 };
 
-export default ActionProvider;
+export
+ 
+default ActionProvider;
