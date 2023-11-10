@@ -31,10 +31,27 @@ const MessageParser : React.FC<MessageParserProps> = ({ children, actions }) => 
             actions.handleProducts();
         }
 
+        if (message.includes('thank')) {
+            actions.hanldeThanks();
+        }
+
+        if (message.includes('login') || message.includes('account') || message.includes('sign')) {
+            actions.handleAccount();
+        }
+    }
+
     return(
-        <div>non</div>
+        <div>
+            {React.Children.map(children, (child : any) => {
+                return React.cloneElement(child, {
+                    parse,
+                    actions,
+                });
+            })}
+        </div>
     );
 
+    
 }
 
 export default MessageParser;
