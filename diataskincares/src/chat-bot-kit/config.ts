@@ -1,8 +1,8 @@
 import { createChatBotMessage } from 'react-chatbot-kit';
 
 interface BotConfig {
-    initialMessages: [];
-    botNmae: string;
+    initialMessages: any[];
+    botName: string;
     customstyles?: {
         botMessageBox?: {
             backgroundColor: string;
@@ -13,11 +13,11 @@ interface BotConfig {
     };
 }
 
-const botNmae = "Diata's Bot";
+const botName = "Diata's Bot";
 
 const config: BotConfig = {
-    initialMessages: [createChatBotMessage(`Hi! I'm ${botNmae}`)],
-    botNmae,
+    initialMessages: [createChatBotMessage(`Hi! I'm ${botName}`, {})],
+    botName,
     customstyles: {
         botMessageBox: {
             backgroundColor: "#3c4448",
