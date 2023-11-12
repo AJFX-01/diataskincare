@@ -151,7 +151,7 @@ import {
 import { auth } from "../firebase/firebase";
 
 interface AuthContextProps {
-    user: User | null | undefined;
+    user: User | undefined | null;
     loading: boolean;
     userName: string;
     signup: (email: string, password: string) => Promise<UserCredential>;

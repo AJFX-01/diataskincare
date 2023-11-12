@@ -29,7 +29,7 @@ interface DeleteAccountState {
 
 const DeleteUser: React.FC<DeleteAccountProps> = () => {
 
-    const { user } = useAuth() || ();
+    const { user } = useAuth() || {} || null;
     const [state, setState] = useState<DeleteAccountState>({
         email: "",
         password: "",
