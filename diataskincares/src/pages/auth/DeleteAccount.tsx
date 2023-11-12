@@ -21,7 +21,7 @@ interface DeleteAccountProps {}
 interface DeleteAccountState {
     email: string;
     password: string;
-    error: string
+    error: string | null;
     loading: boolean;
     view: boolean;
     disable: boolean;
@@ -30,7 +30,7 @@ interface DeleteAccountState {
 const DeleteUser: React.FC<DeleteAccountProps> = () => {
 
     const { user } = useAuth();
-    const [state, setState] = useState<>({
+    const [state, setState] = useState<DeleteAccountState>({
         email: "",
         password: "",
         error: null,
@@ -40,10 +40,84 @@ const DeleteUser: React.FC<DeleteAccountProps> = () => {
 
     });
 
-    const passwordRef
+    const passwordRef = useRef<HTMLInputElement>();
+
+    useEffect(() => {
+        if (!state.email || !state.password) {
+            setState({ ...state, disable: true});
+        } else {
+            setState({ ...state, disable: false});
+        }
+    }, [state.email, state.password]);
+    
+    const reAuthenticate = async () => {
+        setState({ ...state, loading: true });
 
 
+        try {
+            const credential = EmailAuthProvider.credential(state.email, state.password);
+            await reauthenticateWithCredential(user, credential);
 
+            deleteAccount();
+            setState({ ...state, error: null});
+        } catch (error: any) {
+            if (error.message === "Firebase: Error (auth/user-token-expired).") {
+                setState({ ...state, error: "it has been long since your last login, please logout and login again to proceed" });
+                window.setTimeout(() => {
+                  setState({ ...state, error: null });
+                }, 3000);
+              } else if (error.message === "Firebase: Error (auth/wrong-password).") {
+                setState({ ...state, error: "Wrong password" });
+                window.setTimeout(() => {
+                  setState({ ...state, error: null });
+                }, 3000);
+              } else if (error.message === "Firebase: Error (auth/user-mismatch).") {
+                setState({ ...state, error: "Invalid Email" });
+                window.setTimeout(() => {
+                  setState({ ...state, error: null });
+                }, 3000);
+              }
+              setState({ ...state, loading: false });
+        }
+    };
+
+    try {
+        Notiflix.Confirm.show(
+            "DELETE Account",
+            "Are you sure you wamt to delete your account?",
+            "PROCEDD",
+           " CANCEL", 
+           async () => {
+            await reAuthenticate();
+           },
+           () => {},
+           {
+            width: "320px",
+            borderRadius: "5px",
+            titleColor: "#c07d53",
+            okButtonBackground: "#c07d53",
+            cssAnimationStyle: "zoom"
+           }
+        );
+    } catch (error: any) {
+        toast.error(error.message);
+    },
+
+    const deleteAccount = async () => {
+        try {
+            await deleteUser(user);
+            toast.success("Your account has beem deleted")
+        } catch (error : any) {
+            toast.error(error.message)
+        }
+    }
+
+    const handleShowPassword = () => {
+        setState({ ...state, view: !state.view });
+        if (passwordRef.current) {
+            passwordRef.current.type = view ? "text" : "password"
+        } 
+    }
 
     return (
         <section className={styles.auth}>
