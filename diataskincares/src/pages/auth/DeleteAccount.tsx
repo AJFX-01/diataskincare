@@ -222,6 +222,7 @@ import {
   
     const reAuthenticate = () => {
       setLoading(true);
+      if(user !== undefined && user !== null)
       reauthenticateWithCredential(user, credential)
         .then(() => {
           deleteAccount();
@@ -294,6 +295,7 @@ import {
     };
   
     const deleteAccount = () => {
+        if ( user)
       deleteUser(user)
         .then(() => {
           toast.success("Your account has been deleted");
