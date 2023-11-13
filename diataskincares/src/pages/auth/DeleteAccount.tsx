@@ -15,6 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { database } from "../../firebase/firebase";
 import styles from "./auth.module.scss";
+import { error } from "console";
 
 interface DeleteAccountProps {}
 
@@ -29,7 +30,8 @@ interface DeleteAccountState {
 
 const DeleteUser: React.FC<DeleteAccountProps> = () => {
 
-    const { user } = useAuth() || {} || null;
+    const authResult = useAuth()
+    const user = authResult ? authResult.user : undefined;
     const [state, setState] = useState<DeleteAccountState>({
         email: "",
         password: "",
@@ -56,8 +58,10 @@ const DeleteUser: React.FC<DeleteAccountProps> = () => {
 
         try {
             const credential = EmailAuthProvider.credential(state.email, state.password);
-            await reauthenticateWithCredential(user, credential);
-
+            if (user !== undefined && user !== null ) {
+                await reauthenticateWithCredential(user, credential);
+            }
+            
             deleteAccount();
             setState({ ...state, error: null});
         } catch (error: any) {
@@ -101,11 +105,13 @@ const DeleteUser: React.FC<DeleteAccountProps> = () => {
         );
     } catch (error: any) {
         toast.error(error.message);
-    },
+    };
 
     const deleteAccount = async () => {
         try {
-            await deleteUser(user);
+            if (user !== undefined && user !== null) {
+                await deleteUser(user);
+            }
             toast.success("Your account has beem deleted")
         } catch (error : any) {
             toast.error(error.message)
@@ -115,7 +121,7 @@ const DeleteUser: React.FC<DeleteAccountProps> = () => {
     const handleShowPassword = () => {
         setState({ ...state, view: !state.view });
         if (passwordRef.current) {
-            passwordRef.current.type = view ? "text" : "password"
+            passwordRef.current.type = state.view ? "text" : "password"
         } 
     }
 
@@ -127,18 +133,19 @@ const DeleteUser: React.FC<DeleteAccountProps> = () => {
             <Card cardClass={styles.card}>
                 <div className={styles.form}>
                     <h2>Confirm your details</h2>
+                    {state.error && <p className="alert-err0r">{state.error}</p>}
                     <form>
-                        <input type="email" value={email} required placeholder="Email"/>
+                        <input type="email" value={state.email} required placeholder="Email"/>
                         <label className={styles.label}>
-                            <input type="password" required value={} placeholder="Password"/>
+                            <input type="password" required value={state.password} placeholder="Password"/>
                         </label>
-                        {disable ? (
+                        {state.disable ? (
                             <button disabled className={`${styles.button} ${styles.disabled}`}>
                                 Delete Account
                             </button>
                         ) : (
                             <button type="submit" className="--btn --btn-primary --btn-block">
-                                {loading ? (
+                                {state.loading ? (
                                     <img src={} alt="loading" style={{ width : "25px", height: "25px"}} />
                                 ) : ( 
                                     "Delete Account"
@@ -152,4 +159,4 @@ const DeleteUser: React.FC<DeleteAccountProps> = () => {
     )
 };
 
- export default DeleteUser;
+export default DeleteUser;

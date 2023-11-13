@@ -151,7 +151,7 @@ import {
 import { auth } from "../firebase/firebase";
 
 interface AuthContextProps {
-    user: User | undefined | null;
+    user: User | null | undefined;
     loading: boolean;
     userName: string;
     signup: (email: string, password: string) => Promise<UserCredential>;
@@ -181,8 +181,8 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-    const [user, setUser] = useState<User | null | undefined>(null);
+const AuthProvider : React.FC<AuthProviderProps> = ({ children }: AuthProviderProps) => {
+    const [user, setUser] = useState<User | null>();
     const [loading, setLoading] = useState(true);
     const [userName, setUserName] = useState<string>('');
 
@@ -226,6 +226,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+
             setUser(currentUser);
             setLoading(false);
         });
@@ -251,9 +252,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUserName,
     };
 
+    // return (
+    //     <auth.Provider value={values}>
+    //         {children}
+    //     </auth.Provider>
+    // );
     return (
-        <auth.Provider value={values}>
-            {children}
-        </auth.Provider>
-    );
+        
+    )
 };
+
+export default AuthProvider;
