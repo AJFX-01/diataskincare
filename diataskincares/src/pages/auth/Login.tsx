@@ -4,8 +4,24 @@ import { FaGoogle } from "react-icons/fa";
 import { Link , useNavigate } from "react-router-dom";
 import { IoIosEye, IoMdEyeOff } from 'react-icons/io';
 import Card from "../../component/card/Card";
+import { useAuth } from "../../contexts/auth";
+import { useSelector } from "react-redux";
+import { selectPreviousURL } from "../../redux/slice/cartSlice";
 
-const Login: React = () => {
+const Login: React.FC = () => {
+
+
+
+    const [email, setEmail] =  useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const [view, setView] = useState<boolean>(false);
+    const [disable, setDisable] = useState<boolean>(false);
+    const [loading, setLoading] = useState<Boolean>(false);
+    const [error, setErrror] = useState<string | null>(null);
+    const navigate = useNavigate()
+    const { login, googleSignIn } = useAuth();
+    const previousURL = useSelector(selectPreviousURL);
 
     return (
         <section className={`${styles.auth}`}>
@@ -36,13 +52,13 @@ const Login: React = () => {
                         <div className={styles.links}>
                             <Link to="/reset">Forget Password</Link>
                         </div>
-                        <p>-- oR --</p>
+                        <p>-- oR --</p> 
                     </form>
                     <button className="--btn --btn-danger --btn-block">
                         <FaGoggle color="#fff" /> &nbsp; Login With Google
                     </button>
                     <span className={styles.register}>
-                        <p>
+                        <p> s
                             No Diata<span>Skincares</span> account?
                         </p> &nbsp; <Link to="/signup">Sign Up</Link>
                     </span>
@@ -52,4 +68,4 @@ const Login: React = () => {
     );
 }
 
-export default Login;
+export default Login;  
