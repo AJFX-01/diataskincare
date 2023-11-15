@@ -1,11 +1,11 @@
 import styles from "./auth.module.scss";
 import React, { useEffect, useState, useRef } from 'react';
-import { FaGoggle } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
 import { Link , useNavigate } from "react-router-dom";
 import { IoIosEye, IoMdEyeOff } from 'react-icons/io';
 import Card from "../../component/card/Card";
 
-const Login = () => {
+const Login: React = () => {
 
     return (
         <section className={`${styles.auth}`}>
