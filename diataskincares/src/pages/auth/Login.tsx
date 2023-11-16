@@ -18,10 +18,73 @@ const Login: React.FC = () => {
     const [view, setView] = useState<boolean>(false);
     const [disable, setDisable] = useState<boolean>(false);
     const [loading, setLoading] = useState<Boolean>(false);
-    const [error, setErrror] = useState<string | null>(null);
-    const navigate = useNavigate()
+    const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
     const { login, googleSignIn } = useAuth();
     const previousURL = useSelector(selectPreviousURL);
+
+    const redirectUser = () => {
+        if (previousURL.includes("cart")) {
+            return navigate("/cart");
+        } else {
+            navigate('/');
+        }
+    };
+
+    useEffect(() => {
+        if(!email || !password) {
+            setDisable(true);
+        } else {
+            setDisable(false);
+        }
+    }, [email, password]);
+
+    const loginUser = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            setLoading(true);
+            setError('');
+            await login(email, password);
+            setLoading(false);
+            redirectUser()
+        } catch (error : any) {
+            if (error.message === "Firebase: Error (auth/user-not-found).") {
+                setError("User not found");
+                window.setTimeout(() => {
+                  setError("");
+                }, 6000);
+              }
+              if (error.message === "Firebase: Error (auth/wrong-password).") {
+                setError("Wrong password");
+                window.setTimeout(() => {
+                  setError("");
+                }, 6000);
+              }
+              if (error.message === "Firebase: Error (auth/network-request-failed).") {
+                setError("Please check your internet connection");
+                window.setTimeout(() => {
+                  setError("");
+                }, 6000);
+              }
+              if (
+                error.message ===
+                "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
+              ) {
+                setError(
+                  "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later"
+                );
+                window.setTimeout(() => {
+                  setError("");
+                }, 12000);
+                
+                setLoading(false)
+            }
+        }
+    };
+
+
+    
 
     return (
         <section className={`${styles.auth}`}>
