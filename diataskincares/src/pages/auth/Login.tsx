@@ -7,6 +7,8 @@ import Card from "../../component/card/Card";
 import { useAuth } from "../../contexts/auth";
 import { useSelector } from "react-redux";
 import { selectPreviousURL } from "../../redux/slice/cartSlice";
+import spinnerImg from "../../assets/spinner.jpg";
+import loginImg from "../../assets/login.png";
 
 const Login: React.FC = () => {
 
