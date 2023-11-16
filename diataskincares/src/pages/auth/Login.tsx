@@ -84,50 +84,88 @@ const Login: React.FC = () => {
     };
 
 
-    
+    const handleShowPassword = () => {
+        setView(view);
+        if (passwordRef.current) {
+            if (passwordRef.current?.type === "password") {
+                passwordRef.current.setAttribute("type", "text")
+            } else {
+                passwordRef.current.setAttribute("type", "password")
+            }
+        }
+    };
+
+    const handleGoogleSignIn = async () => {
+        try {
+            await googleSignIn();
+            redirectUser();
+        } catch(err : any) {
+            if (err.message === "Firebase: Error (auth/popup-closed-by-user).") {
+                setError("Google sign in failed. (You exited the google sign in)");
+                window.setTimeout(() => {
+                  setError("");
+                }, 6000);
+              }
+              if (err.message === "Firebase: Error (auth/network-request-failed).") {
+                setError(
+                  "Google sign in failed, this is mostly due to network connectivity issues, please check your network and try again."
+                );
+                window.setTimeout(() => {
+                  setError("");
+                }, 6000);
+              }
+            }
+        }
+
 
     return (
-        <section className={`${styles.auth}`}>
-            <div className={styles.img}>
-                <img src={loginImg} alt="login" width="400"/>
-            </div>
-            <Card>
-                <div className={styles.form}>
-                    <h2>Login</h2>
-                    <form>
-                        <input type="email" value={email} placeholder="Email" required/>
-                        <label className={styles.label}> 
-                            <input type="password" value={password} placeholder="Password" required/>
-                        </label>
-                        {disable ? ( 
-                            <button className={`${styles.button} ${styles.disabled}`}>
-                                Continue
-                            </button>
-                            ) : (
-                                <button type="submit" className="--btn --btn-primary --btn-block">
-                                    { loading ? (
-                                        <img src={spinnerImg} alt="loading..." style={{width: "25px", height: "25px"}}/>
-                                    ) : (
-                                        "Continue"
-                                )}
-                            </button>
-                        )}
-                        <div className={styles.links}>
-                            <Link to="/reset">Forget Password</Link>
-                        </div>
-                        <p>-- oR --</p> 
-                    </form>
-                    <button className="--btn --btn-danger --btn-block">
-                        <FaGoggle color="#fff" /> &nbsp; Login With Google
-                    </button>
-                    <span className={styles.register}>
-                        <p> s
-                            No Diata<span>Skincares</span> account?
-                        </p> &nbsp; <Link to="/signup">Sign Up</Link>
-                    </span>
+        <>
+            <section className={`container ${styles.auth}`}>
+                <div className={styles.img}>
+                    <img src={loginImg} alt="login" width="400"/>
                 </div>
-            </Card>
-        </section>
+                <Card>
+                    <div className={styles.form}>
+                        <h2>Login</h2>
+                        {error && <p className="alert-error">{error}</p>}
+                        <form onSubmit={loginUser}>
+                            <input type="email" value={email} placeholder="Email" required onChange={(e) => setEmail(e.target.value)}/>
+                            <label className={styles.label}> 
+                                <input type="password" value={password} placeholder="Password" required ref={passwordRef} onChange={(e) => setPassword(e.target.value)}/>
+                                <span onClick={handleShowPassword}>
+                                    {view ? <IoIosEye/> : <IoMdEyeOff/>}
+                                </span>
+                            </label>
+                            {disable ? ( 
+                                <button className={`${styles.button} ${styles.disabled}`}>
+                                    Continue
+                                </button>
+                                ) : (
+                                    <button type="submit" className="--btn --btn-primary --btn-block">
+                                        { loading ? (
+                                            <img src={spinnerImg} alt="loading..." style={{width: "25px", height: "25px"}}/>
+                                        ) : (
+                                            "Continue"
+                                    )}
+                                </button>
+                            )}
+                            <div className={styles.links}>
+                                <Link to="/reset">Forget Password</Link>
+                            </div>
+                            <p>-- oR --</p> 
+                        </form>
+                        <button className="--btn --btn-danger --btn-block">
+                            <FaGoogle color="#fff" /> &nbsp; Login With Google
+                        </button>
+                        <span className={styles.register}>
+                            <p> s
+                                No Diata<span>Skincares</span> account?
+                            </p> &nbsp; <Link to="/signup">Sign Up</Link>
+                        </span>
+                    </div>
+                </Card>
+            </section>
+        </>
     );
 }
 
