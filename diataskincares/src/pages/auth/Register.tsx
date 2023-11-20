@@ -20,7 +20,7 @@ const Register: React.FC = () => {
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const passwordRef = useRef();
+    const passwordRef = useRef<HTMLInputElement>();
     const [view, setView] = useState<boolean>(false);
     const [caseCondition, setCaseCondition] = useState<boolean>(false);
     const [numberCondition, setNumberCondition] = useState<boolean>(false);
@@ -45,7 +45,7 @@ const Register: React.FC = () => {
     
     };
 
-    const registerUser = async (e : any) => {
+    const registerUser = async (e : React.FormEvent) => {
         e.preventDefault();
 
 
@@ -62,33 +62,60 @@ const Register: React.FC = () => {
                 window.setTimeout(() => {
                   setError("");
                 }, 7000);
-              }
-              if (
-                error.message ===
-                "Firebase: Password should be at least 6 characters (auth/weak-password)."
-              ) {
-                setError("Password should be at least 6 characters");
-                window.setTimeout(() => {
-                  setError("");
-                }, 7000);
-              }
-              if (error.message === "Firebase: Error (auth/invalid-email).") {
-                setError("Invalid email");
-                window.setTimeout(() => {
-                  setError("");
-                }, 7000);
-              }
-              if (error.message === "Firebase: Error (auth/network-request-failed).") {
-                setError("Please check your internet connection");
-                window.setTimeout(() => {
-                  setError("");
-                }, 7000);
-              }
-              setLoading(false);
             }
-        
+            if (
+            error.message ===
+            "Firebase: Password should be at least 6 characters (auth/weak-password)."
+            ) {
+            setError("Password should be at least 6 characters");
+            window.setTimeout(() => {
+                setError("");
+            }, 7000);
+            }
+            if (error.message === "Firebase: Error (auth/invalid-email).") {
+            setError("Invalid email");
+            window.setTimeout(() => {
+                setError("");
+            }, 7000);
+            }
+            if (error.message === "Firebase: Error (auth/network-request-failed).") {
+            setError("Please check your internet connection");
+            window.setTimeout(() => {
+                setError("");
+            }, 7000);
+            }
+            setLoading(false);
         }
-    }
+        
+
+        //===== add users =====
+        const today = new Date();
+        const date = today.toDateString();
+        const usersConfig = {
+            assignedID: uuidv4(),
+            email: email,
+            joinedAt: date,
+            createdAt: Timestamp.now().toDate()
+        };
+        try {
+            const usersRef = collection(database, "Users");
+            await addDoc(usersRef, usersConfig);
+        } catch (error : any) {
+            console.log(error.message);
+        }
+    };
+
+    
+    const handleShowPassword = () => {
+        setView(!view);
+        if (passwordRef.current) {
+            if (passwordRef.current?.type === "password") {
+                passwordRef.current.setAttribute("type", "text")
+            } else {
+                passwordRef.current.setAttribute("type", "password")
+            }
+        }
+    };
 
     
     return (
