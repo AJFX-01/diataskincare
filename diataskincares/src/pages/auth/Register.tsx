@@ -57,7 +57,36 @@ const Register: React.FC = () => {
             setLoading(false);
             redirectUser();
         } catch (error : any) {
-
+            if (error.message === "Firebase: Error (auth/email-already-in-use).") {
+                setError("Email already in use");
+                window.setTimeout(() => {
+                  setError("");
+                }, 7000);
+              }
+              if (
+                error.message ===
+                "Firebase: Password should be at least 6 characters (auth/weak-password)."
+              ) {
+                setError("Password should be at least 6 characters");
+                window.setTimeout(() => {
+                  setError("");
+                }, 7000);
+              }
+              if (error.message === "Firebase: Error (auth/invalid-email).") {
+                setError("Invalid email");
+                window.setTimeout(() => {
+                  setError("");
+                }, 7000);
+              }
+              if (error.message === "Firebase: Error (auth/network-request-failed).") {
+                setError("Please check your internet connection");
+                window.setTimeout(() => {
+                  setError("");
+                }, 7000);
+              }
+              setLoading(false);
+            }
+        
         }
     }
 
