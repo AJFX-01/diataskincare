@@ -157,8 +157,40 @@ const Register: React.FC = () => {
 
 
     useEffect(() => {
-        
-    })
+        if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
+            setCaseCondition(true);
+        } else {
+        setCaseCondition(false);
+        }
+        if (password.match(/([0-9])/)) {
+        setNumberCondition(true);
+        } else {
+        setNumberCondition(false);
+        }
+        if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) {
+        setCharCondition(true);
+        } else {
+        setCharCondition(false);
+        }
+        if (password.length > 5 && password.length <= 12) {
+        setLengthCondition(true);
+        } else {
+        setLengthCondition(false);
+        }
+    
+        if (caseCondition && numberCondition && charCondition && lengthCondition) {
+        setPasswordComplete(true);
+        } else {
+        setPasswordComplete(false);
+        }
+    }, [
+        password,
+        caseCondition,
+        numberCondition,
+        charCondition,
+        lengthCondition,
+        passwordComplete
+    ])
     return (
         <section className={`${styles.auth}`}>
             <Card>
