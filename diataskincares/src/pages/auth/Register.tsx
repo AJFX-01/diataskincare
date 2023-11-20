@@ -117,7 +117,48 @@ const Register: React.FC = () => {
         }
     };
 
-    
+    const handleGoogleSignIn = async () => {
+        try {
+            await googleSignIn();
+            const today = new Date();
+            const date = today.toDateString();
+            const usersConfig = {
+                assignedID: uuidv4(),
+                username: userName,
+                email: user?.email,
+                joinedAt: date,
+                createdAt: Timestamp.now().toDate()
+            };
+
+            try {
+                const usersRef = collection(database, "Users");
+                await addDoc(usersRef, usersConfig);
+            } catch (error : any) {
+                console.log(error.message);
+            }
+            redirectUser();
+        } catch (err: any) {
+            if (err.message === "Firebase: Error (auth/popup-closed-by-user).") {
+                setError("Google sign in failed. (You exited the google sign in)");
+                window.setTimeout(() => {
+                  setError("");
+                }, 6000);
+            }
+            if (err.message === "Firebase: Error (auth/network-request-failed).") {
+                setError(
+                    "Google sign in failed, this is mostly due to network connectivity issues, please check your network and try again."
+                );
+                window.setTimeout(() => {
+                    setError("");
+                }, 6000);
+            }
+        }
+    };
+
+
+    useEffect(() => {
+        
+    })
     return (
         <section className={`${styles.auth}`}>
             <Card>
