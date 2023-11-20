@@ -29,8 +29,8 @@ const Register: React.FC = () => {
     const [passwordComplete, setPasswordComplete] = useState(false);
     const [passFocus , setPassFocus] = useState<boolean>(false);
     const [userName, setUserName] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
     const { signup, updateName, googleSignIn, user } = useAuth();
@@ -45,7 +45,7 @@ const Register: React.FC = () => {
     
     };
 
-    const registerUser = async (e) => {
+    const registerUser = async (e : any) => {
         e.preventDefault();
 
 
