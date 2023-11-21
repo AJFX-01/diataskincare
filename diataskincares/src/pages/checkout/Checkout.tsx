@@ -50,7 +50,7 @@ const Checkout : React.FC = () => {
         dispatch(CALCULATE_TOTAL_QUANTITY());
     }, [dispatch, cartItems]);
 
-    const saveOrder = () => {
+    const saveAddress = () => {
         const today = new Date();
         const date = today.toDateString();
         const time = today.toLocaleDateString();
@@ -70,9 +70,83 @@ const Checkout : React.FC = () => {
             cartItems,
             createdAt: Timestamp.now().toDate()
         };
+
+        try {
+            addDoc(collection(database, "Shipping-Address"), addressConfig);
+            dispatch(CLEAR_CART());
+            navigate("/checkout-success");
+        } catch(error : any) {
+            toast.error(error.message);
+        }
+    };
+
+    const saveOrder = () => {
+        const today = new Date();
+        const date = today.toDateString();
+        const time = today.toLocaleTimeString();
+        const orderConfig = {
+          userID,
+          userEmail,
+          orderDate: date,
+          orderTime: time,
+          orderAmount: cartTotalAmount,
+          orderStatus: "Order Placed...",
+          orderNotification: "Your order has been Placed.....",
+          cartItems,
+          createdAt: Timestamp.now().toDate(),
+        };
+
+        try {
+            addDoc(collection(database, "Orders"), orderConfig);
+            dispatch(CLEAR_CART());
+            navigate("/checkout-success")
+        } catch (error : any) {
+            toast.error(error.message);
+        }
+    };
+    const url = window.location.href;
+
+    const checkout = () => {
+        const initiatePayment = () => {
+            const paystack = new PaystackPop();
+            paystack.newTransaction({
+                key: process.env.REACT_APP_PAYSTACK_KEY,
+                amount: subtotal * 100,
+                email: customerEmail,
+                name,
+                onSuccess() {
+                    saveOrder();
+                    saveAddress();
+                    navigate("/checkout-success");
+                    dispatch(SAVE_SUCCESS_URL({successURL: url}));
+                },
+                onCancel() {
+                    console.log("");
+                },
+            });
+        };
+        initiatePayment();
     }
 
-    return ()
+    return (
+        <>
+            <section className={`container ${styles.section}`}>
+                <img src={checkoutImg} alt="checkout" style={{ width: "40%" }} />
+                <div className={styles.checkout}>
+                    <Card cardClass={styles.card}>
+                        <CheckoutSummary />
+                        <br />
+                        <button 
+                            className="--btn --btn-primary --btn-block"
+                            onClick={checkout}
+                        >
+                            PAY NGN {new Intl.NumberFormat().format(subtotal)}
+                        </button>
+                    </Card>
+                </div>
+            </section>
+        </>
+    );
 }
 
 export default Checkout;
