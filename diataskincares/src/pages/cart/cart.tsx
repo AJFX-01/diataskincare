@@ -22,7 +22,6 @@ import cartEmpty from "../../assets/cartempty.png";
 import Notiflix from "notiflix";
 import { selectIsLoggedIn } from "../../redux/slice/authSlice";
 import useFetchCollection from "../../hooks/useFetchCollection";
-import { createRegularExpressionLiteral } from "typescript";
 import { url } from "inspector";
 
 
@@ -176,14 +175,85 @@ const Cart: React.FC = () => {
                                             style={{ width: "60px" }}
                                         />
                                     </td>
-                                    <td>NGN {new Intl.NumberFormat().format(price)}</td>
+                                    <td>NGN {new Intl.NumberFormat().format(parseInt(price))}</td>
+                                    <td>
+                                        <div className={styles.count}>
+                                            <button
+                                                className="--btn"
+                                                onClick={() => decreaseCart(cart)}
+                                            >
+                                                -
+                                            </button>
+                                            <p>
+                                                <b>{cartQuantity}</b>
+                                            </p>
+                                            <button 
+                                                className="--btn"
+                                                onClick={() => increaseCart(cart)}
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        NGN {new Intl.NumberFormat().format(parseInt(price) * cartQuantity)}
+                                    </td>
+                                    <td>
+                                        <FaTrashAlt
+                                            size={18}
+                                            color="red"
+                                            onClick={() => removeFromCart(cart)}
+                                        />
+                                    </td>
                                 </tr>
                             )
                         })}
                     </tbody>
                 </table>
-            )}2
+            )}
+            {cartItems.length ? (
+                <div className={styles.summary}>
+                    {cartItems.length > 1 ? (
+                        <button className="--btn --btn-danger" onClick={confirmClearCart}>
+                            Clear Cut
+                        </button>
+                    ) : (
+                        "."
+                    )}
+                    <div className={styles.checkout}>
+                        <div>
+                            <Link to="/#products" style={{ fontWeight: "700"}}>
+                                &larr; Continue Shopping
+                            </Link>
+                        </div>
+                    
+                        <br />
+                        <Card cardClass={styles.card}>
+                            <p>
+                                <b>{`Total cart items(s): ${cartTotalQuantity} `}</b>
+                            </p>
+                            <br/>
+                            <div className={styles.text}>
+                                <h4>Subtotal</h4>
+                                &nbsp;{" "}
+                                <h4>NGN {new Intl.NumberFormat().format(cartTotalAmount)}</h4>
+                            </div>
+                            <p>
+                                <b>Delivery fee would be included at checkout</b>
+                            </p>
+                            <br />
+                            <button
+                                className="--btn --btn-primary --btn-block"
+                                onClick={checkout}
+                            >
+                                Proceed to checkout ({cartTotalQuantity}{" "}
+                                {cartTotalQuantity === 1 ? "item" : "items"})
+                            </button>
+                        </Card>
+                    </div>
+                </div>
+                ) : null}
             </div>
         </section>
-    )
+    );
 }
