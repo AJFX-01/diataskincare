@@ -12,7 +12,65 @@ import Card from "../../component/card/Card";
 
 const Reset : React.FC = () => {
 
-    
+    const [email, setEmail] = useState<string>("");
+    const [error, setError] = useState<string | null>(null);
+    const [message, setMessage] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const { resetPassword } = useAuth();
+    const navigate = useNavigate();
+
+
+    const resetUserPassword =async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (email === "") {
+            setError('Enter your email');
+            window.setTimeout(() => {
+                setError("");
+            }, 2000);
+
+            return;
+        }
+
+        try {
+            setError("");
+            setMessage('');
+            setLoading(true);
+            await resetPassword(email);
+            setEmail("");
+            setLoading(false);
+            setMessage(
+                "Check your inbox for further instructions (Ensure to check spam folder, click on 'Report as not spam and continue from inbox')."
+            );
+            window.setTimeout(() => {
+                setMessage("Redirecting....");
+            }, 5000);
+            window.setTimeout(() => {
+                navigate("/login");
+            }, 7000);
+        } catch (err : any) {
+            if (err.message === "Firebase: Error (auth/user-not-found).") {
+                setError("This email is not registered");
+                window.setTimeout(() => {
+                  setError("");
+                }, 3000);
+            }
+            if (err.message === "Firebase: Error (auth/invalid-email).") {
+            setError("Invalid email");
+            window.setTimeout(() => {
+                setError("");
+            }, 3000);
+            }
+            if (err.message === "Firebase: Error (auth/too-many-requests).") {
+            setError("Reset password limit exceeded");
+            window.setTimeout(() => {
+                setError("");
+            }, 3000);
+            }
+        }
+        setLoading(false);
+    };
+
     return (
         <section className={styles.auth}>
             <div className={styles.img}>
