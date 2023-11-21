@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
-interface ShippingAddress {
+export interface ShippingAddress {
     name: string,
     line1 : string,
     line2 : string, 
@@ -11,11 +11,11 @@ interface ShippingAddress {
     country : string,
     phone : string
 }
-interface CheckoutState {
+export interface CheckoutState {
     shippingAddress : ShippingAddress;
 };
 
-const initialState : CheckoutState = {
+export const initialState : CheckoutState = {
     shippingAddress : {
     name: "",
     line1 : "",
