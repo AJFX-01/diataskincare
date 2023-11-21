@@ -73,12 +73,15 @@ const Reset : React.FC = () => {
 
     return (
         <section className={styles.auth}>
+            {loading && <Loader />}
             <div className={styles.img}>
                 <img src={resetImg} alt="login" width="400" />
             </div>
             <Card>
                 <div className={styles.form}>
                     <h2>Reset Password</h2>
+                    {error && <p className="alert error">{error}</p>}
+                    {message && <p className="alert message">{message}</p>}
                     <div className={styles.info}>
                         <p>
                             If the email goes to your spam folder, click on 'Report as not
@@ -87,8 +90,18 @@ const Reset : React.FC = () => {
                         </p>
                     </div>
                     <form>
-                        <input type="email" value={} placeholder="Email" required />
-                        <button className="--btn --btn-primary --btn-block">Proceed</button>
+                        <input 
+                            type="email"
+                            value={email}
+                            placeholder="Email"
+                            onChange={(e) => setEmail(e.target.value)}
+                            required />
+                        <button 
+                            className="--btn --btn-primary --btn-block"
+                            onClick={resetUserPassword}
+                        >
+                            Proceed
+                        </button>
                         <div className={styles.links}>
                             <p style={{ fontWeight : 600 }}>
                                 <Link to="/login">- Login</Link>
