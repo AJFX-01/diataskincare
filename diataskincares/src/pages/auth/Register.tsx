@@ -284,7 +284,14 @@ const Register: React.FC = () => {
                                 )}
                             </button>
                         )}
-                        {!passwordComplete && ()}
+                        {!passwordComplete && (
+                            <button
+                                disabled
+                                className={`${styles.button} ${styles.disabled}`}
+                            >
+                                Continue
+                            </button>
+                        )}
                         <span className={styles.register}>
                             <p>
                                 Have a Diata<span>skincare</span> account?
@@ -293,7 +300,7 @@ const Register: React.FC = () => {
                         </span>
                     </form>
                     <p style={{textAlign: 'center', marginBottom:'1.3rem'}}>-- OR --</p>
-                    <button className="--btn --btn-danger --btn-block">
+                    <button className="--btn --btn-danger --btn-block"  onClick={handleGoogleSignIn}>
                         <FaGoogle color="#fff"/> &nbsp; Continue with Google
                     </button>
                 </div>
