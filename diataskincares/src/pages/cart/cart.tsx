@@ -113,6 +113,16 @@ const Cart: React.FC = () => {
             )}
                 </>
         ) : null}
+            {cartItems.length === 0 ? (
+                <>
+                    <div className={styles["cart-empty"]}>
+                        
+                        |<Link to="/#products" className={styles.link}>
+                            &larr; Continue Shopping
+                        </Link>
+                    </div>
+                </>
+            )}
             </div>
         </section>
     );
