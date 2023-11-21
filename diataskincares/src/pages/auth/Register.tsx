@@ -20,7 +20,7 @@ const Register: React.FC = () => {
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const passwordRef = useRef<HTMLInputElement>();
+    const passwordRef = useRef<HTMLInputElement>(null);
     const [view, setView] = useState<boolean>(false);
     const [caseCondition, setCaseCondition] = useState<boolean>(false);
     const [numberCondition, setNumberCondition] = useState<boolean>(false);
@@ -196,13 +196,95 @@ const Register: React.FC = () => {
             <Card>
                 <div className={styles.form}>
                     <h2>Sign Up</h2>
-                    <form>
-                        <input type="text" value={} placeholder="Name"/>
-                        <input type="email" value={} placeholder="Email"/>
+                    {error && <p className="alert error">{error}</p>}
+                    <form onSubmit={registerUser}>
+                        <input 
+                            type="text"
+                            value={userName}
+                            placeholder="Name"
+                            onChange={(e) => setUserName(e.target.value)}
+                        />
+                        <input
+                            type="email" 
+                            value={email} 
+                            placeholder="Email"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
                         <label className={styles.label}>
-                            <input type="password" value={} placeholder="Password"/>
-                            <span></span>
+                            <input
+                                type="password"
+                                value={password}
+                                ref={passwordRef}
+                                placeholder="Password"
+                                onChange={(e) => setPassword(e.target.value)}
+                                onFocus={() => setPassFocus(true)}
+                                required
+                                />
+                            <span onClick={handleShowPassword}>
+                                {view ? <IoIosEye /> : <IoMdEyeOff />}
+                            </span>
                         </label>
+
+                        <div 
+                            className={
+                                passFocus 
+                                    ? `${styles.indicator} ${styles.show}`
+                                    : `${styles.indicator}`
+                            }
+                        >
+                            <span className={styles.strength}>Password must include:</span>
+                            <ul>
+                                <li 
+                                    className={
+                                        caseCondition ? `${styles.green}` : `${styles.red}`
+                                    }
+                                > 
+                                    {caseCondition ? <ImCheckmark /> : <GoPrimitiveDot/>}
+                                    &nbsp; Uppercase & lowercase letters
+                                </li>
+                                <li 
+                                    className={
+                                        lengthCondition ? `${styles.green}` : `${styles.red}`
+                                    }
+                                >
+                                    {lengthCondition ? <ImCheckmark /> : <GoPrimitiveDot />}
+                                    &nbsp; 6-12 characters
+                                </li>
+                                <li
+                                    className={
+                                        numberCondition ? `${styles.green}` : `${styles.red}`
+                                    }
+                                >
+                                    {numberCondition ? <ImCheckmark /> : <GoPrimitiveDot /> }
+                                    &nbsp; At least a number
+                                </li>
+                                <li 
+                                    className={
+                                        charCondition ? `${styles.green}` : `${styles.red}`
+                                    }
+                                >
+                                    {charCondition ? <ImCheckmark /> : <GoPrimitiveDot />}
+                                    &nbsp; At least one special character (!@#$%^&*)
+                                </li>
+                            </ul>
+                        </div>
+                        {passwordComplete && (
+                            <button
+                                type="submit"
+                                className="--btn --btn --btn-block"
+                            >
+                                {loading ? (
+                                    <img
+                                        src={spinnerImg}
+                                        alt="loading..."
+                                        style={{ width: "25px", height: "25px"}}
+                                    />
+                                ) : (
+                                    "Continue"
+                                )}
+                            </button>
+                        )}
+                        {!passwordComplete && ()}
                         <span className={styles.register}>
                             <p>
                                 Have a Diata<span>skincare</span> account?

@@ -156,7 +156,7 @@ const Login: React.FC = () => {
                             </div>
                             <p>-- oR --</p> 
                         </form>
-                        <button className="--btn --btn-danger --btn-block">
+                        <button className="--btn --btn-danger --btn-block" onClick={handleGoogleSignIn}>
                             <FaGoogle color="#fff" /> &nbsp; Login With Google
                         </button>
                         <span className={styles.register}>
