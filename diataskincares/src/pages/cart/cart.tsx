@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -41,7 +41,7 @@ const Cart: React.FC = () => {
     const increaseCart = (cart : CartItem) => {
         if (cart.cartQuantity >= parseInt(cart.count)) {
            setError (
-            `Sorry, this product currently has a total of ${createRegularExpressionLiteral.count} items avaliable`
+            `Sorry, this product currently has a total of ${cart.count} items avaliable`
            );
            window.setTimeout(() => setError(""), 7000);
            return; 
@@ -94,5 +94,26 @@ const Cart: React.FC = () => {
         }
     };
 
-    return ();
+    return (
+        <section className={`container ${styles.cart}`}>
+            <div className={`container ${styles.table}`}>
+        <p onClick={() => navigate(-1)}
+            style={{ cursor: "pointer", fontSize: "3rem", marginBottom: "2rem"}}
+        >
+            &larr;
+        </p>
+        {cartItems.length ? <h2>Cart</h2> : null}
+        {cartItems.length ? (
+            <>
+            {error && (
+                <p className={`${styles.flex} ${styles.error}`}>
+                    <MdError className={styles["error-icon"]} />
+                    {error}
+                </p>
+            )}
+                </>
+        ) : null}
+            </div>
+        </section>
+    );
 }
