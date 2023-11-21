@@ -186,4 +186,4 @@ const Cart: React.FC = () => {
             </div>
         </section>
     )
-                    }
+}
