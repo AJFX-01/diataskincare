@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import styles from "./auth.module.scss";
-
+import resetImg from "../../assets/forget.png"
+import { useAuth } from "../../contexts/auth";
+import Loader from "../../component/loader/loader";
 import { Link, useNavigate } from "react-router-dom"
 import Card from "../../component/card/Card";
 
-const Reset = () => {
+
+
+
+
+const Reset : React.FC = () => {
+
+    
     return (
         <section className={styles.auth}>
             <div className={styles.img}>
