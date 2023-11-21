@@ -23,6 +23,7 @@ import Notiflix from "notiflix";
 import { selectIsLoggedIn } from "../../redux/slice/authSlice";
 import useFetchCollection from "../../hooks/useFetchCollection";
 import { createRegularExpressionLiteral } from "typescript";
+import { url } from "inspector";
 
 
 const Cart: React.FC = () => {
@@ -54,8 +55,44 @@ const Cart: React.FC = () => {
     }
 
     const removeFromCart = (cart : CartItem) => {
-        
+        dispatch(REMOVE_FROM_CART(cart));
     }
+
+    const confirmClearCart = () => {
+        Notiflix.Confirm.show(
+            "Clear Cart",
+            "Are you sure you want to clear your cart",
+            "CLear",
+            "CANCEL",
+            function okCb() {
+                dispatch(CLEAR_CART());
+            },
+            function cancelCb() {},
+            {
+                width: "320px",
+                borderRadius: "5px",
+                titleColor: "#c07d53",
+                okButtonBackground: "#c07d53",
+                cssAnimationStyle: "zoom",
+            }
+        )
+    }
+
+    useEffect(() => {
+
+        dispatch(CALCULATE_SUBTOTAL());
+        dispatch(CALCULATE_TOTAL_QUANTITY());
+        dispatch(SAVE_URL(""));
+    },[dispatch, cartItems]);
+
+    const checkout = () => {
+        if (isLoggedIn) {
+            navigate("/checkout-details");
+        } else  {
+            dispatch(SAVE_URL(url));
+            navigate('/login')
+        }
+    };
 
     return ();
 }
