@@ -116,14 +116,74 @@ const Cart: React.FC = () => {
             {cartItems.length === 0 ? (
                 <>
                     <div className={styles["cart-empty"]}>
-                        
-                        |<Link to="/#products" className={styles.link}>
-                            &larr; Continue Shopping
-                        </Link>
+                        <img src={cartEmpty} className={styles.image} />
+                        <div>
+                            |<Link to="/#products" className={styles.link}>
+                                &larr; Continue Shopping
+                            </Link>
+                        </div>
                     </div>
+                    <br/>
+                    <br/>
+                    <>
+                        <h3>
+                            <b>Products you may like</b>
+                        </h3>
+                        <div className={styles.related}>
+                            {data?.slice(5, 11).map((product) => {
+                                const {id, name, imageUrl, price } = product;
+                                return (
+                                    <Link key={id} to={`/product-details/${id}`}>
+                                        <Card>
+                                            <div className={styles.details}>
+                                                <img src={imageUrl} alt={name} />
+                                                <p>{name}</p>
+                                                <p>NGN {new Intl.NumberFormat().format(price)}</p>
+                                            </div>
+                                        </Card>
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                    </>
                 </>
-            )}
+                    
+            ) : (
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {cartItems.map((cart, Index) => {
+                            const { id, name, price, imageUrl, cartQuantity } = cart;
+                            return (
+                                <tr key={id}>
+                                    <td>{Index + 1}</td>
+                                    <td>
+                                        <p>
+                                            <b>{name}</b>
+                                        </p>
+                                        <img 
+                                            src={imageUrl}
+                                            alt={name}
+                                            style={{ width: "60px" }}
+                                        />
+                                    </td>
+                                    <td>NGN {new Intl.NumberFormat().format(price)}</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            )}2
             </div>
         </section>
-    );
-}
+    )
+                    }
