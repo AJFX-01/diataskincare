@@ -8,9 +8,10 @@ interface Product {
     price: string;
     description : string;
     imageUrl : string;
+    count: string
 };
 
-interface CartItem extends Product{
+export interface CartItem extends Product{
     cartQuantity: number;
     
 }
