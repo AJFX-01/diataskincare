@@ -8,8 +8,6 @@ import Card from "../../component/card/Card";
 
 
 
-
-
 const Reset : React.FC = () => {
 
     const [email, setEmail] = useState<string>("");
@@ -116,3 +114,6 @@ const Reset : React.FC = () => {
         </section>
     )
 }
+
+
+export default Reset;
