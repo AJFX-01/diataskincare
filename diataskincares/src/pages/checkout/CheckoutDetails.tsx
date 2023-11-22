@@ -54,7 +54,7 @@ const CheckoutDetails : Function = () => {
                                 placeholder="Recipient name"
                                 required
                                 name="name"
-                                value={shippingAddress.name}
+                                value={shippingAddress?.shippingAddress?.name}
                                 onChange={(e) => handleShipping(e)}
                             />
                             <label>Address line 1:</label>
@@ -63,7 +63,7 @@ const CheckoutDetails : Function = () => {
                                 placeholder="Address line 1"
                                 required
                                 name="line1"
-                                value={shippingAddress.line1}
+                                value={shippingAddress?.shippingAddress?.line1}
                                 onChange={(e) => handleShipping(e)}
                             />
                             <label> Address line 2</label>
@@ -72,7 +72,7 @@ const CheckoutDetails : Function = () => {
                                 placeholder="Address line 2"
                                 required
                                 name="line2"
-                                value={shippingAddress.line2}
+                                value={shippingAddress?.shippingAddress?.line2}
                                 onChange={(e) => handleShipping(e)}
                             />
                             <label>City</label>
@@ -81,7 +81,7 @@ const CheckoutDetails : Function = () => {
                                 placeholder="City"
                                 required
                                 name="city"
-                                value={shippingAddress.city}
+                                value={shippingAddress?.shippingAddress?.city}
                                 onChange={(e) => handleShipping(e)}
                             />
                             <label>State</label>
@@ -90,7 +90,7 @@ const CheckoutDetails : Function = () => {
                                 placeholder="state"
                                 required
                                 name="state"
-                                value={shippingAddress.state}
+                                value={shippingAddress?.shippingAddress?.state}
                                 onChange={(e) => handleShipping(e)}
                             />
                             <label>Postal Code</label>
@@ -99,15 +99,15 @@ const CheckoutDetails : Function = () => {
                                 placeholder="Postal code"
                                 required
                                 name="postal-code"
-                                value={shippingAddress.postal_code}
+                                value={shippingAddress?.shippingAddress?.postal_code}
                                 onChange={(e) => handleShipping(e)}
                             />
                             <label>Select Country</label>
                             <CountryDropdown
                                 className={styles.select}
                                 valueType="short"
-                                value={shippingAddress.country}
-                                onChange={(val) => 
+                                value={shippingAddress?.shippingAddress?.country}
+                                onChange={(val : string) => 
                                     handleShipping({
                                         target: { name: "country", value: val},
                                     })
@@ -119,7 +119,7 @@ const CheckoutDetails : Function = () => {
                                 placeholder="Phone"
                                 required
                                 name="phone"
-                                value={shippingAddress.phone}
+                                value={shippingAddress?.shippingAddress?.phone}
                                 onChange={(e) => handleShipping(e)}
                             />
 
