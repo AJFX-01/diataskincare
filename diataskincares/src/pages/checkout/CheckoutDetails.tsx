@@ -17,7 +17,7 @@ const CheckoutDetails : Function = () => {
 
     
 
-    const handleShipping = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleShipping = (e: React.ChangeEvent<HTMLInputElement> | CountryDropdown) => {
         const { name, value } = e.target;
         setShippingAddress({
             ...shippingAddress,
