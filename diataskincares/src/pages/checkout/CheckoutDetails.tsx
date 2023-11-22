@@ -8,17 +8,6 @@ import {
 } from "../../redux/slice/checkoutSlice";
 import { useNavigate } from "react-router-dom";
 
-// interface initialAddressState = {
-//     name: "",
-//     line1: "",
-//     line2: "",
-//     state: "",
-//     city: "",
-//     postal_code: "",
-//     country: "",
-//     phone: "",
-// };
-
 const CheckoutDetails : Function = () => {
     
     
@@ -109,7 +98,7 @@ const CheckoutDetails : Function = () => {
                                 value={shippingAddress?.shippingAddress?.country}
                                 onChange={(val : string) => 
                                     handleShipping({
-                                        target: { name: "country", value: val},
+                                        target : { name: "country", value: val},
                                     })
                                 }
                             />
