@@ -15,6 +15,8 @@ const CheckoutDetails : Function = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    
+
     const handleShipping = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setShippingAddress({
@@ -98,7 +100,7 @@ const CheckoutDetails : Function = () => {
                                 value={shippingAddress?.shippingAddress?.country}
                                 onChange={(val : string) => 
                                     handleShipping({
-                                        target : { name: "country", value: val},
+                                        target : { name: "country", value : val} ,
                                     })
                                 }
                             />
