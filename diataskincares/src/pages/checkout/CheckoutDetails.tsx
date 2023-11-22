@@ -100,7 +100,7 @@ const CheckoutDetails : Function = () => {
                                 value={shippingAddress?.shippingAddress?.country}
                                 onChange={(val : string) => 
                                     handleShipping({
-                                        target : { name: "country", value : val} ,
+                                        target: { name: "country", value : val} ,
                                     })
                                 }
                             />
