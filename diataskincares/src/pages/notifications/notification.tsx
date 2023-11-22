@@ -63,14 +63,43 @@ const Notifications: React.FC = () => {
                                     {filteredNotifs.map((notif) => {
                                         const { id, orderNotification, orderDate, userEmail } = notif;
                                         return (
-                                            <div key>
-                                        )
-                                    }}
+                                            <div key={id}>
+                                                <Card cardClass={styles.card}>
+                                                    <Link to={`/order-details/${id}`}>
+                                                        <RiSearchEyeLine className={styles.icon} size={30} color="#000" />
+                                                    </Link>
+                                                    <div className={styles.details}>
+                                                        {orderNotification === "YOur Order has been chnaged to status of DELIEVERED!" ? (
+                                                            <h2 
+                                                                style={{ color : "green"}}>
+                                                                    <i>{orderNotification}</i>
+                                                            </h2>
+                                                        ) : (
+                                                            <h2 style={{ color: "#c07d53"}}>
+                                                                <i>{orderNotification}</i>
+                                                            </h2>
+                                                        )}
+                                                        <h2>
+                                                            For your order with the Order ID: <b>{id}</b>
+                                                        </h2>
+                                                        <h2>
+                                                            Placed on: <b>{orderDate}</b>
+                                                        </h2>
+                                                        <h2>
+                                                            By: <b>{userEmail}</b>
+                                                        </h2>
+                                                    </div>
+                                                </Card>
+                                                <br/>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             )}
                         </>
                     )}
+                </div>
             )}
         </div>
-    )
+    );
 }
