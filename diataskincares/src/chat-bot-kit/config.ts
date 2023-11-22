@@ -29,5 +29,3 @@ const config: BotConfig = {
 };
 
 export default config;
-
-//
