@@ -5,21 +5,25 @@ import Card from "../../component/card/Card";
 import Loader from "../../component/loader/loader";
 import useFetchCollection from "../../hooks/useFetchCollection";
 import { selectUserID } from "../../redux/slice/authSlice";
-import { selectOrderHistory, STORE_ORDERS } from "../../redux/slice/orderSlice";
+import { Order, selectOrderHistory, STORE_ORDERS } from "../../redux/slice/orderSlice";
 import { RiSearchEyeLine } from "react-icons/ri";
 import styles from "./notifications.module.scss";
+
 
 const Notifications: React.FC = () => {
     const { data, loading } = useFetchCollection("Orders");
 
 
-    const notifs = useSelector(selectOrderHistory);
+    const notifs: Order[] = useSelector(selectOrderHistory);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const userID = useSelector(selectUserID);
 
     useEffect(() => {
-        dispatch(STORE_ORDERS(data));
+
+        const orders = data.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        dispatch(STORE_ORDERS({orderHistory : orders}));
 
     }, [dispatch, data]);
 

@@ -2,10 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface Order {
     id: string;
+    userID: string;
+    userEmail: string;
     orderDate: string;
     orderTime: string;
     orderAmount: number;
     orderStatus: string;
+    orderNotification: string
+    cartItem: {
+        id: string;
+        name: string;
+        price: number;
+        imageUrl: string;
+        cartQuantity: number;
+    }[];
+    createdAt: Date;
 };
 
 export interface Address {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../../component/loader/loader";
 import useFetchCollection from "../../../hooks/useFetchCollection";
 import {
+    Order,
   selectOrderHistory,
   STORE_ORDERS,
 } from "../../../redux/slice/orderSlice";
@@ -12,21 +13,14 @@ import styles from "./orders.module.scss";
 
 const Orders: React.FC = () => {
     const {data, loading }= useFetchCollection("Orders");
-    const orders = useSelector(selectOrderHistory);
+    const orders : Order[] = useSelector(selectOrderHistory);
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
 
     useEffect(() => {
 
-        const orders = data.map((item) => ({
-            id: item.id,
-            orderDate: item.orderDate,
-            orderTime: item.orderTime,
-            orderAmount: item.orderAmount,
-            orderStatus: item.orderStatus
-
-        }));
+        const orders = data.map(doc => ({ id: doc.id, ...doc.data() }));
 
         dispatch(STORE_ORDERS({
             orderHistory: orders

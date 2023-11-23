@@ -7,26 +7,10 @@ import Card from "../../../component/card/Card";
 import Loader from "../../../component/loader/loader";
 import styles from "./changeOrderStatus.module.scss";
 import { BsInfoCircle } from "react-icons/bs";
+import { Order } from "../../../redux/slice/orderSlice";
 
 
- export interface Order {
-    id: string;
-    userID: string;
-    userEmail: DOMStringList;
-    orderDate: string;
-    ordertime: string;
-    orderAmount: number;
-    orderStatus: string;
-    orderNotifications: string;
-    cartItem: {
-        id: string;
-        name: string;
-        price: number;
-        imageUrl: string;
-        cartQuantity: number;
-    }[];
-    createdAt: Date;
-};
+
 
 const OrderStatus: React.FC<{ order: Order; id: string }> = ({ order, id}) => {
     const [status, setStatus] = useState<string>("");
@@ -37,9 +21,9 @@ const OrderStatus: React.FC<{ order: Order; id: string }> = ({ order, id}) => {
 
 
     useEffect(() => {
-        if (order !== null && order.orderNotifications !== null) {
+        if (order !== null && order.orderNotification !== null) {
             if (
-                order.orderNotifications === "Your order has been changed to the status of DELIEVERED!" || 
+                order.orderNotification === "Your order has been changed to the status of DELIEVERED!" || 
                 order.orderStatus === "Delivered"
             ) {
                 setDisable(true);
@@ -57,10 +41,10 @@ const OrderStatus: React.FC<{ order: Order; id: string }> = ({ order, id}) => {
             userID: order.userID,
             userEmail: order.userEmail,
             orderDate: order.orderDate,
-            orderTime: order.ordertime,
+            orderTime: order.orderTime,
             orderAmount: order.orderAmount,
             orderStatus: status,
-            orderNotification: order.orderNotifications,
+            orderNotification: order.orderNotification,
             cartItems: order.cartItem,
             createdAt: order.createdAt,
             editedAt: Timestamp.now().toDate(), 
