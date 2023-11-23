@@ -34,129 +34,134 @@ const OrderDetails: React.FC = () => {
 
       return (
         <section>
-            <div className={`container ${styles.table}  ${styles.sec}`}>
-                <p 
+            <div className={`container ${styles.table} ${styles.sec}`}>
+                <div>
+                    <p
                     onClick={() => navigate(-1)}
                     style={{ cursor: "pointer", marginBottom: "2rem" }}
-                >
+                    >
                     &larr; Go back
-                </p>
-            </div>
-            <br/>
+                    </p>
+                </div>
+                <br />
             <>
-            <h3 className={styles.heading}>Order Information</h3>
-            <p>
-                <b>Order ID:</b> {order.id}
-            </p>
-            <p>
-                <b>Order Amount:</b> NGN{" "}
-                {new Intl.NumberFormat().format(order.orderAmount)}
-            </p>
-            <p>
-                <b>Order Status:</b> {order.orderStatus}{" "}
-                {order.orderStatus === "Delivered"
-                ? ""
-                : "(This could change at any time, check here or your inbox for changes to this status)"}
-            </p>
-            {/* {filteredNotifs.orderDate} */}
-            {/* {filteredAddress && (
-                <>
+                <h3 className={styles.heading}>Order Information</h3>
                 <p>
+                    <b>Order ID:</b> {order.id}
+                </p>
+                <p>
+                    <b>Order Amount:</b> NGN{" "}
+                    {new Intl.NumberFormat().format(order.orderAmount)}
+                </p>
+                <p>
+                    <b>Order Status:</b> {order.orderStatus}{" "}
+                    {order.orderStatus === "Delivered"
+                        ? ""
+                        : "(This could change at any time, check here or your inbox for changes to this status)"}
+                </p>
+                {/* {filteredNotifs.orderDate} */}
+                {/* {filteredAddress && (
+                <>
+                    <p>
                     <b>Time Of Order: </b>
                     {filteredAddress.time}
-                </p>
-                <p>
+                    </p>
+                    <p>
                     <b>Date Of Order: </b>
                     {filteredAddress.date}
-                </p>
+                    </p>
                 </>
-            )} */}
-            <br />
-            {filteredAddress ? (
+                )} */}
+                <br />
+                {filteredAddress ? (
                 <>
-                <h3 className={styles.heading}>Address Information</h3>
-                <p>
-                    <b>Name: </b>
-                    {filteredAddress.name}
-                </p>
-                <p>
-                    <b>Phone Number: </b>
-                    {filteredAddress.phone}
-                </p>
-                <p>
-                    <b>Address 1: </b>
-                    {filteredAddress.line1}
-                </p>
-                <p>
-                    <b>Address 2: </b>
-                    {filteredAddress.line2}
-                </p>
-                <p>
-                    <b>Country: </b>
-                    {filteredAddress.country}
-                </p>
-                <p>
-                    <b>State: </b>
-                    {filteredAddress.state}
-                </p>
+                    <h3 className={styles.heading}>Address Information</h3>
+                    <p>
+                        <b>Name: </b>
+                        {filteredAddress.name}
+                    </p>
+                    <p>
+                        <b>Phone Number: </b>
+                        {filteredAddress.phone}
+                    </p>
+                    <p>
+                        <b>Address 1: </b>
+                        {filteredAddress.line1}
+                    </p>
+                    <p>
+                        <b>Address 2: </b>
+                        {filteredAddress.line2}
+                    </p>
+                    <p>
+                        <b>Country: </b>
+                        {filteredAddress.country}
+                    </p>
+                    <p>
+                        <b>State: </b>
+                        {filteredAddress.state}
+                    </p>
                 </>
-            ) : (
+                ) : (
                 <>
-                <h3 className={styles.heading}>Address Information</h3>
-                <p>
-                    Sorry, this order was made before the address functionality was
-                    added. This would show upon subsequent orders.
-                </p>
+                    <h3 className={styles.heading}>Address Information</h3>
+                    <p>
+                        Sorry, this order was made before the address functionality was
+                        added. This would show upon subsequent orders.
+                    </p>
                 </>
-            )}
-            <br />
-            <table>
+                )}
+                <br />
+                <table>
                 <thead>
-                <tr>
+                    <tr>
                     <th>s/n</th>
                     <th>Product</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
                     <th>Action</th>
-                </tr>
+                    </tr>
                 </thead>
                 <tbody>
-                {order.cartItems.map((cart: any, index: number) => {
+                    {order.cartItems.map((cart: any, index: number) => {
                     const { id, name, price, imageUrl, cartQuantity } = cart;
                     return (
-                    <tr key={id}>
+                        <tr key={id}>
                         <td>
-                        <b>{index + 1}</b>
+                            <b>{index + 1}</b>
                         </td>
                         <td>
-                        <p>
+                            <p>
                             <b>{name}</b>
-                        </p>
-                        <img
+                            </p>
+                            <img
                             src={imageUrl}
                             alt={name}
                             style={{ width: "100px" }}
-                        />
+                            />
                         </td>
                         <td>NGN {new Intl.NumberFormat().format(price)}</td>
                         <td>{cartQuantity}</td>
                         <td>
-                        {new Intl.NumberFormat().format(price * cartQuantity)}
+                            {new Intl.NumberFormat().format(price * cartQuantity)}
                         </td>
                         <td className={styles.icons}>
-                        <Link to={`/review-product/${id}`}>
+                            <Link to={`/review-product/${id}`}>
                             <button className="--btn --btn-primary">
-                            Review Product
+                                Review Product
                             </button>
-                        </Link>
+                            </Link>
                         </td>
-                    </tr>
+                        </tr>
                     );
-                })}
+                    })}
                 </tbody>
-            </table>
+                </table>
             </>
-        </section>
-      )
-}
+        </div>
+      </section>
+    );
+};
+
+
+export default OrderDetails;
