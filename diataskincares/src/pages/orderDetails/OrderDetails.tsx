@@ -123,7 +123,7 @@ const OrderDetails: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {order.cartItems.map((cart: any, index: number) => {
+                    {order.cartItem.map((cart: any, index: number) => {
                     const { id, name, price, imageUrl, cartQuantity } = cart;
                     return (
                         <tr key={id}>
@@ -164,4 +164,4 @@ const OrderDetails: React.FC = () => {
 };
 
 
-export default OrderDetails;
+export default OrderDetails;222222222222222222222222222
