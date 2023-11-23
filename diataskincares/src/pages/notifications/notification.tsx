@@ -55,7 +55,7 @@ const Notifications: React.FC = () => {
                         </div>
                     ) : (
                         <>
-                            {filteredNotifs === "Empty" ? (
+                            {filteredNotifs === null ? (
                                 <>
                                     <h2>
                                         Your Order status is at the <i>'Placed Order'</i>Status,
