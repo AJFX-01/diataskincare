@@ -103,3 +103,6 @@ const Notifications: React.FC = () => {
         </div>
     );
 }
+
+
+export default Notifications
