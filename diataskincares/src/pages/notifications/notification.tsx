@@ -9,7 +9,7 @@ import { Order, selectOrderHistory, STORE_ORDERS } from "../../redux/slice/order
 import { RiSearchEyeLine } from "react-icons/ri";
 import styles from "./notifications.module.scss";
 
-
+222222
 const Notifications: React.FC = () => {
     const { data, loading } = useFetchCollection("Orders");
 
@@ -55,7 +55,7 @@ const Notifications: React.FC = () => {
                         </div>
                     ) : (
                         <>
-                            {filteredNotifs === null ? (
+                            {filteredNotifs === "Empty" ? (
                                 <>
                                     <h2>
                                         Your Order status is at the <i>'Placed Order'</i>Status,
